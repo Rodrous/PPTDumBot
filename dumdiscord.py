@@ -62,11 +62,6 @@ async def on_message(message):
             embed.add_field(name= "!dog", value="Get a Dog pic \U0001F436")
             await message.channel.send(content=None, embed=embed)
 
-        if message.content.lower() == "!ppt":
-            quote = ["Why do i do shit like this smh!", "This was a mistake", "Leaving this goodbye", "Fuck this shit smh", "Very Carefully Next Question", "Coming to the vc was a mistake", "yo no hablo ingles", "i need some booze", "go make me a sandwitch", "sigh What do you want.", "Because I said so.","ahem Can I help you?", "Peace, dudes."]
-            val =random.choice(quote)
-            embed = discord.Embed(title= val )
-            await message.channel.send(content=None, embed=embed)
         if message.content.lower() == "!clear":
             await message.channel.purge(limit=1)
             await message.channel.send("Command Depricated UwU")
