@@ -55,6 +55,7 @@ async def setPrefix(self, msg, *,prefixes = ''):
             customPrefix[msg.guild.id] = prefixes.split() or defaultPrefix
             await msg.send(f"Prefixes set as {prefixes}!")
         else : 
+            msg.channel.send(content = 'You cant use that here yet.',delete_after = 6)
     else:
         msg.channel.send('This is a Server-Only command.')
 
