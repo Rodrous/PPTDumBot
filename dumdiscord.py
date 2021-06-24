@@ -1,6 +1,4 @@
 import discord
-from discord import message
-from discord import guild
 from discord.ext import commands
 import aiohttp
 import requests
@@ -51,13 +49,15 @@ async def getPrefix(bot, msg):
                 name = "setprefix",
                 help = "Set your own prefix.",
                 brief = "Use this to set your own custom Prefix for the Bot to listen to.")
-@bot.guild_only()  # Dunno why we have that since we already checked above, but *shrug*
 async def setPrefix(self, msg, *,prefixes = ''):
-    if msg.guild.id == 826148528870129675 or str(msg.channel) not in restrictedChannels:
-        customPrefix[msg.guild.id] = prefixes.split() or defaultPrefix
-        await msg.send(f"Prefixes set as {prefixes}!")
-    else : 
-        msg.channel.send(content = 'You cant use that here yet.',delete_after = 6)
+    if bot.get_guild(msg.guild.id):
+        if msg.guild.id == 826148528870129675 or str(msg.channel) not in restrictedChannels:
+            customPrefix[msg.guild.id] = prefixes.split() or defaultPrefix
+            await msg.send(f"Prefixes set as {prefixes}!")
+        else: 
+            msg.channel.send(content = 'You cant use that here yet.',delete_after = 6)
+    else:
+        msg.channel.send('This is a Server-Only command.')
 
 @bot.command(
                 name = "prefix",
@@ -72,14 +72,16 @@ async def sendPrefix(msg):
                 name = "resetprefix",
                 help = "Reset the prefix to the default.",
                 brief = "Use this to reset the Prefix the bot listens to, to the default.")
-@bot.guild_only()
 async def resetPrefix(msg):
-    if msg.guild.id == 826148528870129675 or str(msg.channel) not in restrictedChannels:
-        customPrefix.clear()
-        bot.command_prefix = defaultPrefix
-        await msg.channel.send(f'Reset the prefix to : {defaultPrefix[0]}')
-    else : 
-        msg.channel.send('You cant use that here yet.')
+    if bot.get_guild(msg.guild.id):
+        if msg.guild.id == 826148528870129675 or str(msg.channel) not in restrictedChannels:
+            customPrefix.clear()
+            bot.command_prefix = defaultPrefix
+            await msg.channel.send(f'Reset the prefix to : {defaultPrefix[0]}')
+        else : 
+            msg.channel.send('You cant use that here yet.')
+    else:
+        msg.channel.send('This is a Server-Only command.')
 
 @bot.command(
                 name = "quote",
@@ -133,9 +135,9 @@ async def sendRee(msg):
                 help = 'This is like help, but better.',
                 brief = 'What else do you need to know bro, just run the command')
 async def sendHelp(msg):
+    # For PPT and Gif, if it has the X emoji, you can use it in the test server.
     embed = discord.Embed(title="Bot help perhaps", 
         description="Some useful commands. If a command has <:white_check_mark:857551644546826250> it works, if it has <:x:857551644546826250>, you cant use it in a server")
-        # For PPT and Gif, if it has the X emoji, you can use it in the test server.
     embed.add_field(name="!ree", value="Rees out of frustration (<:white_check_mark:857551644546826250>)")
     embed.add_field(name="!s", value="Sends a Random image from internet [1920x1080] (<:white_check_mark:857551644546826250>)")
     embed.add_field(name= "!cat", value = "Sends a Cat pic \U0001F408 (<:white_check_mark:857551644546826250>)")
