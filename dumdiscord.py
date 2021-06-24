@@ -12,7 +12,7 @@ with open("client.txt") as file:
     f = file.readline()
 
 id = base64.b64decode(f).decode('utf-8') 
-client = discord.Client()               # This will be deprecated soon enough.
+#client = discord.Client()               # This will be deprecated soon enough.
 restrictedChannels = ["database"]
 
  # ------------------------------------------------------------------------------------------------------------------ 
