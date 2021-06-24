@@ -36,9 +36,9 @@ defaultPrefix = ['!']
 
 async def readyUp(bot, msg):
     await bot.change_presence(activity=discord.Game('Blackfinix was here.'))
-    return getPrefix(msg)
+    return await getPrefix(msg)
 
-bot = commands.Bot(command_prefix=readyUp)  # This is the same as a client initialization, but bot has more functionalities.
+bot = commands.Bot(command_prefix='!')  # This is the same as a client initialization, but bot has more functionalities.
 
 async def getPrefix(bot, msg):
     guild = msg.guild
@@ -53,7 +53,7 @@ async def getPrefix(bot, msg):
                 brief = "Use this to set your own custom Prefix for the Bot to listen to.")
 @commands.guild_only()  # Dunno why we have that since we already checked above, but *shrug*
 async def setPrefix(self, msg, *,prefixes = ''):
-    if msg.guild.id == 826148528870129675 or str(message.channel) not in restrictedChannels:
+    if msg.guild.id == 826148528870129675 or str(msg.channel) not in restrictedChannels:
         customPrefix[msg.guild.id] = prefixes.split() or defaultPrefix
         await msg.send(f"Prefixes set as {prefixes}!")
     else : 
@@ -63,7 +63,7 @@ async def setPrefix(self, msg, *,prefixes = ''):
                 name = "prefix",
                 help = "Check the default prefix.")
 async def sendPrefix(msg):
-    if msg.guild.id == 826148528870129675 or str(message.channel) not in restrictedChannels:
+    if msg.guild.id == 826148528870129675 or str(msg.channel) not in restrictedChannels:
         await msg.channel.send(f'Current default prefix is : {defaultPrefix[0]} or {bot.get_prefix(msg)}')
     else : 
         msg.channel.send(content = 'You cant use that here yet.', delete_after = 6)
@@ -74,7 +74,7 @@ async def sendPrefix(msg):
                 brief = "Use this to reset the Prefix the bot listens to, to the default.")
 @commands.guild_only()
 async def resetPrefix(msg):
-    if msg.guild.id == 826148528870129675 or str(message.channel) not in restrictedChannels:
+    if msg.guild.id == 826148528870129675 or str(msg.channel) not in restrictedChannels:
         customPrefix.clear()
         bot.command_prefix = defaultPrefix
         await msg.channel.send(f'Reset the prefix to : {defaultPrefix[0]}')
@@ -114,9 +114,9 @@ async def sendDog(msg):
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             if response.status != 200:
-                return await message.channel.send("Couldn't download the file")
+                return await msg.channel.send("Couldn't download the file")
             data = io.BytesIO(await response.read())
-            await message.channel.send(content = "From PPT with \U0001F49A", 
+            await msg.channel.send(content = "From PPT with \U0001F49A", 
                                         file=discord.File(data,"dog.png"))
 
 @commands.command(
@@ -170,7 +170,7 @@ async def sendWallpaper(msg):
                 help = 'Please dont use this.',
                 brief = 'Pwease dont use this uwu')
 async def sendInvite(msg):
-    if msg.guild.id == 826148528870129675 or str(message.channel) not in restrictedChannels:
+    if msg.guild.id == 826148528870129675 or str(msg.channel) not in restrictedChannels:
         await msg.channel.send("This was a mistake")
         await msg.channel.send("<https://discordapp.com/oauth2/authorize?client_id=852977382016024646&scope=bot&permissions=0>")
     else : 
