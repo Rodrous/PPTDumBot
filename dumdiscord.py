@@ -47,11 +47,11 @@ async def getPrefix(bot, msg):
     else:
         return defaultPrefix
 
-@commands.command(
+@bot.command(
                 name = "setprefix",
                 help = "Set your own prefix.",
                 brief = "Use this to set your own custom Prefix for the Bot to listen to.")
-@commands.guild_only()  # Dunno why we have that since we already checked above, but *shrug*
+@bot.guild_only()  # Dunno why we have that since we already checked above, but *shrug*
 async def setPrefix(self, msg, *,prefixes = ''):
     if msg.guild.id == 826148528870129675 or str(msg.channel) not in restrictedChannels:
         customPrefix[msg.guild.id] = prefixes.split() or defaultPrefix
@@ -59,7 +59,7 @@ async def setPrefix(self, msg, *,prefixes = ''):
     else : 
         msg.channel.send(content = 'You cant use that here yet.',delete_after = 6)
 
-@commands.command(
+@bot.command(
                 name = "prefix",
                 help = "Check the default prefix.")
 async def sendPrefix(msg):
@@ -68,11 +68,11 @@ async def sendPrefix(msg):
     else : 
         msg.channel.send(content = 'You cant use that here yet.', delete_after = 6)
 
-@commands.command(
+@bot.command(
                 name = "resetprefix",
                 help = "Reset the prefix to the default.",
                 brief = "Use this to reset the Prefix the bot listens to, to the default.")
-@commands.guild_only()
+@bot.guild_only()
 async def resetPrefix(msg):
     if msg.guild.id == 826148528870129675 or str(msg.channel) not in restrictedChannels:
         customPrefix.clear()
@@ -81,7 +81,7 @@ async def resetPrefix(msg):
     else : 
         msg.channel.send('You cant use that here yet.')
 
-@commands.command(
+@bot.command(
                 name = "quote",
                 help = "Sends a quote from a movie/anime.",
                 brief = "I mean, what else do you need to know. It sends a quote from a movie/anime. Thats it bruv." )
@@ -89,7 +89,7 @@ async def sendQuote(msg):
     url = requests.get('https://animechan.vercel.app/api/random').json()
     await msg.channel.send(f"A quote from {url['character']} : {url['quote']}")
 
-@commands.command(
+@bot.command(
                 name = 'cat',
                 help = 'Sends an image of a cute (*most of the times*) cat ꓷ:',
                 brief = 'Fucking furry.')
@@ -104,7 +104,7 @@ async def sendCat(msg):
             await msg.channel.send("From PPT with \U0001F49A")
             await msg.channel.send(file=discord.File(data,"Cat.png"))
 
-@commands.command(
+@bot.command(
                 name = 'dog',
                 help = 'Sends an image of a heckin good doggo ꓷ:',
                 brief = 'Fucking furry.')
@@ -119,7 +119,7 @@ async def sendDog(msg):
             await msg.channel.send(content = "From PPT with \U0001F49A", 
                                         file=discord.File(data,"dog.png"))
 
-@commands.command(
+@bot.command(
                 name = 'ree',
                 help = 'It just \'***REEEEEE***\'s lmao',
                 brief = '***REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE***')
@@ -128,7 +128,7 @@ async def sendRee(msg):
     await msg.channel.send("*R"+"E"*num + "*")
 
 
-@commands.command(
+@bot.command(
                 name = 'helpme',
                 help = 'This is like help, but better.',
                 brief = 'What else do you need to know bro, just run the command')
@@ -144,7 +144,7 @@ async def sendHelp(msg):
     embed.add_field(name= "!dog", value="Get a Dog pic \U0001F436 (<:white_check_mark:857551644546826250>)")
     await msg.channel.send(content=None, embed=embed)
 
-@commands.command(
+@bot.command(
                 name = 'clear',
                 help = 'Clears a certain amount of messages in the current chat.',
                 brief = '*insert Thanos snap here*')
@@ -152,7 +152,7 @@ async def clearChat(msg):
     await msg.channel.purge(limit=1)
     await msg.channel.send("Command Depricated UwU (for now)")
 
-@commands.command(
+@bot.command(
                 name = 's',
                 help = 'Sends a wallpaper.',
                 brief = 'Sends a wallpaper with size of 1920x1080')
@@ -165,7 +165,7 @@ async def sendWallpaper(msg):
                 data = io.BytesIO(await response.read())
                 await msg.channel.send(file=discord.File(data,"Why are you looking at this.png"))
 
-@commands.command(
+@bot.command(
                 name = 'invite',
                 help = 'Please dont use this.',
                 brief = 'Pwease dont use this uwu')
