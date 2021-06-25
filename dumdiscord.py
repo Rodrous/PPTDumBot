@@ -10,7 +10,6 @@ with open("client.txt") as file:
     f = file.readline()
 
 id = base64.b64decode(f).decode('utf-8') 
-#client = discord.Client()               # This will be deprecated soon enough.
 restrictedChannels = ["database"]
 
  # ------------------------------------------------------------------------------------------------------------------ 
@@ -51,7 +50,7 @@ async def getPrefix(bot, msg):
                 brief = "Use this to set your own custom Prefix for the Bot to listen to.")
 async def setPrefix(self, msg, *,prefixes = ''):
     if bot.get_guild(msg.guild.id):
-        if msg.guild.id == 826148528870129675 or str(msg.channel) not in restrictedChannels:
+        if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels):
             customPrefix[msg.guild.id] = prefixes.split() or defaultPrefix
             await msg.send(f"Prefixes set as {prefixes}!")
         else: 
@@ -63,7 +62,7 @@ async def setPrefix(self, msg, *,prefixes = ''):
                 name = "prefix",
                 help = "Check the default prefix.")
 async def sendPrefix(msg):
-    if msg.guild.id == 826148528870129675 or str(msg.channel) not in restrictedChannels:
+    if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels):
         await msg.channel.send(f'Current default prefix is : {defaultPrefix[0]} or {bot.get_prefix(msg)}')
     else : 
         msg.channel.send(content = 'You cant use that here yet.', delete_after = 6)
@@ -74,7 +73,7 @@ async def sendPrefix(msg):
                 brief = "Use this to reset the Prefix the bot listens to, to the default.")
 async def resetPrefix(msg):
     if bot.get_guild(msg.guild.id):
-        if msg.guild.id == 826148528870129675 or str(msg.channel) not in restrictedChannels:
+        if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels):
             customPrefix.clear()
             bot.command_prefix = defaultPrefix
             await msg.channel.send(f'Reset the prefix to : {defaultPrefix[0]}')
@@ -172,7 +171,7 @@ async def sendWallpaper(msg):
                 help = 'Please dont use this.',
                 brief = 'Pwease dont use this uwu')
 async def sendInvite(msg):
-    if msg.guild.id == 826148528870129675 or str(msg.channel) not in restrictedChannels:
+    if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels):
         await msg.channel.send("This was a mistake")
         await msg.channel.send("<https://discordapp.com/oauth2/authorize?client_id=852977382016024646&scope=bot&permissions=0>")
     else : 
