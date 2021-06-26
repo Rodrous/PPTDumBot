@@ -226,7 +226,9 @@ async def addtoguild(ctx):
             brief = 'Pong',
             help = 'Returns the delay of the bot')
 async def ping(msg):
-    await msg.send(f'Pong!\n{round(bot.latency * 1000)}ms')
+    embed = discord.Embed()
+    embed.add_field(name="Ping", value=f"{round(bot.latency * 1000)}ms")
+    await msg.send(embed=embed)
 
 if __name__ == "__main__":
     bot.run(id)
