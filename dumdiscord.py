@@ -16,8 +16,8 @@ restrictedChannels = ["database"]
 with open("config/allowedguildIds.txt") as file:
     f = file.readlines()
 
-#allowedguilds = [base64.b64decode(i).decode('utf-8') for i in f]
-allowedguilds = [i for i in f]
+allowedguilds = [base64.b64decode(i).decode('utf-8') for i in f]
+
 
  # ------------------------------------------------------------------------------------------------------------------ 
 
@@ -59,22 +59,23 @@ async def getPrefix(bot, msg):
                 brief = "Use this to set your own custom Prefix for the Bot to listen to.")
 async def setPrefix(self, msg, *,prefixes = ''):
     if bot.get_guild(msg.guild.id):
-        if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels):
+        if str(msg.guild.id) in allowedguilds and (str(msg.channel) not in restrictedChannels):
             customPrefix[msg.guild.id] = prefixes.split() or defaultPrefix
             await msg.send(f"Prefixes set as {prefixes}!")
         else: 
-            msg.channel.send(content = 'You cant use that here yet.',delete_after = 6)
+            await msg.channel.send(content = 'You cant use that here yet.',delete_after = 6)
     else:
-        msg.channel.send('This is a Server-Only command.')
+        await msg.channel.send('This is a Server-Only command.')
 
 @bot.command(
                 name = "prefix",
                 help = "Check the default prefix.")
 async def sendPrefix(msg):
-    if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels):
+    print(msg.guild.id,type(msg.guild.id))
+    if str(msg.guild.id) in allowedguilds and (str(msg.channel) not in restrictedChannels):
         await msg.channel.send(f'Current default prefix is : {defaultPrefix[0]} or {bot.get_prefix(msg)}')
     else : 
-        msg.channel.send(content = 'You cant use that here yet.', delete_after = 6)
+        await msg.channel.send(content = 'You cant use that here yet.', delete_after = 6)
 
 @bot.command(
                 name = "resetprefix",
@@ -82,14 +83,14 @@ async def sendPrefix(msg):
                 brief = "Use this to reset the Prefix the bot listens to, to the default.")
 async def resetPrefix(msg):
     if bot.get_guild(msg.guild.id):
-        if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels):
+        if str(msg.guild.id) in allowedguilds and (str(msg.channel) not in restrictedChannels):
             customPrefix.clear()
             bot.command_prefix = defaultPrefix
             await msg.channel.send(f'Reset the prefix to : {defaultPrefix[0]}')
         else : 
-            msg.channel.send('You cant use that here yet.')
+            await msg.channel.send('You cant use that here yet.')
     else:
-        msg.channel.send('This is a Server-Only command.')
+        await msg.channel.send('This is a Server-Only command.')
 
 @bot.command(
                 name = "quote",
@@ -186,22 +187,7 @@ async def sendInvite(ctx):
         await ctx.send("This was a mistake")
         await ctx.send("<https://discordapp.com/oauth2/authorize?client_id=852977382016024646&scope=bot&permissions=0>")
     else : 
-        ctx.send(content = 'You cant use that here yet.', delete_after = 6)
-
-#todo Encrypt the guild ids
-@bot.command(
-    name = "addme",
-    help = "adds the guild id to the list",
-    brief = "Your fault buddy"
-)
-async def addtoguild(ctx):
-    if str(ctx.message.guild.id) in allowedguilds:
-        await ctx.send("Already in the allowed Server List")
-    else:
-        with open("config/allowedguildIds.txt",'a') as f:
-            f.write(f"\n{str(ctx.message.guild.id)}")
-        await ctx.send("Added in the allowed Server List")
-
+        await ctx.send(content = 'You cant use that here yet.', delete_after = 6)
 
 
 if __name__ == "__main__":
