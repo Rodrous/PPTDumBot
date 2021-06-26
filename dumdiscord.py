@@ -39,7 +39,7 @@ customPrefix = {}
 defaultPrefix = ['!']
 
 async def readyUp(bot, msg):
-    await bot.change_presence(activity=discord.Game('Blackfinix was here.'))
+    await bot.change_presence(activity=discord.Game('Your Mum.'))
     return await getPrefix(msg)
 
 bot = commands.Bot(command_prefix='!')  # This is the same as a client initialization, but bot has more functionalities.
@@ -156,7 +156,7 @@ async def sendHelp(msg):
     await msg.channel.send(content=None, embed=embed)
 
 @bot.command(
-                name = 'clears',
+                name = 'clear',
                 help = 'Clears a certain amount of messages in the current chat.',
                 brief = '!clear <somenumber>')
 
