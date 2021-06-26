@@ -156,7 +156,7 @@ async def sendHelp(msg):
     await msg.channel.send(content=None, embed=embed)
 
 @bot.command(
-                name = 'clears',
+                name = 'clear',
                 help = 'Clears a certain amount of messages in the current chat.',
                 brief = '!clear <somenumber>')
 
