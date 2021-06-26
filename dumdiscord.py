@@ -1,6 +1,8 @@
 import discord
+from discord import activity
 from discord.ext import commands
 import aiohttp
+from discord.ext.commands.core import guild_only
 import requests
 import io
 import base64
@@ -17,7 +19,7 @@ restrictedChannels = ["database"]
 
 # This is how Danny(Creator of python API for discord) handles custom prefixes, but that needs cogs which i have no idea
 # how they work or what they are even, so imma just keep that here for later use and reference.
-    # def getPrefix(bot, msg):
+    # def prefixCallable(bot, msg):
     #     user_id = bot.user.id
     #     base = [f'<@!{user_id}> ', f'<@{user_id}> ']
     #     if msg.guild is None:
@@ -30,43 +32,43 @@ restrictedChannels = ["database"]
 # From here to end of setprefix() is all from 'https://stackoverflow.com/questions/56796991/discord-py-changing-prefix-with-command'
 # With slight modifications.
 customPrefix = {}
-defaultPrefix = ['!']
+defaultPrefix = '!'
 
-async def readyUp(bot, msg):
-    await bot.change_presence(activity=discord.Game('Blackfinix was here.'))
-    return await getPrefix(msg)
-
-bot = commands.Bot(command_prefix='!')  # This is the same as a client initialization, but bot has more functionalities.
-
-async def getPrefix(bot, msg):
+def determinePrefix(bot, msg):
     guild = msg.guild
     if guild:     #Only allow custom prefixs in guild
-        return customPrefix.get(guild.id, defaultPrefix)
+        #return await bot.get_prefix(msg)
+        return commands.when_mentioned_or(str(customPrefix.get(guild.id, defaultPrefix)[0]))(bot,msg)
     else:
-        return defaultPrefix
+        return commands.when_mentioned_or(defaultPrefix)(bot,msg)
+
+# This is the same as a client initialization, but bot has more functionalities.
+bot = commands.Bot(command_prefix=determinePrefix, 
+    case_insensitive = True, activity=discord.Game('Blackfinix was here.'))  
 
 @bot.command(
             name = "setprefix",
             brief = "Set your own prefix.",
             help = "Use this to set your own custom Prefix for the Bot to listen to.")
-async def setPrefix(self, msg, *,prefixes = ''):
-    if bot.get_guild(msg.guild.id):
+async def setPrefix(msg, *,prefixes = ''):
+    if msg.channel.type is not discord.ChannelType.private:
         if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels):
             customPrefix[msg.guild.id] = prefixes.split() or defaultPrefix
-            await msg.send(f"Prefixes set as {prefixes}!")
+            bot.command_prefix = determinePrefix(bot, msg)
+            await msg.send(f"Prefixes set as : {bot.command_prefix}")
         else: 
-            msg.channel.send(content = 'You cant use that here yet.',delete_after = 6)
-    else:
-        msg.channel.send('This is a Server-Only command.')
+            await msg.channel.send(content = 'You cant use that here yet.')
+    else :
+        await msg.channel.send(content = 'This is a Server-Only command.')
 
 @bot.command(
             name = "prefix",
             brief = "Check the default prefix.")
 async def sendPrefix(msg):
     if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels):
-        await msg.channel.send(f'Current default prefix is : {defaultPrefix[0]} or {bot.get_prefix(msg)}')
+        await msg.channel.send(f'Current default prefix is : {defaultPrefix} or {await bot.get_prefix(msg)}')
     else : 
-        msg.channel.send(content = 'You cant use that here yet.', delete_after = 6)
+        await msg.channel.send(content = 'You cant use that here yet.', delete_after = 6)
 
 @bot.command(
             name = "resetprefix",
@@ -77,11 +79,11 @@ async def resetPrefix(msg):
         if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels):
             customPrefix.clear()
             bot.command_prefix = defaultPrefix
-            await msg.channel.send(f'Reset the prefix to : {defaultPrefix[0]}')
+            await msg.channel.send(f'Reset the prefix to : {defaultPrefix}')
         else : 
-            msg.channel.send('You cant use that here yet.')
+            await msg.channel.send('You cant use that here yet.')
     else:
-        msg.channel.send('This is a Server-Only command.')
+        await msg.channel.send('This is a Server-Only command.')
 
 @bot.event
 async def on_message(msg):
@@ -89,6 +91,13 @@ async def on_message(msg):
 
     await bot.process_commands(msg)
 
+# @bot.event
+# async def on_member_join(member):
+#     bot.get_channel(826555270155075634).send(f"<a:blobjoin:858349179893710905> {member.mention}")
+
+# @bot.event
+# async def on_member_remove(member):
+#     bot.get_channel(826555270155075634).send(f"<a:blobleave:858349192169652255> {member.name}")
 
 @bot.command(
             name = "quote",
@@ -150,8 +159,9 @@ async def sendHelp(msg):
     embed.add_field(name= "!quote", value = "Sends a random anime quote! (<:white_check_mark:857551644546826250>)")
     embed.add_field(name= "!invite", value = "Sends 'add bot to server' link (<:x:857551644546826250>)")
     embed.add_field(name= "!dog", value="Get a Dog pic \U0001F436 (<:white_check_mark:857551644546826250>)")
-    if msg.guild.id == 826148528870129675 and str(msg.channel) not in restrictedChannels:
-        embed.add_field(name = "For PPT and Gif", value = "If it has the X emoji, you can use it in the test server, but i dont guarantee it will work.")
+    if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels):
+        embed.add_field(name = "For PPT and Gif", value = "If it has the X emoji, you can use it in the test server, but i dont guarantee it will work.",
+            inline = False)
     await msg.channel.send(content=None, embed=embed)
 
 @bot.command(
