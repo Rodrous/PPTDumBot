@@ -5,13 +5,20 @@ import requests
 import io
 import base64
 import random
+import typing
 
-with open("client.txt") as file:
+with open("config/client.txt") as file:
     f = file.readline()
 
 id = base64.b64decode(f).decode('utf-8') 
 restrictedChannels = ["database"]
 
+with open("config/allowedguildIds.txt") as file:
+    f = file.readlines()
+
+#allowedguilds = [base64.b64decode(i).decode('utf-8') for i in f]
+allowedguilds = [i for i in f]
+print(allowedguilds)
  # ------------------------------------------------------------------------------------------------------------------ 
 
 # This is how Danny(Creator of python API for discord) handles custom prefixes, but that needs cogs which i have no idea
@@ -37,6 +44,8 @@ async def readyUp(bot, msg):
 
 bot = commands.Bot(command_prefix='!')  # This is the same as a client initialization, but bot has more functionalities.
 
+
+#todo change all guild ids 231248 to allowedguilds
 async def getPrefix(bot, msg):
     guild = msg.guild
     if guild:     #Only allow custom prefixs in guild
@@ -84,49 +93,49 @@ async def resetPrefix(msg):
 
 @bot.command(
                 name = "quote",
-                help = "Sends a quote from a movie/anime.",
-                brief = "I mean, what else do you need to know. It sends a quote from a movie/anime. Thats it bruv." )
-async def sendQuote(msg):
+                help = "Sends a quote from a anime.",
+                brief = "I mean, what else do you need to know. It sends a quote from an anime. Thats it bruv." )
+async def sendQuote(ctx):
     url = requests.get('https://animechan.vercel.app/api/random').json()
-    await msg.channel.send(f"A quote from {url['character']} : {url['quote']}")
+    await ctx.send(f"A quote from {url['character']} : {url['quote']}")
 
 @bot.command(
                 name = 'cat',
                 help = 'Sends an image of a cute (*most of the times*) cat ꓷ:',
                 brief = 'Fucking furry.')
-async def sendCat(msg):
+async def sendCat(ctx):
     get_image_url = requests.get(f"https://aws.random.cat/meow").json()
     url = get_image_url['file']
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             if response.status != 200:
-                return await msg.channel.send("Couldn't download the file")
+                return await ctx.send("Couldn't download the file")
             data = io.BytesIO(await response.read())
-            await msg.channel.send("From PPT with \U0001F49A")
-            await msg.channel.send(file=discord.File(data,"Cat.png"))
+            await ctx.send("From PPT with \U0001F49A")
+            await ctx.send(file=discord.File(data,"Cat.png"))
 
 @bot.command(
                 name = 'dog',
                 help = 'Sends an image of a heckin good doggo ꓷ:',
                 brief = 'Fucking furry.')
-async def sendDog(msg):
+async def sendDog(ctx):
     get_image_url = requests.get(f"https://dog.ceo/api/breeds/image/random").json()
     url = get_image_url['message']
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             if response.status != 200:
-                return await msg.channel.send("Couldn't download the file")
+                return await ctx.send("Couldn't download the file")
             data = io.BytesIO(await response.read())
-            await msg.channel.send(content = "From PPT with \U0001F49A", 
+            await ctx.send(content = "From PPT with \U0001F49A",
                                         file=discord.File(data,"dog.png"))
 
 @bot.command(
                 name = 'ree',
                 help = 'It just \'***REEEEEE***\'s lmao',
                 brief = '***REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE***')
-async def sendRee(msg):
+async def sendRee(ctx):
     num = random.randint(1,100)
-    await msg.channel.send("*R"+"E"*num + "*")
+    await ctx.send("*R"+"E"*num + "*")
 
 
 @bot.command(
@@ -146,37 +155,52 @@ async def sendHelp(msg):
     await msg.channel.send(content=None, embed=embed)
 
 @bot.command(
-                name = 'clear',
+                name = 'clears',
                 help = 'Clears a certain amount of messages in the current chat.',
-                brief = '*insert Thanos snap here*')
-async def clearChat(msg):
-    await msg.channel.purge(limit=1)
-    await msg.channel.send("Command Depricated UwU (for now)")
+                brief = '!clear <somenumber>')
+
+@commands.has_permissions(manage_messages = True)
+async def clearChat(ctx,amount: typing.Optional[int]=1):
+    await ctx.message.channel.purge(limit=int(amount))
+
 
 @bot.command(
                 name = 's',
                 help = 'Sends a wallpaper.',
                 brief = 'Sends a wallpaper with size of 1920x1080')
-async def sendWallpaper(msg):
+async def sendWallpaper(ctx):
     url = f"https://picsum.photos/1920/1080"
     async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 if response.status != 200:
-                    return await msg.channel.send("Couldn't download the file..")
+                    return await ctx.send("Couldn't download the file..")
                 data = io.BytesIO(await response.read())
-                await msg.channel.send(file=discord.File(data,"Why are you looking at this.png"))
+                await ctx.send(file=discord.File(data,"Why are you looking at this.png"))
 
 @bot.command(
                 name = 'invite',
                 help = 'Please dont use this.',
                 brief = 'Pwease dont use this uwu')
-async def sendInvite(msg):
-    if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels):
-        await msg.channel.send("This was a mistake")
-        await msg.channel.send("<https://discordapp.com/oauth2/authorize?client_id=852977382016024646&scope=bot&permissions=0>")
+async def sendInvite(ctx):
+    if str(ctx.message.guild.id) in allowedguilds and (str(ctx.message.channel) not in restrictedChannels):
+        await ctx.send("This was a mistake")
+        await ctx.send("<https://discordapp.com/oauth2/authorize?client_id=852977382016024646&scope=bot&permissions=0>")
     else : 
-        msg.channel.send(content = 'You cant use that here yet.', delete_after = 6)
+        ctx.send(content = 'You cant use that here yet.', delete_after = 6)
 
+#todo Encrypt the guild ids
+@bot.command(
+    name = "addme",
+    help = "adds the guild id to the list",
+    brief = "Your fault buddy"
+)
+async def addtoguild(ctx):
+    if str(ctx.message.guild.id) in allowedguilds:
+        await ctx.send("Already in the allowed Server List")
+    else:
+        with open("config/allowedguildIds.txt",'a') as f:
+            f.write(f"\n{str(ctx.message.guild.id)}")
+        await ctx.send("Added in the allowed Server List")
 
 
 
