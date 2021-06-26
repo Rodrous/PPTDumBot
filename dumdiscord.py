@@ -136,13 +136,15 @@ async def sendRee(msg):
 async def sendHelp(msg):
     # For PPT and Gif, if it has the X emoji, you can use it in the test server.
     embed = discord.Embed(title="Bot help perhaps", 
-        description="Some useful commands. If a command has <:white_check_mark:857551644546826250> it works, if it has <:x:857551644546826250>, you cant use it in a server")
-    embed.add_field(name="!ree", value="Rees out of frustration (<:white_check_mark:857551644546826250>)")
-    embed.add_field(name="!s", value="Sends a Random image from internet [1920x1080] (<:white_check_mark:857551644546826250>)")
-    embed.add_field(name= "!cat", value = "Sends a Cat pic \U0001F408 (<:white_check_mark:857551644546826250>)")
-    embed.add_field(name= "!quote", value = "Sends a random anime quote! (<:white_check_mark:857551644546826250>)")
-    embed.add_field(name= "!invite", value = "Sends 'add bot to server' link (<:x:857551644546826250>)")
-    embed.add_field(name= "!dog", value="Get a Dog pic \U0001F436 (<:white_check_mark:857551644546826250>)")
+        description="Some useful commands.\nSome are only available in our test server")
+    embed.add_field(name= "Currently Public", value= "_ _", inline= False)
+    embed.add_field(name="!ree", value="Rees out of frustration")
+    embed.add_field(name="!s", value="Sends a Random image from internet [1920x1080]")
+    embed.add_field(name= "!cat", value = "Sends a Cat pic \U0001F408")
+    embed.add_field(name= "!quote", value = "Sends a random anime quote!")
+    embed.add_field(name= "!dog", value="Get a Dog pic \U0001F436")
+    embed.add_field(name= "Only in Nerds&Karma", value= "_ _", inline= False)
+    embed.add_field(name="!invite", value="Sends 'add bot to server' link")
     await msg.channel.send(content=None, embed=embed)
 
 @bot.command(
