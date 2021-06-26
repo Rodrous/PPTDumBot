@@ -20,7 +20,6 @@ with open("config/allowedguildIds.txt") as file:
 
 #allowedguilds = [base64.b64decode(i).decode('utf-8') for i in f]
 allowedguilds = [i for i in f]
-print(allowedguilds)
  # ------------------------------------------------------------------------------------------------------------------ 
 
 # This is how Danny(Creator of python API for discord) handles custom prefixes, but that needs cogs which i have no idea
