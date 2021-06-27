@@ -49,7 +49,7 @@ def determinePrefix(bot, msg):
 
 # This is the same as a client initialization, but bot has more functionalities.
 bot = commands.Bot(command_prefix=determinePrefix, 
-    case_insensitive = True, activity=discord.Game('Blackfinix was here.'))  
+    case_insensitive = True, activity=discord.Game('Your Mum.'))  
 
 @bot.command(
             name = "setprefix",
