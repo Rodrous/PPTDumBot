@@ -5,7 +5,7 @@
 - DO NOT make any changes to the `Procfile` or to `client`
 - requirements will consist of all the external libraries you would use.
 - Code is messy, i will soon implement DRY, so it will be bit better to read.
-- The only thing needed to be edited is the `dumdiscord.py` script
+- The only thing needed to be edited is the `dumdiscord.py` script and whatever is in cogs
 
 ---
 
