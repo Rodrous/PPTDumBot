@@ -49,7 +49,7 @@ def determinePrefix(bot, msg):
 
 # This is the same as a client initialization, but bot has more functionalities.
 bot = commands.Bot(command_prefix=determinePrefix, 
-    case_insensitive = True, activity=discord.Game('Blackfinix was here.'))  
+    case_insensitive = True, activity=discord.Game('Your Mum.'))  
 
 @bot.command(
             name = "setprefix",
@@ -226,7 +226,9 @@ async def addtoguild(ctx):
             brief = 'Pong',
             help = 'Returns the delay of the bot')
 async def ping(msg):
-    await msg.send(f'Pong!\n{round(bot.latency * 1000)}ms')
+    embed = discord.Embed()
+    embed.add_field(name="Pong", value=f"{round(bot.latency * 1000)}ms")
+    await msg.send(embed=embed)
 
 if __name__ == "__main__":
     bot.run(id)
