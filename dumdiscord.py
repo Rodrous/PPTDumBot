@@ -29,7 +29,7 @@ restrictedChannels = ["database"]
 # From here to end of setprefix() is all from 'https://stackoverflow.com/questions/56796991/discord-py-changing-prefix-with-command'
 # With slight modifications.
 customPrefix = {}
-defaultPrefix = '!'
+defaultPrefix = '$'
 
 def determinePrefix(bot, msg):
     guild = msg.guild
@@ -41,12 +41,12 @@ def determinePrefix(bot, msg):
 
 # This is the same as a client initialization, but bot has more functionalities.
 bot = commands.Bot(command_prefix=determinePrefix, 
-    case_insensitive = True, activity=discord.Game('Your Mum.'))  
+    case_insensitive = True, activity=discord.Game('I dont like mum jokes.'))
 
 @bot.command(
             name = "setprefix",
-            brief = "Set your own prefix.",
-            help = "Use this to set your own custom Prefix for the Bot to listen to.")
+            brief = "Set your own prefixes.",
+            help = "Use this to set your own custom Prefixes for the Bot to listen to.")
 async def setPrefix(msg, *,prefixes = ''):
     if msg.channel.type is not discord.ChannelType.private:
         if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels):
@@ -74,8 +74,7 @@ async def sendPrefix(msg):
 async def resetPrefix(msg):
     if bot.get_guild(msg.guild.id):
         if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels):
-            customPrefix.clear()
-            bot.command_prefix = defaultPrefix
+            await setPrefix(msg,prefixes=defaultPrefix)
             await msg.channel.send(f'Reset the prefix to : {defaultPrefix}')
         else : 
             await msg.channel.send('You cant use that here yet.')
@@ -122,7 +121,7 @@ async def sendHelp(msg):
             help = 'Clears a certain amount of messages in the current chat.',
             brief = '!clear <somenumber>')
 @commands.has_permissions(manage_messages = True)
-async def clearChat(ctx,amount: typing.Optional[int]=1):
+async def clearChat(ctx, amount: typing.Optional[int]=1):
     await ctx.message.channel.purge(limit=int(amount))
     
 
