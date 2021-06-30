@@ -29,7 +29,7 @@ restrictedChannels = ["database"]
 # From here to end of setprefix() is all from 'https://stackoverflow.com/questions/56796991/discord-py-changing-prefix-with-command'
 # With slight modifications.
 customPrefix = {}
-defaultPrefix = '$'
+defaultPrefix = '!'
 
 def determinePrefix(bot, msg):
     guild = msg.guild
@@ -86,14 +86,6 @@ async def on_message(msg):
     # Add stuff here, but DO NOT DELETE THE LINE BELOW!! or nothing will work
 
     await bot.process_commands(msg)
-
-# @bot.event
-# async def on_member_join(member):
-#     bot.get_channel(826555270155075634).send(f"<a:blobjoin:858349179893710905> {member.mention}")
-
-# @bot.event
-# async def on_member_remove(member):
-#     bot.get_channel(826555270155075634).send(f"<a:blobleave:858349192169652255> {member.name}")
 
 
 @bot.command(

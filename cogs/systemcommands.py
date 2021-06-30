@@ -3,6 +3,7 @@ from discord.ext import commands
 import discord,base64
 import re as reg
 import requests,aiohttp,io
+import generalPurpose as gp
 
 with open("config/allowedguildIds.txt") as file:
     f = file.readlines()
@@ -21,10 +22,10 @@ class syscom(commands.Cog):
         help='Pwease dont use this uwu')
     async def sendInvite(self,ctx):
         if str(ctx.message.guild.id) in allowedguilds:
-            await ctx.send("This was a mistake")
             await ctx.send(
-                "<https://discordapp.com/oauth2/authorize?client_id=852977382016024646&scope=bot&permissions=0>")
+                "This was a mistake\n<https://discordapp.com/oauth2/authorize?client_id=852977382016024646&scope=bot&permissions=0>")
         else:
+            await ctx.message.channel.purge(limit=int(1))
             await ctx.send(content='You cant use that here yet.', delete_after=6)
 
     @commands.command(
@@ -38,46 +39,41 @@ class syscom(commands.Cog):
 
     @commands.command(
         name = 'steal',
-        brief = 'Yoink an emoji',
-        help = 'FBI OPEN UP')
+        brief = 'FBI OPEN UP',
+        help = 'Yoink an emoji, with the given name or the emoji name')
     @commands.guild_only()
     @commands.has_guild_permissions(manage_emojis = True)
     async def stealEmoji(self, ctx, *, args = ''):
-        # gLimit = ctx.guild.emoji_limit
-        # gCurr = len(await ctx.guild.fetch_emojis())
-        # turl = 'https://cdn.discordapp.com/emojis/'
-        # if args != '':
-        #     msg = args.split()
+        gLimit = ctx.guild.emoji_limit
+        gCurr = len(await ctx.guild.fetch_emojis())
+        turl = 'https://cdn.discordapp.com/emojis/'
+        if args != '':
+            msg = args.split()
 
-        #     if reg.match(pattern='<a?:.*:\d*>',string=msg[0]):
-        #         name = '_'.join(msg[1:]) or (''.join(reg.findall(pattern='(?<=:)[a-zA-Z1-9~_]*(?=:)', string=msg[0])))
-        #     else:
-        #         await ctx.send("Wrong Input detected. Not an emoji.")
-        #         return
-
-        #     eid = int(''.join(reg.findall(pattern='(?<=:)\d*(?=>)', string=msg[0])))
-        #     emoj = commands.Bot.get_emoji(self=ctx.bot, id=eid)
-        #     eimgbytes = await emoj.url.read()
-        #     print (emoj.url)
-
-        #     if gCurr >= gLimit:
-        #         await ctx.send("This server is already at the limit and cant have more emojis **):**")
-        #         return
+            if reg.match(pattern='<a?:.*:\d*>',string=msg[0]):
+                name = '_'.join(msg[1:]) or (''.join(reg.findall(pattern='(?<=:)[a-zA-Z1-9~_]*(?=:)', string=msg[0])))
+            else:
+                return await ctx.send("Wrong Input detected. Not an emoji.")
             
-        #     newEm = await ctx.guild.create_custom_emoji(name=name, image=eimgbytes, reason=f'{ctx.author.mention} triggered the command : $steal')
-        #     await ctx.send(f'Added the emoji {newEm} to the server with the name : "{name}"')
-        # else:
-        #     await ctx.send("No emoji detected.")
-        #     return
+            if gCurr >= gLimit:
+                return await ctx.send("This server is already at the limit and cant have more emojis **):**")
 
-        url = f"https://cdn.discordapp.com/emojis/853662523843674112.png"
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url) as response:
-                if response.status != 200:
-                    return await ctx.send("Couldn't download the file")
-                data = io.BytesIO(await response.read())
-                await ctx.send("From PPT with \U0001F49A")
-                await ctx.send(file=discord.File(data, "Cat.png"))
+            eid = int(''.join(reg.findall(pattern='(?<=:)\d*(?=>)', string=msg[0])))
+
+            if reg.match(pattern='<a:',string=msg[0]) is not None:
+                turl += str(eid) + '.gif'
+            else:
+                turl += str(eid) + '.png'
+            #url = f"https://cdn.discordapp.com/emojis/853662523843674112.png"
+
+            tfile = await gp.getDataFromLink(url=turl,json=False,returnFile=False,fileName="WhyAreYouLookingAtThis.png")
+            
+            newEm = await ctx.guild.create_custom_emoji(name=name, image=tfile.getvalue(), reason=f'{ctx.author.mention} triggered the command : $steal')
+            return await ctx.send(f'Added the emoji {newEm} to the server with the name : "{name}"')
+        else:
+            return await ctx.send("No emoji detected.")
+
+        
         
 
 
