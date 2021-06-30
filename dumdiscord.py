@@ -41,12 +41,12 @@ def determinePrefix(bot, msg):
 
 # This is the same as a client initialization, but bot has more functionalities.
 bot = commands.Bot(command_prefix=determinePrefix, 
-    case_insensitive = True, activity=discord.Game('Your Mum.'))  
+    case_insensitive = True, activity=discord.Game('I dont like mum jokes.'))
 
 @bot.command(
             name = "setprefix",
-            brief = "Set your own prefix.",
-            help = "Use this to set your own custom Prefix for the Bot to listen to.")
+            brief = "Set your own prefixes.",
+            help = "Use this to set your own custom Prefixes for the Bot to listen to.")
 async def setPrefix(msg, *,prefixes = ''):
     if msg.channel.type is not discord.ChannelType.private:
         if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels):
@@ -74,8 +74,7 @@ async def sendPrefix(msg):
 async def resetPrefix(msg):
     if bot.get_guild(msg.guild.id):
         if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels):
-            customPrefix.clear()
-            bot.command_prefix = defaultPrefix
+            await setPrefix(msg,prefixes=defaultPrefix)
             await msg.channel.send(f'Reset the prefix to : {defaultPrefix}')
         else : 
             await msg.channel.send('You cant use that here yet.')
@@ -87,14 +86,6 @@ async def on_message(msg):
     # Add stuff here, but DO NOT DELETE THE LINE BELOW!! or nothing will work
 
     await bot.process_commands(msg)
-
-# @bot.event
-# async def on_member_join(member):
-#     bot.get_channel(826555270155075634).send(f"<a:blobjoin:858349179893710905> {member.mention}")
-
-# @bot.event
-# async def on_member_remove(member):
-#     bot.get_channel(826555270155075634).send(f"<a:blobleave:858349192169652255> {member.name}")
 
 
 @bot.command(
@@ -122,7 +113,7 @@ async def sendHelp(msg):
             help = 'Clears a certain amount of messages in the current chat.',
             brief = '!clear <somenumber>')
 @commands.has_permissions(manage_messages = True)
-async def clearChat(ctx,amount: typing.Optional[int]=1):
+async def clearChat(ctx, amount: typing.Optional[int]=1):
     await ctx.message.channel.purge(limit=int(amount))
     
 
