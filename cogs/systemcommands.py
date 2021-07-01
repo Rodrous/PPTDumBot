@@ -1,5 +1,8 @@
 from discord.ext import commands
 import discord,base64
+import re as reg
+from build import generalPurpose as gp
+
 
 with open("config/allowedguildIds.txt") as file:
     f = file.readlines()
