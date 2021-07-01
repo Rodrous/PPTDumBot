@@ -1,6 +1,7 @@
 from discord.ext import commands
-import requests,aiohttp,io,discord,random
-import generalPurpose as gp
+import requests, random
+from build import generalPurpose as gp
+
 
 #sends images and quotes
 class webmaster(commands.Cog):
