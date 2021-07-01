@@ -1,6 +1,5 @@
 from discord.ext import commands
-import requests, random
-import aiohttp,io
+import requests, random,discord,aiohttp,io
 from build import generalPurpose as gp
 
 
