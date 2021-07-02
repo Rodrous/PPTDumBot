@@ -13,43 +13,26 @@ class webmaster(commands.Cog):
         brief='Sends an image of a cute (*most of the times*) cat ꓷ:',
         help='Fucking furry.')
     async def sendCat(self,ctx):
-        get_image_url = requests.get(f"https://aws.random.cat/meow").json()
-        url = get_image_url['file']
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url) as response:
-                if response.status != 200:
-                    return await ctx.send("Couldn't download the file")
-                data = io.BytesIO(await response.read())
-                await ctx.send("From PPT with \U0001F49A")
-                await ctx.send(file=discord.File(data, "Cat.png"))
+        data = await gp.getDataFromLink(url="https://aws.random.cat/meow", json=True, jsonType='file', returnFile=True, filename='Cat.png')
+        await ctx.send("From PPT with \U0001F49A")
+        await ctx.send(file=data)
 
     @commands.command(
         name='dog',
         brief='Sends an image of a heckin good doggo ꓷ:',
         help='Fucking furry.')
     async def sendDog(self,ctx):
-        get_image_url = requests.get(f"https://dog.ceo/api/breeds/image/random").json()
-        url = get_image_url['message']
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url) as response:
-                if response.status != 200:
-                    return await ctx.send("Couldn't download the file")
-                data = io.BytesIO(await response.read())
-                await ctx.send(content="From PPT with \U0001F49A",
-                               file=discord.File(data, "dog.png"))
+        data = await gp.getDataFromLink(url="https://dog.ceo/api/breeds/image/random", json=True, jsonType='message', returnFile=True, filename='Dog.png')
+        await ctx.send("From PPT with \U0001F49A")
+        await ctx.send(file=data)
 
     @commands.command(
         name='s',
         brief='Sends a wallpaper.',
         help='Sends a wallpaper with size of 1920x1080')
     async def sendWallpaper(self,ctx):
-        url = f"https://picsum.photos/1920/1080"
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url) as response:
-                if response.status != 200:
-                    return await ctx.send("Couldn't download the file..")
-                data = io.BytesIO(await response.read())
-                await ctx.send(file=discord.File(data, "Why are you looking at this.png"))
+        data = await gp.getDataFromLink(url="https://picsum.photos/1920/1080", returnFile=True, filename='Why are you looking at this.png')
+        await ctx.send(file=data)
 
     @commands.command(
         name="quote",
@@ -60,8 +43,9 @@ class webmaster(commands.Cog):
         await ctx.send(f"A quote from {url['character']} : {url['quote']}")
 
     @commands.command(
-        aliases=['re', 'ree', 'reee', 'reeee'],
-        brief='It just \'***REEEEEE***\'s lmao',
+        name='Ree',
+        aliases=['re', 'reee', 'reeee'],
+        brief='It just REEEEEEEEEEE\'s lmao',
         help='***REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE***')
     async def sendRee(self,ctx):
         num = random.randint(1, 100)
