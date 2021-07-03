@@ -1,4 +1,5 @@
 git+https://github.com/Rapptz/discord.py
 aiohttp
 requests
+sys
 

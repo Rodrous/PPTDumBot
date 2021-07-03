@@ -1,5 +1,5 @@
 from discord.ext import commands
-import requests,aiohttp,io,discord,random
+import requests,aiohttp,io,discord,random,sys
 
 #sends images and quotes
 class webmaster(commands.Cog):
@@ -70,7 +70,7 @@ class webmaster(commands.Cog):
         brief="Draf is tooo lazy to type it",
         help="ily * num")
     async def sendIly(self, ctx):
-        num = random.randint(10000, 100000000000000000000)
+        num = random.randint(10, sys.maxsize)
         await ctx.send("ily " + str(num))
 
 def setup(bot):
