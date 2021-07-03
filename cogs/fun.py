@@ -58,14 +58,6 @@ class webmaster(commands.Cog):
         await ctx.send(f"A quote from {url['character']} : {url['quote']}")
 
     @commands.command(
-        name="ily",
-        brief="im too lazy to type it",
-        help="ily * num")
-    async def sendIly(self, ctx):
-        num = random.randint(10000, 100000000000000000000)
-        await ctx.send("ily " + str(num))
-
-    @commands.command(
         aliases=['re', 'ree', 'reee', 'reeee'],
         brief='It just \'***REEEEEE***\'s lmao',
         help='***REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE***')

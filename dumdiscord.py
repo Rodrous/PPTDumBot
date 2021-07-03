@@ -41,17 +41,16 @@ def determinePrefix(bot, msg):
 
 # This is the same as a client initialization, but bot has more functionalities.
 bot = commands.Bot(command_prefix=determinePrefix, 
-    case_insensitive = True, activity=discord.Game('Your Mum.'))  
+    case_insensitive = True, activity=discord.Game('I dont like mum jokes.'))  
 
 @bot.command(
             name = "setprefix",
-            brief = "Set your own prefix.",
-            help = "Use this to set your own custom Prefix for the Bot to listen to.")
+            brief = "Set your own prefixes.",
+            help = "Use this to set your own custom Prefixes for the Bot to listen to.")
 async def setPrefix(msg, *,prefixes = ''):
     if msg.channel.type is not discord.ChannelType.private:
         if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels):
-            customPrefix[msg.guild.id] = prefixes.split() or defaultPrefix
-            bot.command_prefix = determinePrefix(bot, msg)
+            await setPrefix(msg,prefixes=defaultPrefix)
             await msg.send(f"Prefixes set as : {bot.command_prefix}")
         else: 
             await msg.channel.send(content = 'You cant use that here yet.')
@@ -119,10 +118,11 @@ async def sendHelp(msg):
 #clears the chat
 @bot.command(
             name = 'clear',
+            alliases=['purge'],
             help = 'Clears a certain amount of messages in the current chat.',
             brief = '!clear <somenumber>')
 @commands.has_permissions(manage_messages = True)
-async def clearChat(ctx,amount: typing.Optional[int]=1):
+async def clearChat(ctx, amount: typing.Optional[int]=1):
     await ctx.message.channel.purge(limit=int(amount))
     
 
