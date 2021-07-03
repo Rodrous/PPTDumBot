@@ -9,7 +9,7 @@ class webmaster(commands.Cog):
     @commands.command(
         name='cat',
         brief='Sends an image of a cute (*most of the times*) cat ꓷ:',
-        help='Fucking furry.')
+        help='Sends a cat Image')
     async def sendCat(self,ctx):
         get_image_url = requests.get(f"https://aws.random.cat/meow").json()
         url = get_image_url['file']
@@ -64,6 +64,14 @@ class webmaster(commands.Cog):
     async def sendRee(self,ctx):
         num = random.randint(1, 100)
         await ctx.send("*R" + "E" * num + "*")
+
+    @commands.command(
+        name="ily",
+        brief="Draf is tooo lazy to type it",
+        help="ily * num")
+    async def sendIly(self, ctx):
+        num = random.randint(10000, 100000000000000000000)
+        await ctx.send("ily " + str(num))
 
 def setup(bot):
     bot.add_cog(webmaster(bot))
