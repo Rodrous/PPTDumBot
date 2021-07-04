@@ -13,18 +13,7 @@ restrictedChannels = ["database"]
 class syscom(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
-
-    @commands.command(
-        name='invite',
-        brief='Please dont use this.',
-        help='This bot is just pain with extra steps')
-    async def sendInvite(self,ctx):
-        if str(ctx.message.guild.id) in allowedguilds:
-             await ctx.send(
-                "This was a mistake\n<https://discordapp.com/oauth2/authorize?client_id=852977382016024646&scope=bot&permissions=0>")
-        else:
-            await ctx.send(content='You cant use that here yet.', delete_after=6)
-
+    #YOOOOOO
 
     @commands.command(
         name='ping',
