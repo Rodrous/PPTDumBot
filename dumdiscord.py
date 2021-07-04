@@ -1,9 +1,6 @@
 import discord
-from discord import activity
 from discord.ext import commands
-from discord.ext.commands.core import guild_only
 import base64
-import typing
 
 with open("config/client.txt") as file:
     f = file.readline()
@@ -11,23 +8,6 @@ with open("config/client.txt") as file:
 id = base64.b64decode(f).decode('utf-8')
 restrictedChannels = ["database"]
 
-
- # ------------------------------------------------------------------------------------------------------------------ 
-
-# This is how Danny(Creator of python API for discord) handles custom prefixes, but that needs cogs which i have no idea
-# how they work or what they are even, so imma just keep that here for later use and reference.
-    # def prefixCallable(bot, msg):
-    #     user_id = bot.user.id
-    #     base = [f'<@!{user_id}> ', f'<@{user_id}> ']
-    #     if msg.guild is None:
-    #         base.append('!')
-    #         base.append('?')
-    #     else:
-    #         base.extend(bot.prefixes.get(msg.guild.id, ['?', '!']))
-    #     return base
-
-# From here to end of setprefix() is all from 'https://stackoverflow.com/questions/56796991/discord-py-changing-prefix-with-command'
-# With slight modifications.
 customPrefix = {}
 defaultPrefix = '!'
 
@@ -53,9 +33,9 @@ async def setPrefix(msg, *,prefixes = ''):
             await setPrefix(msg,prefixes=defaultPrefix)
             await msg.send(f"Prefixes set as : {bot.command_prefix}")
         else: 
-            await msg.channel.send(content = 'You cant use that here yet.')
+            await msg.channel.send(content = 'You cant use that here yet.', delete_after=6)
     else :
-        await msg.channel.send(content = 'This is a Server-Only command.')
+        await msg.channel.send(content = 'This is a Server-Only command.', delete_after=6)
 
 @bot.command(
             name = "prefix",
@@ -77,9 +57,9 @@ async def resetPrefix(msg):
             bot.command_prefix = defaultPrefix
             await msg.channel.send(f'Reset the prefix to : {defaultPrefix}')
         else : 
-            await msg.channel.send('You cant use that here yet.')
+            await msg.channel.send('You cant use that here yet.', delete_after=6)
     else:
-        await msg.channel.send('This is a Server-Only command.')
+        await msg.channel.send('This is a Server-Only command.', delete_after=6)
 
 @bot.event
 async def on_message(msg):
@@ -96,43 +76,8 @@ async def on_message(msg):
 #     bot.get_channel(826555270155075634).send(f"<a:blobleave:858349192169652255> {member.name}")
 
 
-@bot.command(
-            name = 'helpme',
-            brief = 'This is like help, but better.',
-            help = 'What else do you need to know bro, just run the command')
-async def sendHelp(msg):
-    embed = discord.Embed(title="Bot help perhaps", 
-        description="Some useful commands. If a command has <:white_check_mark:857551644546826250> it works, if it has <:x:857551644546826250>, you cant use it in a server")
-    embed.add_field(name="!ree", value="Rees out of frustration (<:white_check_mark:857551644546826250>)")
-    embed.add_field(name="!s", value="Sends a Random image from internet [1920x1080] (<:white_check_mark:857551644546826250>)")
-    embed.add_field(name= "!cat", value = "Sends a Cat pic \U0001F408 (<:white_check_mark:857551644546826250>)")
-    embed.add_field(name= "!quote", value = "Sends a random anime quote! (<:white_check_mark:857551644546826250>)")
-    embed.add_field(name= "!invite", value = "Sends 'add bot to server' link (<:x:857551644546826250>)")
-    embed.add_field(name= "!dog", value="Get a Dog pic \U0001F436 (<:white_check_mark:857551644546826250>)")
-    if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels):
-        embed.add_field(name = "For PPT and Gif", value = "If it has the X emoji, you can use it in the test server, but i dont guarantee it will work.",
-            inline = False)
-    await msg.channel.send(content=None, embed=embed)
-
-
-#clears the chat
-@bot.command(
-            name = 'clear',
-            alliases=['purge'],
-            help = 'Clears a certain amount of messages in the current chat.',
-            brief = '!clear <somenumber>')
-@commands.has_permissions(manage_messages = True)
-async def clearChat(ctx, amount: typing.Optional[int]=1):
-    await ctx.message.channel.purge(limit=int(amount))
-    
-
-
-
-
-
-
-
 if __name__ == "__main__":
     bot.load_extension('cogs.fun')
     bot.load_extension('cogs.systemcommands')
+    bot.load_extension('cogs.help')
     bot.run(id)

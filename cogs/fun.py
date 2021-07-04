@@ -18,8 +18,8 @@ class webmaster(commands.Cog):
                 if response.status != 200:
                     return await ctx.send("Couldn't download the file")
                 data = io.BytesIO(await response.read())
-                await ctx.send("From PPT with \U0001F49A")
-                await ctx.send(file=discord.File(data, "Cat.png"))
+                await ctx.send(content="From PPT with \U0001F49A",file=discord.File(data, "Cat.png"))
+
 
     @commands.command(
         name='dog',
@@ -47,12 +47,12 @@ class webmaster(commands.Cog):
                 if response.status != 200:
                     return await ctx.send("Couldn't download the file..")
                 data = io.BytesIO(await response.read())
-                await ctx.send(file=discord.File(data, "Why are you looking at this.png"))
+                await ctx.send(file=discord.File(data, "Wallpaper.png"))
 
     @commands.command(
         name="quote",
         brief="Sends a quote from a movie/anime.",
-        help="I mean, what else do you need to know. It sends a quote from a movie/anime. Thats it bruv.")
+        help="Sends a random quote")
     async def sendQuote(self,ctx):
         url = requests.get('https://animechan.vercel.app/api/random').json()
         await ctx.send(f"A quote from {url['character']} : {url['quote']}")
@@ -62,7 +62,7 @@ class webmaster(commands.Cog):
         brief='It just \'***REEEEEE***\'s lmao',
         help='***REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE***')
     async def sendRee(self,ctx):
-        num = random.randint(1, 100)
+        num = random.randint(10,100)
         await ctx.send("*R" + "E" * num + "*")
 
     @commands.command(
@@ -72,6 +72,7 @@ class webmaster(commands.Cog):
     async def sendIly(self, ctx):
         num = random.randint(10, sys.maxsize)
         await ctx.send("ily " + str(num))
+
 
 def setup(bot):
     bot.add_cog(webmaster(bot))
