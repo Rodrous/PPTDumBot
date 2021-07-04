@@ -35,25 +35,13 @@ class syscom(commands.Cog):
         embed.add_field(name="Pong", value=f"{round(self.bot.latency * 1000)}ms")
         await msg.send(embed=embed)
 
-
-
-    @commands.command(
-        name='clear',
-        alliases=['purge'],
-        help='Clears a certain amount of messages in the current chat.',
-        brief='!clear <somenumber>')
-    @commands.has_permissions(manage_messages=True)
-    async def clearChat(self,ctx, amount: typing.Optional[int] = 1):
-        await ctx.message.channel.purge(limit=int(amount))
-
-
     @commands.command(
         name = 'steal',
         brief = 'FBI OPEN UP',
         help = 'Yoink an emoji, with the given name or the emoji name')
     @commands.guild_only()
     @commands.has_guild_permissions(manage_emojis = True)
-    @commands.has_permissions(administrator=True, manage_guild=True,manage_emojis=True)
+    @commands.has_permissions(manage_emojis=True)
     async def stealEmoji(self, ctx, *, args = ''):
         gLimit = ctx.guild.emoji_limit
         gCurr = len(await ctx.guild.fetch_emojis())
@@ -84,15 +72,15 @@ class syscom(commands.Cog):
                     turl += str(eid) + '.gif'
                 else:
                     turl += str(eid) + '.png'
-                #url = f"https://cdn.discordapp.com/emojis/853662523843674112.png"
+                    #url = f"https://cdn.discordapp.com/emojis/853662523843674112.png"
 
-                data = await gp.getDataFromLink(url=turl, fileName="WhyAreYouLookingAtThis")
+                    data = await gp.getDataFromLink(url=turl, fileName="WhyAreYouLookingAtThis")
 
-                newEm = await ctx.guild.create_custom_emoji(name=name, image=data.getvalue(), reason=f'{ctx.author.mention} triggered the command : $steal')
-                return await ctx.send(f'Added the emoji {newEm} to the server with the name : "{name}"')
+                    newEm = await ctx.guild.create_custom_emoji(name=name, image=data.getvalue(), reason=f'{ctx.author.mention} triggered the command : $steal')
+                    return await ctx.send(f'Added the emoji {newEm} to the server with the name : "{name}"')
 
         except Exception as e:
-            print(f"There is some Error Here, error is defined by: {e}")
+                print(f"There is some Error Here, error is defined by: {e}")
 
 
 
