@@ -28,7 +28,7 @@ class gethelp(commands.Cog):
         embed.add_field(name="ping", value="Pings the bot or as a IT guy would say, ' Sends a ICMP packet to check the performance of connection between a server ' (<:white_check_mark:857551644546826250>)")
         #MODERATION HERE
         embed.add_field(name="Moderation", value="_ _", inline=False)
-        embed.add_field(name="clear", value="Purges the chat")
+        embed.add_field(name="clear", value="Purges the chat (<:white_check_mark:857551644546826250>)")
         embed.add_field(name="invite", value="Sends 'add bot to server' link (<:x:857551644546826250>)")
         await ctx.send(content=None, embed=embed)
 
