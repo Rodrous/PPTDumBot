@@ -9,7 +9,7 @@ id = base64.b64decode(f).decode('utf-8')
 restrictedChannels = ["database"]
 
 customPrefix = {}
-defaultPrefix = '!'
+defaultPrefix = '$'
 
 def determinePrefix(bot, msg):
     guild = msg.guild
@@ -30,7 +30,8 @@ bot = commands.Bot(command_prefix=determinePrefix,
 async def setPrefix(msg, *,prefixes = ''):
     if msg.channel.type is not discord.ChannelType.private:
         if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels):
-            await setPrefix(msg,prefixes=defaultPrefix)
+            customPrefix[msg.guild.id] = prefixes.split() or defaultPrefix
+            bot.command_prefix = determinePrefix(bot, msg)
             await msg.send(f"Prefixes set as : {bot.command_prefix}")
         else: 
             await msg.channel.send(content = 'You cant use that here yet.', delete_after=6)
@@ -53,8 +54,7 @@ async def sendPrefix(msg):
 async def resetPrefix(msg):
     if bot.get_guild(msg.guild.id):
         if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels):
-            customPrefix.clear()
-            bot.command_prefix = defaultPrefix
+            await setPrefix(msg,prefixes=defaultPrefix)
             await msg.channel.send(f'Reset the prefix to : {defaultPrefix}')
         else : 
             await msg.channel.send('You cant use that here yet.', delete_after=6)

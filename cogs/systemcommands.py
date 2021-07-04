@@ -10,6 +10,7 @@ with open("config/allowedguildIds.txt") as file:
 allowedguilds = [base64.b64decode(i).decode('utf-8')  for i in f]
 
 restrictedChannels = ["database"]
+
 class syscom(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
@@ -53,7 +54,7 @@ class syscom(commands.Cog):
         help = 'Yoink an emoji, with the given name or the emoji name')
     @commands.guild_only()
     @commands.has_guild_permissions(manage_emojis = True)
-    @commands.has_permissions(administrator=True, manage_guild=True,manage_emojis=True)
+    @commands.has_permissions(administrator=True, manage_guild=True, manage_emojis=True)
     async def stealEmoji(self, ctx, *, args = ''):
         gLimit = ctx.guild.emoji_limit
         gCurr = len(await ctx.guild.fetch_emojis())
@@ -64,7 +65,6 @@ class syscom(commands.Cog):
         if args == '':
             return await ctx.send("No emoji or link detected.")
         try:
-
             msg = args.split()
             if reg.match(pattern='https://cdn.discordapp.com/emojis/', string=msg[0]):
                 data = await gp.getDataFromLink(url=str(msg[0]), fileName='WhyAreYouLookingAtThis')
