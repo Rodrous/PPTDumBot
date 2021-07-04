@@ -22,7 +22,7 @@ class gethelp(commands.Cog):
         #todo remove the complex bs
         embed.add_field(name="!ping", value="Pings the bot or as a IT guy would say, ' Sends a ICMP packet to check the performance of connection between a server ' (<:white_check_mark:857551644546826250>)")
         embed.add_field(name="!steal", value="Steals emojis (<:white_check_mark:857551644546826250>)")
-
+        embed.add_field(name="!ily", value="Sends ily cuz draf do be lazy(<:white_check_mark:857551644546826250>)")
         await ctx.send(content=None, embed=embed)
 
 def setup(bot):
