@@ -10,6 +10,7 @@ with open("config/allowedguildIds.txt") as file:
 allowedguilds = [base64.b64decode(i).decode('utf-8')  for i in f]
 
 restrictedChannels = ["database"]
+
 class syscom(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
@@ -41,7 +42,6 @@ class syscom(commands.Cog):
         if args == '':
             return await ctx.send("No emoji or link detected.")
         try:
-
             msg = args.split()
             if reg.match(pattern='https://cdn.discordapp.com/emojis/', string=msg[0]):
                 data = await gp.getDataFromLink(url=str(msg[0]), fileName='WhyAreYouLookingAtThis')
