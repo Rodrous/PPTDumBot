@@ -21,7 +21,7 @@ class gethelp(commands.Cog):
         fun.add_field(name= "quote", value = "Sends a random anime quote! (<:white_check_mark:857551644546826250>)")
         fun.add_field(name= "dog", value="Get a Dog pic \U0001F436 (<:white_check_mark:857551644546826250>)")
         fun.add_field(name="ily", value="Sends ily cuz draf do be lazy\nOnly allowed for Draf & Nissy(<:white_check_mark:857551644546826250>)")
-        fun.add_field(name="say", value="Repeats what you say(<:white_check_mark:857551644546826250>)")
+        fun.add_field(name="say", value="Basically repeats after you")
         #todo remove the complex bs
         #UTILITY HERE
         utility = discord.Embed(title="Utility Commands", color=16375162)

@@ -1,6 +1,7 @@
 from discord.ext import commands
 import requests,aiohttp,io,discord,random,sys
 from build import generalPurpose as gp
+import re as reg
 
 #sends images and quotes
 class webmaster(commands.Cog):
@@ -60,6 +61,19 @@ class webmaster(commands.Cog):
             await ctx.send("ily " + str(num))
         else:
             await ctx.send("you cant use that", delete_after=6)
+
+    @commands.command(
+        name="say",
+        brief="repeats your shit",
+        help="repeat")
+    async def sendRepeat(self,ctx,*,args):
+        args_string=str(args)
+        await ctx.message.channel.purge(limit=1)
+        if reg.match(pattern='@everyone|@here', string=args_string.lower()):
+            await ctx.send('Fuck you, you cant loophoel dis', delete_after=6)
+        else:
+            await ctx.send(args)
+
 
 
 def setup(bot):
