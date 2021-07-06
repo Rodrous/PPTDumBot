@@ -1,5 +1,6 @@
 from discord.ext import commands
 import requests,aiohttp,io,discord,random,sys
+from build import generalPurpose as gp
 
 #sends images and quotes
 class webmaster(commands.Cog):
@@ -11,7 +12,7 @@ class webmaster(commands.Cog):
         brief='Sends an image of a cute (*most of the times*) cat ꓷ:',
         help='Sends a cat image.')
     async def sendCat(self,ctx):
-        data = await gp.getDataFromLink(url="https://aws.random.cat/meow", json=True, jsonType='file', returnFile=True, filename='Cat.png')
+        data = await gp.getDataFromLink(url="https://aws.random.cat/meow", json=True, jsonType='file', returnFile=True, fileName='Cat.png')
         await ctx.send("From PPT with \U0001F49A")
         await ctx.send(file=data)
 
@@ -20,7 +21,7 @@ class webmaster(commands.Cog):
         brief='Sends an image of a heckin good doggo ꓷ:',
         help='Fucking furry.')
     async def sendDog(self,ctx):
-        data = await gp.getDataFromLink(url="https://dog.ceo/api/breeds/image/random", json=True, jsonType='message', returnFile=True, filename='Dog.png')
+        data = await gp.getDataFromLink(url="https://dog.ceo/api/breeds/image/random", json=True, jsonType='message', returnFile=True, fileName='Dog.png')
         await ctx.send("From PPT with \U0001F49A")
         await ctx.send(file=data)
 
@@ -29,7 +30,7 @@ class webmaster(commands.Cog):
         brief='Sends a wallpaper.',
         help='Sends a wallpaper with size of 1920x1080')
     async def sendWallpaper(self,ctx):
-        data = await gp.getDataFromLink(url="https://picsum.photos/1920/1080", returnFile=True, filename='Why are you looking at this.png')
+        data = await gp.getDataFromLink(url="https://picsum.photos/1920/1080", returnFile=True, fileName='Why are you looking at this.png')
         await ctx.send(file=data)
         
     @commands.command(
