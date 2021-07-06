@@ -57,7 +57,7 @@ class webmaster(commands.Cog):
     async def sendIly(self, ctx):
         author_allowed_ids= [323457305855262721, 579036541238640731]
         if author_allowed_ids.__contains__(ctx.author.id):
-            randomint = str("1" + "0" * random.randint(10,100))
+            randomint = "1" + "0" * random.randint(10,100)
             num = random.randint(10,int(randomint))
             await ctx.send("ily " + str(num))
         else:
@@ -68,9 +68,8 @@ class webmaster(commands.Cog):
         brief="repeats your shit",
         help="repeat")
     async def sendRepeat(self,ctx,*,args):
-        args_string=str(args)
         await ctx.message.channel.purge(limit=1)
-        if reg.match(pattern='@everyone|@here', string=args_string.lower()):
+        if reg.match(pattern='@everyone|@here', string=args, flags=reg.I):
             await ctx.send('Fuck you, you cant loophoel dis', delete_after=6)
         else:
             await ctx.send(args)
