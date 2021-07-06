@@ -57,7 +57,8 @@ class webmaster(commands.Cog):
     async def sendIly(self, ctx):
         author_allowed_ids= [323457305855262721, 579036541238640731]
         if author_allowed_ids.__contains__(ctx.author.id):
-            num = random.randint(10, sys.maxsize)
+            randomint = str("1" + "0" * random.randint(10,100))
+            num = random.randint(10,int(randomint))
             await ctx.send("ily " + str(num))
         else:
             await ctx.send("you cant use that", delete_after=6)
