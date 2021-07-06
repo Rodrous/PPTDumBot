@@ -30,10 +30,9 @@ class gethelp(commands.Cog):
         moderation = discord.Embed(title="Moderation Commands", color=13524060)
         moderation.add_field(name="clear", value="Purges the chat (<:white_check_mark:857551644546826250>)")
         moderation.add_field(name="invite", value="Sends 'add bot to server' link (<:x:857551644546826250>)")
-        await ctx.send(content=None, embed=general)
-        await ctx.send(content=None, embed=fun)
-        await ctx.send(content=None, embed=utility)
-        await ctx.send(content=None, embed=moderation)
+        embeds=[general, fun, utility, moderation]
+        for embed in embeds:
+            await ctx.send(content=None, embed=embed)
 
 def setup(bot):
     bot.add_cog(gethelp(bot))
