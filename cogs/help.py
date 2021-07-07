@@ -16,6 +16,7 @@ class gethelp(commands.Cog):
         #FUN HERE
         fun = discord.Embed(title="Fun Commands", color=52382)
         fun.add_field(name="ree", value="Rees out of frustration (<:white_check_mark:857551644546826250>)")
+        fun.add_field(name="yeye", value="Issi asked for it so yeah it does the same as ree but yeye")
         fun.add_field(name="s", value="Sends a Random image from internet [1920x1080] (<:white_check_mark:857551644546826250>)")
         fun.add_field(name= "cat", value = "Sends a Cat pic \U0001F408 (<:white_check_mark:857551644546826250>)")
         fun.add_field(name= "quote", value = "Sends a random anime quote! (<:white_check_mark:857551644546826250>)")

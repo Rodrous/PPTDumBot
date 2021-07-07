@@ -74,6 +74,13 @@ class webmaster(commands.Cog):
         else:
             await ctx.send(args)
 
+    @commands.command(
+            name="yeye",
+            brief="issi asked me to do it",
+            help="yeeeyeeeee")
+    async def sendYeye(self,ctx):
+        await ctx.send("*Y" + "E" * random.randint(10,50) + "Y" + "E" * random.randint(10,50) + "*")
+
 
 
 def setup(bot):
