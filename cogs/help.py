@@ -32,6 +32,7 @@ class gethelp(commands.Cog):
         moderation = discord.Embed(title="Moderation Commands", color=13524060)
         moderation.add_field(name="clear", value="Purges the chat (<:white_check_mark:857551644546826250>)")
         moderation.add_field(name="invite", value="Sends 'add bot to server' link (<:x:857551644546826250>)")
+        moderation.set_footer(text="A bot by; itsPPT#9651, Blackfinix#3706 & EvilGiraffes#7300", icon_url="https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048")
         embeds=[general, fun, utility, moderation]
         for embed in embeds:
             await ctx.send(content=None, embed=embed)
