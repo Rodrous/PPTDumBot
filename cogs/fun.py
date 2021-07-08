@@ -55,11 +55,18 @@ class webmaster(commands.Cog):
         brief="Draf is tooo lazy to type it",
         help="ily * num")
     async def sendIly(self, ctx):
-        author_allowed_ids= [323457305855262721, 579036541238640731]
-        if author_allowed_ids.__contains__(ctx.author.id):
+        author_allowed_ids= [323457305855262721, 579036541238640731] #[draf, nissy]
+        author = ctx.author.id
+        if author_allowed_ids.__contains__(author):
             randomint = "1" + "0" * random.randint(10,100)
             num = random.randint(10,int(randomint))
-            await ctx.send("ily " + str(num))
+            draf = author_allowed_ids[0]
+            nissy = author_allowed_ids[1]
+            if author != nissy:
+                name = nissy
+            elif author != draf:
+                name = draf
+            await ctx.send("ily " + str(num) + f" <@{name}>")
         else:
             await ctx.send("you cant use that", delete_after=6)
 
@@ -75,9 +82,10 @@ class webmaster(commands.Cog):
             await ctx.send(args)
 
     @commands.command(
-            name="yeye",
-            brief="issi asked me to do it",
-            help="yeeeyeeeee")
+        name="yeye",
+        aliases= ["yeeyee", "yeyee","yeeye"],
+        brief="issi asked me to do it",
+        help="yeeeyeeeee")
     async def sendYeye(self,ctx):
         await ctx.send("*Y" + "E" * random.randint(10,50) + "Y" + "E" * random.randint(10,50) + "*")
 
