@@ -27,7 +27,7 @@ class webmaster(commands.Cog):
         await ctx.send(file=data)
 
     @commands.command(
-        name='s',
+        name='wallpaper',
         brief='Sends a wallpaper.',
         help='Sends a wallpaper with size of 1920x1080')
     async def sendWallpaper(self,ctx):
