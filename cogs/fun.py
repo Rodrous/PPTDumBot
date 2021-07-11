@@ -89,12 +89,7 @@ class webmaster(commands.Cog):
     async def sendYeye(self,ctx):
         await ctx.send("*Y" + "E" * random.randint(10,50) + "Y" + "E" * random.randint(10,50) + "*")
 
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        if "our" in message.content.lower():
-            seq = ["<:doggo:863639575666098186>", "<:pepCom:863639491533340682>","<:BlackCom:863642798070431744>", "<:Star:863642810879443004>", "<a:Communist:863640421628641320>","<:comthumb:863646009334169651>","<:usrBall:863646049028276234>","<:yeye:863647634361942018>",'<:russianpepe:863647634001887273>']
-            rand = random.choice(seq)
-            await message.add_reaction(rand)
+
 
 
 
