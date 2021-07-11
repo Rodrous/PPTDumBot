@@ -94,7 +94,7 @@ class webmaster(commands.Cog):
     async def on_message(self, message):
         if "our" in message.content:
             seq = ["<:doggo:863639575666098186>", "<:pepCom:863639491533340682>", "<a:Communist:863640421628641320>",
-                   "<:BlackCom:863642798070431744>", "<:Star:863642810879443004>", "<a:Communist:863640421628641320>"]
+                   "<:BlackCom:863642798070431744>", "<:Star:863642810879443004>", "<a:Communist:863640421628641320>","<:comthumb:863646009334169651>","<:usrBall:863646049028276234>"]
             rand = random.choice(seq)
             await message.add_reaction(rand)
 
