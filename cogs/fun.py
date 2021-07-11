@@ -1,5 +1,5 @@
 from discord.ext import commands
-import requests,aiohttp,io,discord,random,sys
+import requests,random
 from build import generalPurpose as gp
 import re as reg
 
@@ -89,6 +89,14 @@ class webmaster(commands.Cog):
     async def sendYeye(self,ctx):
         await ctx.send("*Y" + "E" * random.randint(10,50) + "Y" + "E" * random.randint(10,50) + "*")
 
+
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        if "our" in message.content:
+            seq = ["<:doggo:863639575666098186>", "<:pepCom:863639491533340682>", "<a:Communist:863640421628641320>",
+                   "<:BlackCom:863642798070431744>", "<:Star:863642810879443004>", "<a:Communist:863640421628641320>"]
+            rand = random.choice(seq)
+            await message.add_reaction(rand)
 
 
 def setup(bot):
