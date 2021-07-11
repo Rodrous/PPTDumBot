@@ -6,6 +6,7 @@ class gethelp(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
 
+    #todo make into a flipbook
     @commands.command(
                 name = 'helpme',
                 brief = 'This is like help, but better.',
@@ -23,6 +24,9 @@ class gethelp(commands.Cog):
         fun.add_field(name= "dog", value="Get a Dog pic \U0001F436 (<:white_check_mark:857551644546826250>)")
         fun.add_field(name="ily", value="Sends ily cuz draf do be lazy\nOnly allowed for Draf & Nissy(<:white_check_mark:857551644546826250>)")
         fun.add_field(name="say", value="Basically repeats after you")
+        fun.add_field(name="joke", value="Gives you random jokes, can be offensive you have been warned")
+        fun.add_field(name="dadjoke", value="Gives you a random dadjoke, enjoy :)")
+        fun.add_field(name="yomomma", value="yomomma so dumb she didnt realize this will output random mom jokes")
         #todo remove the complex bs
         #UTILITY HERE
         utility = discord.Embed(title="Utility Commands", color=16375162)

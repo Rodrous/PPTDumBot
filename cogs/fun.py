@@ -89,6 +89,37 @@ class webmaster(commands.Cog):
     async def sendYeye(self,ctx):
         await ctx.send("*Y" + "E" * random.randint(10,50) + "Y" + "E" * random.randint(10,50) + "*")
 
+    @commands.command(
+        name="joke",
+        aliases=["getjoke","jk"],
+        brief="It send a random joke",
+        help="a random joke, can be explicit or offensive so beware")
+    async def sendJoke(self,ctx):
+        url = requests.get("https://v2.jokeapi.dev/joke/Any").json()
+        if url['type'] == 'single':
+            await ctx.send(url['joke'])
+        elif url['type'] == 'twopart':
+            await ctx.send(f"{url['setup']}\n{url['delivery']}")
+        else:
+            await ctx.send('An error has occured')
+
+    @commands.command(
+        name="dadjoke",
+        brief='i hate my life',
+        help='you hate me')
+    async def sendDadjoke(self,ctx):
+        url = requests.get("https://icanhazdadjoke.com/", headers={"accept" : "application/json"}).json()
+        await ctx.send(url['joke'])
+
+    @commands.command(
+        name='yomomma',
+        aliases=['yourmom', 'yomom'],
+        brief='we like mom jokes',
+        help='sends a random yomomma joke')
+    async def sendMomjoke(self,ctx):
+        url = requests.get('https://api.yomomma.info/').json()
+        await ctx.send(url['joke'])
+
     @commands.Cog.listener()
     async def on_message(self, message):
         if reg.search(pattern=r'\b\s*ours?\s*\b', string=message.content.lower(), flags=reg.I):
