@@ -26,7 +26,7 @@ class gethelp(commands.Cog):
         fun.add_field(name= "dog", value="Get a Dog pic \U0001F436")
         fun.add_field(name="ily", value="Sends ily cuz draf do be lazy\nOnly allowed for Draf & Nissy")
         fun.add_field(name="say", value="Basically repeats after you")
-        fun.add_field(name="joke", value="Gives you random jokes, can be offensive you have been warned")
+        fun.add_field(name="joke", value="Gives you random jokes, you can use the flag `-ex` to get explicit jokes but beware may be offensive")
         fun.add_field(name="dadjoke", value="Gives you a random dadjoke, enjoy :)")
         fun.add_field(name="yomomma", value="yomomma so dumb she didnt realize this will output random mom jokes")
         #todo remove the complex bs

@@ -94,14 +94,16 @@ class webmaster(commands.Cog):
         aliases=["getjoke","jk"],
         brief="It send a random joke",
         help="a random joke, can be explicit or offensive so beware")
-    async def sendJoke(self,ctx):
-        url = requests.get("https://v2.jokeapi.dev/joke/Any").json()
+    async def sendJoke(self,ctx, *, args = 'null'):
+        # https://sv443.net/jokeapi/v2/
+        if str(args).count('-ex') >= 1:
+            url = requests.get('https://v2.jokeapi.dev/joke/Any').json()
+        else:
+            url = requests.get('https://v2.jokeapi.dev/joke/Any?blacklistFlags=nsfw,religious,political,racist,sexist,explicit').json()
         if url['type'] == 'single':
             await ctx.send(url['joke'])
         elif url['type'] == 'twopart':
             await ctx.send(f"{url['setup']}\n{url['delivery']}")
-        else:
-            await ctx.send('An error has occured')
 
     @commands.command(
         name="dadjoke",
