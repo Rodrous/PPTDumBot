@@ -55,7 +55,7 @@ class webmaster(commands.Cog):
         brief="Draf is tooo lazy to type it",
         help="ily * num")
     async def sendIly(self, ctx):
-        author_allowed_ids= [323457305855262721, 579036541238640731] #[draf, nissy]
+        author_allowed_ids = [323457305855262721, 579036541238640731] #[draf, nissy]
         author = ctx.author.id
         if author_allowed_ids.__contains__(author):
             randomint = "1" + "0" * random.randint(10,100)
