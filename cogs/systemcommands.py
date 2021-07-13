@@ -35,9 +35,9 @@ class syscom(commands.Cog):
     async def stealEmoji(self, ctx, *, args = ''):
         gLimit = ctx.guild.emoji_limit
         gCurr = len(await ctx.guild.fetch_emojis())
-        #print(str(gCurr)+'/'+str(gLimit)+' emojis')
-        if gCurr >= gLimit:
-                return await ctx.send("This server is already at the limit and cant have more emojis **):**\n(If you think this is an error,contact Blackfinix/EvilGiraffes/PPT)")
+        print(str(gCurr)+'/'+str(gLimit)+' emojis')
+        # if gCurr >= gLimit:
+        #         return await ctx.send("This server is already at the limit and cant have more emojis **):**\n(If you think this is an error,contact Blackfinix/EvilGiraffes/PPT)")
         turl = 'https://cdn.discordapp.com/emojis/'
         if args == '':
             return await ctx.send("No emoji or link detected.")
@@ -70,6 +70,7 @@ class syscom(commands.Cog):
 
         except Exception as e:
                 print(f"There is some Error Here, error is defined by: {e}")
+                await ctx.send("This server is already at the limit and cant have more emojis **):**")
 
 
 
