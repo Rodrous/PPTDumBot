@@ -1,6 +1,7 @@
 from discord.ext import commands
-import requests,aiohttp,io,discord,random,sys
+import requests,random
 from build import generalPurpose as gp
+import re as reg
 
 #sends images and quotes
 class webmaster(commands.Cog):
@@ -26,7 +27,7 @@ class webmaster(commands.Cog):
         await ctx.send(file=data)
 
     @commands.command(
-        name='s',
+        name='wallpaper',
         brief='Sends a wallpaper.',
         help='Sends a wallpaper with size of 1920x1080')
     async def sendWallpaper(self,ctx):
@@ -54,12 +55,81 @@ class webmaster(commands.Cog):
         brief="Draf is tooo lazy to type it",
         help="ily * num")
     async def sendIly(self, ctx):
-        author_allowed_ids = [323457305855262721, 579036541238640731]
-        if author_allowed_ids.__contains__(ctx.author.id):
-            num = random.randint(10, sys.maxsize)
-            await ctx.send("ily " + str(num))
+        author_allowed_ids = [323457305855262721, 579036541238640731] #[draf, nissy]
+        author = ctx.author.id
+        if author_allowed_ids.__contains__(author):
+            randomint = "1" + "0" * random.randint(10,100)
+            num = random.randint(10,int(randomint))
+            draf = author_allowed_ids[0]
+            nissy = author_allowed_ids[1]
+            if author != nissy:
+                name = nissy
+            elif author != draf:
+                name = draf
+            await ctx.send("ily " + str(num) + f" <@{name}>")
         else:
             await ctx.send("you cant use that", delete_after=6)
+
+    @commands.command(
+        name="say",
+        brief="repeats your shit",
+        help="repeat")
+    async def sendRepeat(self,ctx,*,args):
+        await ctx.message.channel.purge(limit=1)
+        if reg.match(pattern='@everyone|@here', string=args, flags=reg.I):
+            await ctx.send('Fuck you, you cant loophoel dis', delete_after=6)
+        else:
+            await ctx.send(args)
+
+    @commands.command(
+        name="yeye",
+        aliases= ["yeeyee", "yeyee","yeeye"],
+        brief="issi asked me to do it",
+        help="yeeeyeeeee")
+    async def sendYeye(self,ctx):
+        await ctx.send("*Y" + "E" * random.randint(10,50) + "Y" + "E" * random.randint(10,50) + "*")
+
+    @commands.command(
+        name="joke",
+        aliases=["getjoke","jk"],
+        brief="It send a random joke",
+        help="a random joke, can be explicit or offensive so beware")
+    async def sendJoke(self,ctx, *, args = 'null'):
+        # https://sv443.net/jokeapi/v2/
+        if str(args).count('-ex') >= 1:
+            url = requests.get('https://v2.jokeapi.dev/joke/Any').json()
+        else:
+            url = requests.get('https://v2.jokeapi.dev/joke/Any?blacklistFlags=nsfw,religious,political,racist,sexist,explicit').json()
+        if url['type'] == 'single':
+            await ctx.send(url['joke'])
+        elif url['type'] == 'twopart':
+            await ctx.send(f"{url['setup']}\n{url['delivery']}")
+
+    @commands.command(
+        name="dadjoke",
+        brief='i hate my life',
+        help='you hate me')
+    async def sendDadjoke(self,ctx):
+        url = requests.get("https://icanhazdadjoke.com/", headers={"accept" : "application/json"}).json()
+        await ctx.send(url['joke'])
+
+    @commands.command(
+        name='yomomma',
+        aliases=['yourmom', 'yomom'],
+        brief='we like mom jokes',
+        help='sends a random yomomma joke')
+    async def sendMomjoke(self,ctx):
+        url = requests.get('https://api.yomomma.info/').json()
+        await ctx.send(url['joke'])
+
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        if reg.search(pattern=r'\b\s*ours?\s*\b', string=message.content.lower(), flags=reg.I):
+            seq = ["<:doggo:863639575666098186>", "<:pepCom:863639491533340682>", "<:BlackCom:863642798070431744>",
+                   "<:Star:863642810879443004>", "<a:Communist:863640421628641320>", "<:comthumb:863646009334169651>",
+                   "<:usrBall:863646049028276234>", "<:yeye:863647634361942018>", '<:russianpepe:863647634001887273>']
+            rand = random.choice(seq)
+            await message.add_reaction(rand)
 
 
 def setup(bot):
