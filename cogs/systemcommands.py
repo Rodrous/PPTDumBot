@@ -36,8 +36,8 @@ class syscom(commands.Cog):
         gLimit = ctx.guild.emoji_limit
         gCurr = len(await ctx.guild.fetch_emojis())
         #print(str(gCurr)+'/'+str(gLimit)+' emojis')
-        if gCurr >= gLimit:
-                return await ctx.send("This server is already at the limit and cant have more emojis **):**")
+        # if gCurr >= gLimit:
+        #         return await ctx.send("This server is already at the limit and cant have more emojis **):**")
         turl = 'https://cdn.discordapp.com/emojis/'
         if args == '':
             return await ctx.send("No emoji or link detected.")
