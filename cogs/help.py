@@ -44,7 +44,7 @@ class gethelp(commands.Cog):
             #MODERATION HERE
             moderation = discord.Embed(title="Moderation Commands", color=moderation_color)
             moderation.add_field(name="clear", value="Purges the chat")
-            moderation.add_field(name="mute", value="Mutes someone")
+            moderation.add_field(name="mute", value="Mutes someone, default is 10 minutes")
             moderation.add_field(name="unmute", value="Unmute someone")
             moderation.set_footer(text="A bot by; itsPPT#9651, Blackfinix#3706 & EvilGiraffes#7300", icon_url="https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048")
             embeds=[intro, fun, utility, moderation]
@@ -121,7 +121,7 @@ class gethelp(commands.Cog):
                 color = moderation_color
             elif cmd == 'mute':
                 syntax = 'mute [@user] [minutes]'
-                desc = 'Mutes a bitch'
+                desc = 'Mutes a bitch, default is 10 minutes'
                 color = moderation_color
             elif cmd == 'unmute':
                 syntax = 'unmute [@user]'
