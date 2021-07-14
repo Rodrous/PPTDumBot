@@ -21,7 +21,7 @@ class gethelp(commands.Cog):
             #INTRO
             intro = discord.Embed(title="Bot Help Perhaps", description="**Default Prefix:**`$`\n**Custom Prefix:** `Will be added in the future`"
                                                                         "\n\nYou can find out more on each command by doing `help [command]`", color=11187115)
-            #GENERAL
+            #GENERAL HERE
             #general = discord.Embed(title="", description="", color=)
             #FUN HERE
             fun = discord.Embed(title="Fun Commands", color=fun_color)
@@ -66,6 +66,8 @@ class gethelp(commands.Cog):
                 if reg.match(val, string=cmd):
                     cmd = aliased_commands.get(val)
 
+            #GENERAL HERE
+            #Remember to change the first if statement in FUN to an elif when general is added lmao
             #FUN HERE
             if cmd == 'ree':
                 aliases = 're|reee|reeee'
@@ -130,8 +132,8 @@ class gethelp(commands.Cog):
             # elif cmd == '':
             #     aliases = ''
             #     syntax = ''
-            #     desc = ''
-            #     color =
+            #     desc = 'REQUIRED'
+            #     color = REQUIRED
             else:
                 desc = ''
 
