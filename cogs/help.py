@@ -18,7 +18,8 @@ class gethelp(commands.Cog):
         moderation_color = 13524060
         if not args:
             #INTRO
-            intro = discord.Embed(title="Bot Help Perhaps", description="Here you can find all the useful commands we have implemented", color=11187115)
+            intro = discord.Embed(title="Bot Help Perhaps", description="**Default Prefix:**`$`\n**Custom Prefix:** `Will be added in the future`"
+                                                                        "\n\nYou can find out more on each command by doing `helpme [command]`", color=11187115)
             #GENERAL
             #general = discord.Embed(title="", description="", color=)
             #FUN HERE
