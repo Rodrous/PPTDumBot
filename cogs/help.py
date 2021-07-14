@@ -115,7 +115,7 @@ class gethelp(commands.Cog):
             elif cmd == 'clear':
                 aliases = 'purge'
                 syntax = 'clear [num]'
-                desc = 'Clears the chat'
+                desc = 'Clears the chat\nwill be bettered in the feature, will add more flags and make it more advanced'
                 color = moderation_color
             elif cmd == 'mute':
                 syntax = 'mute [@user] [seconds]'
