@@ -56,10 +56,10 @@ class gethelp(commands.Cog):
             arg = args.split()
             cmd = arg[0].lower()
             aliased_commands = {
-                reg.compile(pattern=r're{1,4}') : 'ree',
-                reg.compile(pattern=r'ye{1,2}ye{1,2}') : 'yeye',
+                reg.compile(pattern=r're+') : 'ree',
+                reg.compile(pattern=r'ye+ye+') : 'yeye',
                 reg.compile(pattern=r'(get)?joke|jk') : 'joke',
-                reg.compile(pattern=r'yomom(ma)?|yourmom') : 'yomomma',
+                reg.compile(pattern=r'yomom|yourmom') : 'yomomma',
                 reg.compile(pattern=r'clear|purge') : 'clear'
             }
             for val in aliased_commands:
@@ -120,7 +120,7 @@ class gethelp(commands.Cog):
                 desc = 'Clears the chat\nwill be bettered in the feature, will add more flags and make it more advanced'
                 color = moderation_color
             elif cmd == 'mute':
-                syntax = 'mute [@user] [seconds]'
+                syntax = 'mute [@user] [minutes]'
                 desc = 'Mutes a bitch'
                 color = moderation_color
             elif cmd == 'unmute':

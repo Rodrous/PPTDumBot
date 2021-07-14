@@ -31,7 +31,7 @@ class moderation(commands.Cog):
             await ctx.message.channel.purge(limit=int(amount))
 
         @commands.command(
-            help = "Mutes a person, Format:- <user> <time in seconds (Default=10)> <reason> (Default= Being a Biotch)"
+            help = "Mutes a person, Format:- <user> <time in minutes (Default=10)> <reason> (Default= Being a Biotch)"
         )
         @commands.has_permissions(administrator=True)
         async def mute(self,ctx,user: discord.Member,time = 10,reason="being a biotch"):
@@ -49,8 +49,9 @@ class moderation(commands.Cog):
                 await user.add_roles(getRole)
             else:
                 await user.add_roles(getRole)
+            await ctx.send("Done!")
             await user.send(f"You were muted because {reason}")
-            await asyncio.sleep(int(time))
+            await asyncio.sleep(int(time) * 60)
             await user.remove_roles(getRole)
 
         @commands.command(
@@ -59,5 +60,6 @@ class moderation(commands.Cog):
         async def unmute(self,ctx,user: discord.Member):
             getRole = discord.utils.get(ctx.guild.roles, name="Muted")
             await user.remove_roles(getRole)
+            await ctx.send("Done!")
 def setup(bot):
     bot.add_cog(moderation(bot))
