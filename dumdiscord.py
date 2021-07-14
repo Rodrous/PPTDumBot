@@ -67,13 +67,6 @@ async def on_message(msg):
 
     await bot.process_commands(msg)
 
-# @bot.event
-# async def on_member_join(member):
-#     bot.get_channel(826555270155075634).send(f"<a:blobjoin:858349179893710905> {member.mention}")
-
-# @bot.event
-# async def on_member_remove(member):
-#     bot.get_channel(826555270155075634).send(f"<a:blobleave:858349192169652255> {member.name}")
 
 
 if __name__ == "__main__":

@@ -33,10 +33,12 @@ class gethelp(commands.Cog):
         #UTILITY HERE
         utility = discord.Embed(title="Utility Commands", color=16375162)
         utility.add_field(name="steal", value="Steals emojis")
-        utility.add_field(name="ping", value="Pings the bot or as a IT guy would say:\n' Sends a ICMP packet to check the performance of connection between a server ' ")
+        utility.add_field(name="ping", value="Pings the bot")
         #MODERATION HERE
         moderation = discord.Embed(title="Moderation Commands", color=13524060)
         moderation.add_field(name="clear", value="Purges the chat")
+        moderation.add_field(name="mute", value="Mutes someone")
+        moderation.add_field(name="unmute", value="Unmute someone")
         moderation.set_footer(text="A bot by; itsPPT#9651, Blackfinix#3706 & EvilGiraffes#7300", icon_url="https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048")
         embeds=[intro, fun, utility, moderation]
         for embed in embeds:

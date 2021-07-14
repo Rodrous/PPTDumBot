@@ -14,3 +14,5 @@ async def getDataFromLink(url:str, json:bool=False, jsonType:str='', returnFile:
             if returnFile:
                 return discord.File(data,fileName)
             return data
+
+#todo Urban Dict Scrapy/Api Add
