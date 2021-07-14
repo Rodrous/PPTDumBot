@@ -21,7 +21,8 @@ def determinePrefix(bot, msg):
 
 # This is the same as a client initialization, but bot has more functionalities.
 bot = commands.Bot(command_prefix=determinePrefix, 
-    case_insensitive = True, activity=discord.Activity(type=discord.ActivityType.listening, name='$ (Why do I exist, father?)'))
+    case_insensitive = True, activity=discord.Activity(type=discord.ActivityType.listening, name='$ (Why do I exist, father?)'),
+    help_command=None)
 
 @bot.command(
             name = "setprefix",

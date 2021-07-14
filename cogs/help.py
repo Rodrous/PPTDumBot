@@ -9,7 +9,8 @@ class gethelp(commands.Cog):
 
     #todo make into a flipbook
     @commands.command(
-                name = 'helpme',
+                name = 'help',
+                aliases = ['helpme'],
                 brief = 'This is like help, but better.',
                 help = 'What else do you need to know bro, just run the command')
     async def sendHelp(self,ctx, *, args = ''):
@@ -19,7 +20,7 @@ class gethelp(commands.Cog):
         if not args:
             #INTRO
             intro = discord.Embed(title="Bot Help Perhaps", description="**Default Prefix:**`$`\n**Custom Prefix:** `Will be added in the future`"
-                                                                        "\n\nYou can find out more on each command by doing `helpme [command]`", color=11187115)
+                                                                        "\n\nYou can find out more on each command by doing `help [command]`", color=11187115)
             #GENERAL
             #general = discord.Embed(title="", description="", color=)
             #FUN HERE
