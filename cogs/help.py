@@ -36,7 +36,7 @@ class gethelp(commands.Cog):
             fun.add_field(name="joke", value="Gives you random jokes, you can use the flag `-ex` to get explicit jokes but beware may be offensive")
             fun.add_field(name="dadjoke", value="Gives you a random dadjoke, enjoy :)")
             fun.add_field(name="yomomma", value="yomomma so dumb she didnt realize this will output random mom jokes")
-            fun.add_field(name="minesweeper", value="A fun game of minesweeper will be generated\nsyntax is; `ms [rows] [columns] [mines]`\nMax rows is 11, max columns is 9 and minimum mines is 3")
+            fun.add_field(name="minesweeper", value="A fun game of minesweeper will be generated\nsyntax is; `minesweeper [rows] [columns] [mines]`\nMax rows is 11, max columns is 9 and minimum mines is 3")
             #todo remove the complex bs
             #UTILITY HERE
             utility = discord.Embed(title="Utility Commands", color=utility_color)

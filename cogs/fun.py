@@ -126,19 +126,22 @@ class webmaster(commands.Cog):
         aliases=['ms'])
     async def mineSweeper(self,ctx,rows = 8, columns = 8, mines = 5):
         run = True
-        if int(rows) > 11:
+        row = int(rows)
+        column = int(columns)
+        mine = int(mines)
+        if row > 11:
             run = False
-        if int(columns) > 9:
+        elif column > 9:
             run = False
-        if int(mines) < 3:
+        elif mine < 3:
             run = False
-        if int(mines) >= int(rows) - 1 or int(mines) >= int(columns) - 1:
+        elif mine >= row - 1 or mine >= column - 1:
             run = False
         if run:
-            arr = [[0 for column in range(int(columns))] for rows in range(int(rows))]
-            border_x = columns - 1
-            border_y = rows - 1
-            for num in range(int(mines)):
+            arr = [[0 for column in range(column)] for rows in range(row)]
+            border_x = column - 1
+            border_y = row - 1
+            for num in range(mine):
                 x = random.randint(0, border_x)
                 y = random.randint(0, border_y)
                 arr[y][x] = 'X'
