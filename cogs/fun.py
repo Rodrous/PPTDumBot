@@ -1,6 +1,7 @@
 from discord.ext import commands
 import requests,random
 from build import generalPurpose as gp
+from build.library import moviequotes
 import re as reg
 
 #sends images and quotes
@@ -121,6 +122,18 @@ class webmaster(commands.Cog):
     async def sendMomjoke(self,ctx):
         url = requests.get('https://api.yomomma.info/').json()
         await ctx.send(url['joke'])
+
+    @commands.command(
+        name='moviequotes',
+        aliases=['mq', 'moviequote'])
+    async def movieQuote(self,ctx):
+        quote = await moviequotes()
+        await ctx.send('__**This isnt fully implemented yet**__')
+        string = f"**Movie:** {quote['movie']}"
+        if quote['character']:
+            string = string + f"\n**Character:** {quote['character']}"
+        string = string + f'\n\"{quote["quote"]}\"'
+        await ctx.send(string)
 
 
     @commands.Cog.listener()
