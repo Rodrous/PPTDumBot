@@ -75,4 +75,5 @@ if __name__ == "__main__":
     bot.load_extension('cogs.systemcommands')
     bot.load_extension('cogs.help')
     bot.load_extension('cogs.moderation')
+    bot.load_extension('cogs.games')
     bot.run(id)
