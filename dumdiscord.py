@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import base64, random
+from build import generalPurpose as gp
 
 with open("config/client.txt") as file:
     f = file.readline()
@@ -25,7 +26,7 @@ def determinePrefix(bot, msg):
         return commands.when_mentioned_or(defaultPrefix)(bot,msg)
 
 # This is the same as a client initialization, but bot has more functionalities.
-bot = commands.Bot(command_prefix=determinePrefix, 
+bot = commands.Bot(command_prefix=determinePrefix,
     case_insensitive = True, activity=discord.Activity(type=discord.ActivityType.listening, name=f'$help | {str(random.choice(descriptions))}'),
     help_command=None)
 
@@ -50,18 +51,12 @@ async def setPrefix(msg, *,prefixes = ''):
         if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels): # 2
             customPrefix[msg.guild.id] = prefixes.split() or defaultPrefix # 3
             bot.command_prefix = determinePrefix(bot, msg) # 4
-            await msg.send(f"Prefixes set as : {await getPrefix(msg, True)}") # 5
-        else: 
+            await msg.send(f"Prefixes set as : {await gp.getPrefix(msg, bot, True)}") # 5
+        else:
             await msg.channel.send(content = 'You cant use that here yet.', delete_after=6)
     else :
         await msg.channel.send(content = 'This is a Server-Only command.', delete_after=6)
 
-# Returns the prefix...
-async def getPrefix(msg, string:bool=False):
-    tp = await bot.get_prefix(msg)
-    if string:
-        return ' or '.join(tp[1:]) # ...either in a string as : "@PPTDumbBot or $"...
-    return tp # ...or as a List type
 
 # Sends the current prefix in the chat
 @bot.command(
@@ -70,7 +65,7 @@ async def getPrefix(msg, string:bool=False):
 async def sendPrefix(msg):
     if msg.channel.type is not discord.ChannelType.private: # Same as the 'setprefix'
         if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels): # Same as the 'setprefix'
-            await msg.channel.send(f"Current default prefix is : {await getPrefix(msg, True)}") # Same as the 'setprefix'
+            await msg.channel.send(f"Current default prefix is : {await gp.getPrefix(msg, bot, True)}") # Same as the 'setprefix'
         else : 
             await msg.channel.send(content = 'You cant use that here yet.', delete_after = 6)
     else :

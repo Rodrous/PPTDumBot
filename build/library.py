@@ -1,7 +1,10 @@
 import random
+
 """
 Feel free to add as many moviequotes as you want, if there is no character or image leave it blank but dont remove it
 """
+
+
 async def moviequotes():
     mq = [
         {"movie": "Dirty Harry [1971]", "character": "Dirty Harry",

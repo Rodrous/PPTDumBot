@@ -1,7 +1,6 @@
 from discord.ext import commands
 import discord
 import re as reg
-
 class gethelp(commands.Cog):
 
     def __init__(self,bot):
@@ -13,10 +12,11 @@ class gethelp(commands.Cog):
                 aliases = ['helpme'],
                 brief = 'This is like help, but better.',
                 help = 'What else do you need to know bro, just run the command')
-    async def sendHelp(self,ctx, *, args = ''):
+    async def sendHelp(self, ctx, *, args = ''):
         fun_color = 52382
         utility_color = 16375162
         moderation_color = 13524060
+        args = args.split()
         if not args:
             #INTRO
             intro = discord.Embed(title="Bot Help Perhaps", description="**Default Prefix:**`$`\n**Custom Prefix:** `Will be added in the future`"
@@ -54,8 +54,7 @@ class gethelp(commands.Cog):
         else:
             aliases = ''
             syntax = ''
-            arg = args.split()
-            cmd = arg[0].lower()
+            cmd = args[0].lower()
             aliased_commands = {
                 reg.compile(pattern=r're+') : 'ree',
                 reg.compile(pattern=r'ye+ye+') : 'yeye',
