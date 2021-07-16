@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 import requests,random
 from build import generalPurpose as gp
@@ -128,12 +129,14 @@ class webmaster(commands.Cog):
         aliases=['mq', 'moviequote'])
     async def movieQuote(self,ctx):
         quote = await moviequotes()
-        await ctx.send('__**This isnt fully implemented yet**__')
-        string = f"**Movie:** {quote['movie']}"
-        if quote['character']:
-            string = string + f"\n**Character:** {quote['character']}"
-        string = string + f'\n\"{quote["quote"]}\"'
-        await ctx.send(string)
+        await ctx.send('__**This has not been fully implemented yet**__')
+        string = f'"{quote["quote"]}\"'
+        if quote["character"]:
+            string = string + f'-{quote["character"]}'
+        embed = discord.Embed(title=quote["movie"], description=string, color= 4029286)
+        if quote["image"]:
+            embed.set_thumbnail(url=quote["image"])
+        await ctx.send(embed= embed)
 
 
     @commands.Cog.listener()
