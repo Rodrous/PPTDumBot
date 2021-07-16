@@ -1,6 +1,7 @@
 from discord.ext import commands
 import discord
 import re as reg
+from build.generalPurpose import getPrefix
 class gethelp(commands.Cog):
 
     def __init__(self,bot):
@@ -17,10 +18,20 @@ class gethelp(commands.Cog):
         utility_color = 16375162
         moderation_color = 13524060
         args = args.split()
+        pf = await getPrefix(ctx, self.bot)
+        prefix = pf[2]
         if not args:
             #INTRO
-            intro = discord.Embed(title="Bot Help Perhaps", description="**Default Prefix:**`$`\n**Custom Prefix:** `Will be added in the future`"
-                                                                        "\n\nYou can find out more on each command by doing `help [command]`", color=11187115)
+            intro = discord.Embed(title="Bot Help Perhaps",
+                                  description=f"""
+                                  **Server Prefix:** `{prefix}`
+                                  *If you need help on a specific command you can type:* `help [command]`\n
+                                  **React with:**
+                                  <:PepeLmao:865712134439436328> For Fun
+                                  <:PepoGamer:865712213141356565> For Games
+                                  <a:pepeAnimeCaught:865712704315850782> For Utility
+                                  <a:pepeban:865714938667991091> For Moderation
+                                  """, color=11187115)
             #GENERAL HERE
             #general = discord.Embed(title="", description="", color=)
             #FUN HERE
@@ -37,11 +48,13 @@ class gethelp(commands.Cog):
             fun.add_field(name="dadjoke", value="Gives you a random dadjoke, enjoy :)")
             fun.add_field(name="yomomma", value="yomomma so dumb she didnt realize this will output random mom jokes")
             fun.add_field(name="minesweeper", value="A fun game of minesweeper will be generated\nsyntax is; `minesweeper [rows] [columns] [mines]`\nMax rows is 11, max columns is 9 and minimum mines is 3")
+            fun.set_footer(text="A bot by; itsPPT#9651, Blackfinix#3706 & EvilGiraffes#7300", icon_url="https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048")
             #todo remove the complex bs
             #UTILITY HERE
             utility = discord.Embed(title="Utility Commands", color=utility_color)
             utility.add_field(name="steal", value="Steals emojis")
             utility.add_field(name="ping", value="Pings the bot")
+            utility.set_footer(text="A bot by; itsPPT#9651, Blackfinix#3706 & EvilGiraffes#7300", icon_url="https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048")
             #MODERATION HERE
             moderation = discord.Embed(title="Moderation Commands", color=moderation_color)
             moderation.add_field(name="clear", value="Purges the chat")
@@ -49,8 +62,12 @@ class gethelp(commands.Cog):
             moderation.add_field(name="unmute", value="Unmute someone")
             moderation.set_footer(text="A bot by; itsPPT#9651, Blackfinix#3706 & EvilGiraffes#7300", icon_url="https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048")
             embeds=[intro, fun, utility, moderation]
-            for embed in embeds:
-                await ctx.send(content=None, embed=embed)
+            embed = await ctx.send(embed=intro)
+            reactions = ['<:PepeLmao:865712134439436328>', '<:PepoGamer:865712213141356565>', '<a:pepeAnimeCaught:865712704315850782>', '<a:pepeban:865714938667991091>'] #fun, games, utility, moderation
+            for react in reactions:
+                await embed.add_reaction(emoji=react)
+            # for embed in embeds:
+            #     await ctx.send(content=None, embed=embed)
         else:
             aliases = ''
             syntax = ''
@@ -154,6 +171,11 @@ class gethelp(commands.Cog):
                 await ctx.send(embed=embed)
             else:
                 await ctx.send('Not a valid command')
+
+    @commands.Cog.listener()
+    async def on_reaction_add(self):
+        reaction.message.add_reaction(emoji='<a:bot:855557085495951360>')
+
 
 def setup(bot):
     bot.add_cog(gethelp(bot))
