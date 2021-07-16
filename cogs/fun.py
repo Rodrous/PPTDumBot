@@ -130,10 +130,10 @@ class webmaster(commands.Cog):
     async def movieQuote(self,ctx):
         quote = await moviequotes()
         await ctx.send('__**This has not been fully implemented yet**__')
-        string = f'"{quote["quote"]}\"'
+        string = f'\"{quote["quote"]}\"'
         if quote["character"]:
-            string = string + f'-{quote["character"]}'
-        embed = discord.Embed(title=quote["movie"], description=string, color= 4029286)
+            string = string + f'\n**-{quote["character"]}**'
+        embed = discord.Embed(title=quote['movie'] ,description=string, color= 4029286)
         if quote["image"]:
             embed.set_thumbnail(url=quote["image"])
         await ctx.send(embed= embed)
