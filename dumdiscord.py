@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-import base64
+import base64, random
 
 with open("config/client.txt") as file:
     f = file.readline()
@@ -11,6 +11,11 @@ restrictedChannels = ["database"]
 customPrefix = {}
 defaultPrefix = '$'
 
+# add various descriptions here
+descriptions = ['aWYgeW91IGRlY29kZWQgdGhpcyB5b3UncmUgYSBuZXJk', 'Why do i exist, father?']
+
+# You dont care about this a lot, only about the first return, that finds in the dictionary 'customPrefix' the prefix with
+# the key of the guild that called it. This will need rework when we add db so dont care about this too much.
 def determinePrefix(bot, msg):
     guild = msg.guild
     if guild:     #Only allow custom prefixs in guild
@@ -21,33 +26,57 @@ def determinePrefix(bot, msg):
 
 # This is the same as a client initialization, but bot has more functionalities.
 bot = commands.Bot(command_prefix=determinePrefix, 
-    case_insensitive = True, activity=discord.Activity(type=discord.ActivityType.listening, name='$help | aWYgeW91IGRlY29kZWQgdGhpcyB5b3UncmUgYSBuZXJk'),
+    case_insensitive = True, activity=discord.Activity(type=discord.ActivityType.listening, name=f'$help | {str(random.choice(descriptions))}'),
     help_command=None)
 
+# Im sorting them via numbers, so when i do 1: explanation, the explanation is for the line 1 (and its else statement if it exists)
+# 1 : Checks if the command was called inside a server
+# 2 : Checks if the command was called from an allowed server (in this case Nerds&Karma) and from outside a restricted channel
+# 3 : Sets the key-value pair inside the dictionary 'customPrefix' to be key = server id and value = its current prefix
+#     If the server hasnt set any custom prefixes while calling the command, then this line :
+#          prefixes.split() or defaultPrefix
+#     has the values :
+#           None or {defaultPrefix}
+#     and it defaults to the default prefix
+# 4 : Sets the current servers prefix to be the new (or default) prefix.
+# We may need to add fragmented Bot functionality for this to work properly, but not sure, havent read the docs about it.
+# 5 : Sends what the new prefixes are in the chat
 @bot.command(
             name = "setprefix",
             brief = "Set your own prefixes.",
             help = "Use this to set your own custom Prefixes for the Bot to listen to.")
 async def setPrefix(msg, *,prefixes = ''):
-    if msg.channel.type is not discord.ChannelType.private:
-        if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels):
-            customPrefix[msg.guild.id] = prefixes.split() or defaultPrefix
-            bot.command_prefix = determinePrefix(bot, msg)
-            await msg.send(f"Prefixes set as : {bot.command_prefix}")
+    if msg.channel.type is not discord.ChannelType.private: # 1
+        if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels): # 2
+            customPrefix[msg.guild.id] = prefixes.split() or defaultPrefix # 3
+            bot.command_prefix = determinePrefix(bot, msg) # 4
+            await msg.send(f"Prefixes set as : {await getPrefix(msg, True)}") # 5
         else: 
             await msg.channel.send(content = 'You cant use that here yet.', delete_after=6)
     else :
         await msg.channel.send(content = 'This is a Server-Only command.', delete_after=6)
 
+# Returns the prefix...
+async def getPrefix(msg, string:bool=False):
+    tp = await bot.get_prefix(msg)
+    if string:
+        return ' or '.join(tp[1:]) # ...either in a string as : "@PPTDumbBot or $"...
+    return tp # ...or as a List type
+
+# Sends the current prefix in the chat
 @bot.command(
             name = "prefix",
             brief = "Check the default prefix.")
 async def sendPrefix(msg):
-    if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels):
-        await msg.channel.send(f'Current default prefix is : {defaultPrefix} or {await bot.get_prefix(msg)}')
-    else : 
-        await msg.channel.send(content = 'You cant use that here yet.', delete_after = 6)
+    if msg.channel.type is not discord.ChannelType.private: # Same as the 'setprefix'
+        if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels): # Same as the 'setprefix'
+            await msg.channel.send(f"Current default prefix is : {await getPrefix(msg, True)}") # Same as the 'setprefix'
+        else : 
+            await msg.channel.send(content = 'You cant use that here yet.', delete_after = 6)
+    else :
+        await msg.channel.send(content = f'Prefix for DMs is : {defaultPrefix} or by Mentioning me.')
 
+# Resets the prefix by calling the 'setprefix' command but with the default prefix as an argument
 @bot.command(
             name = "resetprefix",
             brief = "Reset the prefix to the default.",
