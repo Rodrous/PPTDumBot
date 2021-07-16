@@ -15,4 +15,11 @@ async def getDataFromLink(url:str, json:bool=False, jsonType:str='', returnFile:
                 return discord.File(data,fileName)
             return data
 
+# Returns the prefix...
+async def getPrefix(msg, bot, string:bool=False):
+    tp = await bot.get_prefix(msg)
+    if string:
+        return ' or '.join(tp[1:]) # ...either in a string as : "@PPTDumbBot or $"...
+    return tp # ...or as a List type
+
 #todo Urban Dict Scrapy/Api Add
