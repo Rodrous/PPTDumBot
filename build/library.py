@@ -4,13 +4,16 @@ Feel free to add as many moviequotes as you want, if there is no character or im
 """
 async def moviequotes():
     mq = [
-        {"movie": "Dirty Harry [1971]", "character": "Harry",
+        {"movie": "Dirty Harry [1971]", "character": "Dirty Harry",
          "quote": "You've got to ask yourself one question; Do you feel lucky? well, do ya, punk?",
          "image": "https://prod.cdn.bbaws.net/TDC_Blockbuster_-_Production/79/16/WB-0008_po-reg-medium_orig.jpg"},
+        {"movie": "Sudden Impact [1983]", "character": "Dirty Harry",
+         "quote": "Go ahead. Make my day.",
+         "image": "https://images-na.ssl-images-amazon.com/images/S/pv-target-images/8f7c63364fbd9d1b804c755ca7cd93309aa4f44e95ee87c1a341413a1486ffbe._RI_V_TTW_.jpg"},
         {"movie": "The Godfather [1972]", "character": "Don Vito Corleone",
          "quote": "I'm gonna make him an offer he cant refuse",
          "image": "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg"},
-        {"movie": "Psycho[1960]", "character": "",
+        {"movie": "Psycho[1960]", "character": "Norman Bates",
          "quote": "A boy's best friend is his mother",
          "image": "https://tuploads.s3.eu-west-1.amazonaws.com/production/uploads/event/image/107693/default_5404___7979721490.jpg"},
         {"movie": "Ace Ventura Pet Detective [1994]", "character": "Ace Ventura",
@@ -43,6 +46,9 @@ async def moviequotes():
         {"movie": "Austin Powers: In Goldmember [2002]", "character": "Dr Evil",
          "quote": "I never knew my birth parents. There was a car accident. My birth mother was incinerated, and I only survived because her smoking carcass had formed a protective cocoon of slaughtered human effluence. A Belgian man and his fifteen year-old love slave were looting the accident scene, and came across a blood soaked baby, moi. They raised me to be evil. You know, that old chestnut.",
          "image": "https://lh3.googleusercontent.com/proxy/ZJMqjotntOWvKAwjs2wMiKs5mIgwBz_eCarGjuQPOMfzYWxx-6rWI-ZCHmsu1Vx4vu6PilzRGBrhHR-VhoChqg3kzaY7zpyWm3ZXf6cuxSNEmVRwRgi0X2aVVzaue1gnOmp3-4tz6YObNlP2b0xpOy_Q"},
+        {"movie": "Batman The Dark Knight [2008]", "character": "The Joker",
+         "quote": "Don't talk like one of them. You're not! Even if you'd like to be. To them, you're just a freak, like me! They need you right now, but when they don't, they'll cast you out, like a leper! You see, their morals, their code, it's a bad joke. Dropped at the first sign of trouble. They're only as good as the world allows them to be. I'll show you. When the chips are down, these... these civilized people, they'll eat each other. See, I'm not a monster. I'm just ahead of the curve.",
+         "image": "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_.jpg"},
         # {"movie": "", "character": "",
         # "quote": "",
         # "image": ""},
