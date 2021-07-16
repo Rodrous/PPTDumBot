@@ -12,27 +12,27 @@
 ## How to Add Emojis?
 There are 2 ways.
 
-## 1)
+### 1)
 
-Go [here](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjIjuWghq3xAhXEwzgGHWAiDvkQFnoECAQQAw&url=https%3A%2F%2Funicode.org%2Femoji%2Fcharts%2Ffull-emoji-list.html&usg=AOvVaw2Y8ixSqM60XYhs6auuOUsB), copy the unicode
+  Go [here](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjIjuWghq3xAhXEwzgGHWAiDvkQFnoECAQQAw&url=https%3A%2F%2Funicode.org%2Femoji%2Fcharts%2Ffull-emoji-list.html&usg=AOvVaw2Y8ixSqM60XYhs6auuOUsB), copy the unicode
 
-replace “+” with “000” 
+  replace “+” with “000” 
 
-![PPTDumBot%2017652a0bcf3846aca49dc48d4229374d/Untitled.png](PPTDumBot%2017652a0bcf3846aca49dc48d4229374d/Untitled.png)
+  ![PPTDumBot%2017652a0bcf3846aca49dc48d4229374d/Untitled.png](PPTDumBot%2017652a0bcf3846aca49dc48d4229374d/Untitled.png)
 
-For example :
+  For example :
 
-“U+1F911” will become “U0001F911” and add a `\` in front of it before printing.
+  “U+1F911” will become “U0001F911” and add a `\` in front of it before printing.
 
-![PPTDumBot%2017652a0bcf3846aca49dc48d4229374d/Untitled%201.png](PPTDumBot%2017652a0bcf3846aca49dc48d4229374d/Untitled%201.png)
+  ![PPTDumBot%2017652a0bcf3846aca49dc48d4229374d/Untitled%201.png](PPTDumBot%2017652a0bcf3846aca49dc48d4229374d/Untitled%201.png)
 
-## 2)
+### 2)
 
-Having 'Developer Mode' enabled for discord, right click the emoji you want and copy its ID.
-To make the bot print it, use this format : 
-`(<:emojiName:emojiID>)`
-If your emoji is animated, you just need to add one thing to the string :
-`(<a:emojiName:emojiID>)`
+  Having 'Developer Mode' enabled for discord, right click the emoji you want and copy its ID.
+  To make the bot print it, use this format : 
+  `(<:emojiName:emojiID>)`
+  If your emoji is animated, you just need to add one thing to the string :
+  `(<a:emojiName:emojiID>)`
 
 
 ## Confused on how to make PRs?
