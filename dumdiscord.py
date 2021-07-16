@@ -57,12 +57,6 @@ async def setPrefix(msg, *,prefixes = ''):
     else :
         await msg.channel.send(content = 'This is a Server-Only command.', delete_after=6)
 
-# Returns the prefix...
-# async def getPrefix(msg, bot, string:bool=False):
-#     tp = await bot.get_prefix(msg)
-#     if string:
-#         return ' or '.join(tp[1:]) # ...either in a string as : "@PPTDumbBot or $"...
-#     return tp # ...or as a List type
 
 # Sends the current prefix in the chat
 @bot.command(
