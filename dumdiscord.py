@@ -10,7 +10,7 @@ id = base64.b64decode(f).decode('utf-8')
 restrictedChannels = ["database"]
 
 customPrefix = {}
-defaultPrefix = '='
+defaultPrefix = '$'
 
 # add various descriptions here
 descriptions = ['aWYgeW91IGRlY29kZWQgdGhpcyB5b3UncmUgYSBuZXJk', 'Why do i exist, father?', 'Serving 2 servers lmao']
