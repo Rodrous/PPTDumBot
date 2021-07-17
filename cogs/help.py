@@ -22,6 +22,10 @@ class gethelp(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
 
+    @commands.Cog.listener()
+    async def on_reaction_add(self, reaction, user):
+        pass
+
     #todo make into a flipbook
     @commands.command(
                 name = 'help',
@@ -176,10 +180,6 @@ class gethelp(commands.Cog):
                 await ctx.send(embed=embed)
             else:
                 await ctx.send('Not a valid command')
-
-    @commands.Cog.listener()
-    async def on_reaction_add(self, reaction, user):
-        pass
 
 def setup(bot):
     bot.add_cog(gethelp(bot))
