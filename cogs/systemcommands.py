@@ -63,10 +63,10 @@ class syscom(commands.Cog):
                     turl += str(eid) + '.png'
                     #url = f"https://cdn.discordapp.com/emojis/853662523843674112.png"
 
-                    data = await gp.getDataFromLink(url=turl, fileName="WhyAreYouLookingAtThis")
+                data = await gp.getDataFromLink(url=turl, fileName="WhyAreYouLookingAtThis")
 
-                    newEm = await ctx.guild.create_custom_emoji(name=name, image=data.getvalue(), reason=f'{ctx.author.mention} triggered the command : $steal')
-                    return await ctx.send(f'Added the emoji {newEm} to the server with the name : "{name}"')
+                newEm = await ctx.guild.create_custom_emoji(name=name, image=data.getvalue(), reason=f'{ctx.author.mention} triggered the command : $steal')
+                return await ctx.send(f'Added the emoji {newEm} to the server with the name : "{name}"')
 
         except Exception as e:
                 print(f"There is some Error Here, error is defined by: {e}")

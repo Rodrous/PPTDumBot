@@ -22,16 +22,17 @@ class gethelp(commands.Cog):
         prefix = pf[2]
         if not args:
             #INTRO
-            intro = discord.Embed(title="Bot Help Perhaps",
-                                  description=
-                                  f"**Server Prefix:** `{prefix}`"
-                                  "\n*If you need help on a specific command you can type:* `help [command]`"
-                                  "\n\n**React with:**"
-                                  "\n<:PepeLmao:865712134439436328> For Fun"
-                                  "\n<:PepoGamer:865712213141356565> For Games"
-                                  "\n<a:pepeAnimeCaught:865712704315850782> For Utility"
-                                  "\n<a:pepeban:865714938667991091> For Moderation"
-                                  , color=11187115)
+            intro = discord.Embed(
+                title="Bot Help Perhaps",
+                description=
+                f"**Server Prefix:** `{prefix}`"
+                "\n*If you need help on a specific command you can type:* `help [command]`"
+                "\n\n**React with:**"
+                "\n<:PepeLmao:865712134439436328> For Fun"
+                "\n<:PepoGamer:865712213141356565> For Games"
+                "\n<a:pepeAnimeCaught:865712704315850782> For Utility"
+                "\n<a:pepeban:865714938667991091> For Moderation"
+                , color=11187115)
             #GENERAL HERE
             #general = discord.Embed(title="", description="", color=)
             #FUN HERE
@@ -173,7 +174,7 @@ class gethelp(commands.Cog):
                 await ctx.send('Not a valid command')
 
     @commands.Cog.listener()
-    async def on_reaction_add(self):
+    async def on_reaction_add(self, reaction, user):
         reaction.message.add_reaction(emoji='<a:bot:855557085495951360>')
 
 
