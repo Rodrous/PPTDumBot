@@ -26,7 +26,7 @@ def determinePrefix(bot, msg):
         return commands.when_mentioned_or(defaultPrefix)(bot,msg)
 
 # This is the same as a client initialization, but bot has more functionalities.
-bot = commands.Bot(command_prefix=determinePrefix, 
+bot = commands.Bot(command_prefix=determinePrefix,
     case_insensitive = True, activity=discord.Activity(type=discord.ActivityType.listening, name=f'$help | {str(random.choice(descriptions))}'),
     help_command=None)
 
@@ -52,7 +52,7 @@ async def setPrefix(msg, *,prefixes = ''):
             customPrefix[msg.guild.id] = prefixes.split() or defaultPrefix # 3
             bot.command_prefix = determinePrefix(bot, msg) # 4
             await msg.send(f"Prefixes set as : {await gp.getPrefix(msg, bot, True)}") # 5
-        else: 
+        else:
             await msg.channel.send(content = 'You cant use that here yet.', delete_after=6)
     else :
         await msg.channel.send(content = 'This is a Server-Only command.', delete_after=6)
