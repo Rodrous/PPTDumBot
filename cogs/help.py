@@ -1,6 +1,7 @@
 from discord.ext import commands
 import discord
 import re as reg
+from build import generalPurpose as gp
 class gethelp(commands.Cog):
 
     def __init__(self,bot):
@@ -13,6 +14,8 @@ class gethelp(commands.Cog):
                 brief = 'This is like help, but better.',
                 help = 'What else do you need to know bro, just run the command')
     async def sendHelp(self, ctx, *, args = ''):
+        pr = await gp.getPrefix(ctx, self.bot)
+        print(pr)
         fun_color = 52382
         utility_color = 16375162
         moderation_color = 13524060
