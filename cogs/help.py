@@ -13,7 +13,7 @@ async def introMenu(prefix):
         title="Help Menu",
         description=
         f"**Server Prefix:** `{prefix}`"
-        "\n*If you need help on a specific command you can type:* `help [command]`"
+        f"\n*If you need help on a specific command you can type:* `{prefix}help [command]`"
         "\n\n**React with:**"
         "\n<:PepeLmao:865712134439436328> For Fun"
         "\n<:PepoGamer:865712213141356565> For Games"
