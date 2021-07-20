@@ -40,7 +40,7 @@ async def funHelp(prefix):
         f"`{prefix}say`: Repeats what you say\n"
         f"`{prefix}joke`: Gives you random jokes\n"
         f"`{prefix}dadjoke`: Gives you a random dadjoke, enjoy :)\n"
-        f"`{prefix}yomomma`: yomomma so dumb she didnt realize this will output random mom jokes\n"
+        f"`{prefix}yomomma`: Yomomma so dumb she didnt realize this will output random mom jokes\n"
         # f"`{prefix}`:\n"
         , color=fun_color)
     embed.set_author(name="Server Index -> Fun Commands",
@@ -68,7 +68,7 @@ async def utilityHelp(prefix):
         title= "Utility Commands",
         description=
         f"**For more info on each commands do** `{prefix}help [command]`\n*There you will also find Syntax, Aliases and Flags for commands*\n\n"
-        f"`{prefix}steal`: grabs emoji's and puts it in your server\n"
+        f"`{prefix}steal`: Grabs emoji's and puts it in your server\n"
         f"`{prefix}ping`: Pings the bot\n"
         # f"`{prefix}`:\n"
     , color=utility_color)
@@ -83,9 +83,9 @@ async def moderationHelp(prefix):
         title= "moderation Commands",
         description=
         f"**For more info on each commands do** `{prefix}help [command]`\n*There you will also find Syntax, Aliases and Flags for commands*\n\n"
-        f"`{prefix}clear`: purges chat\n"
-        f"`{prefix}mute`: mutes a bitch\n"
-        f"`{prefix}unmute`: unmutes a bitch\n"
+        f"`{prefix}clear`: Purges chat\n"
+        f"`{prefix}mute`: Mutes a bitch\n"
+        f"`{prefix}unmute`: Unmutes a bitch\n"
         # f"`{prefix}`:\n"
     , color=moderation_color)
     embed.set_footer(text="\U00002193 React to return")
