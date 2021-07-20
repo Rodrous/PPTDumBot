@@ -13,7 +13,6 @@ async def introMenu(prefix):
         title="Help Menu",
         description=
         f"**Server Prefix:** `{prefix}`"
-        f"\n*If you need help on a specific command you can type:* `{prefix}help [command]`"
         "\n\n**React with:**"
         "\n<:PepeLmao:865712134439436328> For Fun"
         "\n<:PepoGamer:865712213141356565> For Games"
@@ -80,7 +79,7 @@ async def utilityHelp(prefix):
 
 async def moderationHelp(prefix):
     embed = discord.Embed(
-        title= "moderation Commands",
+        title= "Moderation Commands",
         description=
         f"**For more info on each commands do** `{prefix}help [command]`\n*There you will also find Syntax, Aliases and Flags for commands*\n\n"
         f"`{prefix}clear`: Purges chat\n"
@@ -123,7 +122,8 @@ class gethelp(commands.Cog):
                 reg.compile(pattern=r'(get)?joke|jk') : 'joke',
                 reg.compile(pattern=r'yomom|yourmom') : 'yomomma',
                 reg.compile(pattern=r'clear|purge') : 'clear',
-                reg.compile(pattern=r'm(ine)?s(weeper)?') : 'minesweeper'
+                reg.compile(pattern=r'm(ine)?s(weeper)?') : 'minesweeper',
+                reg.compile(pattern=r'say|speak') : 'say'
             }
             for val in aliased_commands:
                 if reg.match(val, string=cmd):
@@ -154,7 +154,8 @@ class gethelp(commands.Cog):
                 desc = 'This sends Ily * num\nOnly for Draf and Nissen'
                 color = fun_color
             elif cmd == 'say':
-                syntax = 'say [message]'
+                syntax = f'{prefix}say [message]'
+                aliases = 'speak'
                 desc = 'Repeats everything you say, you cannot use this to bypass `@everyone|@here`'
                 color = fun_color
             elif cmd == 'joke':
@@ -171,12 +172,12 @@ class gethelp(commands.Cog):
             #GAMES HERE
             elif cmd == 'minesweeper':
                 aliases = 'ms'
-                syntax = 'minesweeper [rows] [columns] [mines]'
+                syntax = f'{prefix}minesweeper [rows] [columns] [mines]'
                 desc = 'A fun game of minesweeper will be generated\nMax rows is 11, max columns is 9 and minimum mines is 3'
                 color = games_color
             #UTILITY HERE
             elif cmd == 'steal':
-                syntax = 'steal [emoji]|steal [emojilink]'
+                syntax = f'{prefix}steal [emoji]|steal [emojilink]'
                 desc = 'Steals an emoji and adds it to your server'
                 color = utility_color
             elif cmd == 'ping':
@@ -185,26 +186,26 @@ class gethelp(commands.Cog):
             #MODERATION HERE
             elif cmd == 'clear':
                 aliases = 'purge'
-                syntax = 'clear [num]'
+                syntax = f'{prefix}clear [num]'
                 desc = 'Clears the chat\nwill be bettered in the feature, will add more flags and make it more advanced'
                 color = moderation_color
             elif cmd == 'mute':
-                syntax = 'mute [@user] [minutes]'
+                syntax = f'{prefix}mute [@user] [minutes]'
                 desc = 'Mutes a bitch, default is 10 minutes'
                 color = moderation_color
             elif cmd == 'unmute':
-                syntax = 'unmute [@user]'
+                syntax = f'{prefix}unmute [@user]'
                 desc = 'Unmutes a bitch'
                 color = moderation_color
             # elif cmd == '':
             #     aliases = ''
-            #     syntax = ''
+            #     syntax = f''
             #     desc = 'REQUIRED'
             #     color = REQUIRED
             else:
                 desc = ''
 
-            desc_final = f"**Name:** `{cmd.capitalize()}`"
+            desc_final = f"**Prefix:** `{prefix}`\n**Name:** `{cmd.capitalize()}`"
             if aliases:
                 desc_final = desc_final + f"\n**Aliases:** `{aliases}`"
             if syntax:

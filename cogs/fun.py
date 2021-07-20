@@ -74,6 +74,7 @@ class webmaster(commands.Cog):
 
     @commands.command(
         name="say",
+        aliases = ["speak"],
         brief="repeats your shit",
         help="repeat")
     async def sendRepeat(self,ctx,*,args):
