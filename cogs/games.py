@@ -19,7 +19,7 @@ class games(commands.Cog):
             run = False
         elif mine < 3:
             run = False
-        elif mine >= row - 1 or mine >= column - 1:
+        elif mine >= (row - 1) + (column - 1):
             run = False
         if run:
             arr = [[0 for column in range(column)] for rows in range(row)]
