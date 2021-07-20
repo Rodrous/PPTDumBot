@@ -29,7 +29,7 @@ def determinePrefix(bot, msg):
 
 # This is the same as a client initialization, but bot has more functionalities.
 bot = commands.Bot(command_prefix=determinePrefix,
-    case_insensitive = True, activity=discord.Activity(type=discord.ActivityType.listening, name=f'$help | {str(random.choice(descriptions))}'),
+    case_insensitive = True, activity=discord.Activity(type=discord.ActivityType.listening, name=f'{defaultPrefix}help | {str(random.choice(descriptions))}'),
     help_command=None)
 
 # Im sorting them via numbers, so when i do 1: explanation, the explanation is for the line 1 (and its else statement if it exists)
