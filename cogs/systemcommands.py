@@ -50,6 +50,7 @@ class syscom(commands.Cog):
                 return await ctx.send(f'Added the emoji {newEm} to the server with the name : "{name}"')
 
             else:
+                print('got in else')
                 if reg.match(pattern='<a?:.*:\d*>',string=msg[0]):
                     name = '_'.join(msg[1:]) or (''.join(reg.findall(pattern='(?<=:)[a-zA-Z1-9~_]*(?=:)', string=msg[0])))
                 else:

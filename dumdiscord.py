@@ -13,7 +13,7 @@ customPrefix = {}
 defaultPrefix = '$'
 
 # add various descriptions here
-descriptions = ['aWYgeW91IGRlY29kZWQgdGhpcyB5b3UncmUgYSBuZXJk', 'Why do i exist, father?']
+descriptions = ['aWYgeW91IGRlY29kZWQgdGhpcyB5b3UncmUgYSBuZXJk', 'Why do i exist, father?', 'Serving 2 servers lmao']
 
 # You dont care about this a lot, only about the first return, that finds in the dictionary 'customPrefix' the prefix with
 # the key of the guild that called it. This will need rework when we add db so dont care about this too much.
