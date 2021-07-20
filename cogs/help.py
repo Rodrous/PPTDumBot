@@ -3,9 +3,14 @@ import discord
 import re as reg
 from build.generalPurpose import getPrefix
 
+fun_color = 52382
+utility_color = 16375162
+moderation_color = 13524060
+games_color = 6724095
+
 async def introMenu(prefix):
-    intro = discord.Embed(
-        title="Bot Help Perhaps",
+    embed = discord.Embed(
+        title="Help Menu",
         description=
         f"**Server Prefix:** `{prefix}`"
         "\n*If you need help on a specific command you can type:* `help [command]`"
@@ -15,71 +20,99 @@ async def introMenu(prefix):
         "\n<a:pepeAnimeCaught:865712704315850782> For Utility"
         "\n<a:pepeban:865714938667991091> For Moderation"
         , color=11187115)
-    return intro
+    embed.set_author(name='Server Index',
+                     icon_url='https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048')
+    reactions = ['<:PepeLmao:865712134439436328>', '<:PepoGamer:865712213141356565>', '<a:pepeAnimeCaught:865712704315850782>', '<a:pepeban:865714938667991091>'] #fun, games, utility, moderation
+    return embed, reactions
+
+async def funHelp(prefix):
+    embed = discord.Embed(
+        title='Fun Commands',
+        description=
+        f"**For more info on each commands do** `{prefix}help [command]`\n*There you will also find Syntax, Aliases and Flags for commands*\n\n"
+        f"`{prefix}ree`: Ree's out of frustration\n"
+        f"`{prefix}yeye`: Issi asked for it so yeah, it does the same as ree but yeye\n"
+        f"`{prefix}wallpaper`: Sends a Random image from internet [1920x1080]\n"
+        f"`{prefix}cat`: Sends a Cat pic \U0001F408\n"
+        f"`{prefix}dog`: Get a Dog pic \U0001F436\n"
+        f"`{prefix}quote`: Sends a random anime quote\n"
+        f"`{prefix}ily`: It sends ily + num cause Draf is too lazy to type\n"
+        f"`{prefix}say`: Repeats what you say\n"
+        f"`{prefix}joke`: Gives you random jokes\n"
+        f"`{prefix}dadjoke`: Gives you a random dadjoke, enjoy :)\n"
+        f"`{prefix}yomomma`: yomomma so dumb she didnt realize this will output random mom jokes\n"
+        # f"`{prefix}`:\n"
+        , color=fun_color)
+    embed.set_author(name="Server Index -> Fun Commands",
+                     icon_url= 'https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048')
+    embed.set_footer(text="\U00002193 React to return")
+    reactions = ['<:return:867101369814745099>']
+    return embed, reactions
+
+async def gamesHelp(prefix):
+    embed = discord.Embed(
+        title= "Games",
+        description=
+        f"**For more info on each commands do** `{prefix}help [command]`\n*There you will also find Syntax, Aliases and Flags for commands*\n\n"
+        f"`{prefix}minesweeper`: Generates a game of minesweeper\n"
+        # f"`{prefix}`:\n"
+    , color=games_color)
+    embed.set_author(name="Server Index -> Games",
+                     icon_url='https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048')
+    embed.set_footer(text="\U00002193 React to return")
+    reactions = ['<:return:867101369814745099>']
+    return embed, reactions
+
+async def utilityHelp(prefix):
+    embed = discord.Embed(
+        title= "Utility Commands",
+        description=
+        f"**For more info on each commands do** `{prefix}help [command]`\n*There you will also find Syntax, Aliases and Flags for commands*\n\n"
+        f"`{prefix}steal`: grabs emoji's and puts it in your server\n"
+        f"`{prefix}ping`: Pings the bot\n"
+        # f"`{prefix}`:\n"
+    , color=utility_color)
+    embed.set_author(name="Server Index -> Utility Commands",
+                     icon_url='https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048')
+    embed.set_footer(text="\U00002193 React to return")
+    reactions = ['<:return:867101369814745099>']
+    return embed, reactions
+
+async def moderationHelp(prefix):
+    embed = discord.Embed(
+        title= "moderation Commands",
+        description=
+        f"**For more info on each commands do** `{prefix}help [command]`\n*There you will also find Syntax, Aliases and Flags for commands*\n\n"
+        f"`{prefix}clear`: purges chat\n"
+        f"`{prefix}mute`: mutes a bitch\n"
+        f"`{prefix}unmute`: unmutes a bitch\n"
+        # f"`{prefix}`:\n"
+    , color=moderation_color)
+    embed.set_footer(text="\U00002193 React to return")
+    embed.set_author(name="Server Index -> Moderation Commands",
+                     icon_url='https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048')
+    reactions = ['<:return:867101369814745099>']
+    return embed, reactions
 
 class gethelp(commands.Cog):
 
     def __init__(self,bot):
         self.bot = bot
 
-    @commands.Cog.listener()
-    async def on_reaction_add(self, react, uid):
-        if not uid.bot:
-            ctx = react.message
-            embed = discord.Embed(title='test', description='test')
-            await ctx.edit(embed=embed)
-
-    #todo make into a flipbook
     @commands.command(
                 name = 'help',
                 aliases = ['helpme'],
                 brief = 'This is like help, but better.',
                 help = 'What else do you need to know bro, just run the command')
     async def sendHelp(self, ctx, *, args = ''):
-        fun_color = 52382
-        utility_color = 16375162
-        moderation_color = 13524060
         args = args.split()
         pf = await getPrefix(ctx, self.bot)
         prefix = pf[2]
-        intro = await introMenu(prefix)
         if not args:
-            #GENERAL HERE
-            #general = discord.Embed(title="", description="", color=)
-            #FUN HERE
-            fun = discord.Embed(title="Fun Commands", color=fun_color)
-            fun.add_field(name="ree", value="Rees out of frustration")
-            fun.add_field(name="yeye", value="Issi asked for it so yeah it does the same as ree but yeye")
-            fun.add_field(name="wallpaper", value="Sends a Random image from internet [1920x1080]")
-            fun.add_field(name= "cat", value = "Sends a Cat pic \U0001F408")
-            fun.add_field(name= "quote", value = "Sends a random anime quote!")
-            fun.add_field(name= "dog", value="Get a Dog pic \U0001F436")
-            fun.add_field(name="ily", value="Sends ily cuz draf do be lazy\nOnly allowed for Draf & Nissy")
-            fun.add_field(name="say", value="Basically repeats after you")
-            fun.add_field(name="joke", value="Gives you random jokes, you can use the flag `-ex` to get explicit jokes but beware may be offensive")
-            fun.add_field(name="dadjoke", value="Gives you a random dadjoke, enjoy :)")
-            fun.add_field(name="yomomma", value="yomomma so dumb she didnt realize this will output random mom jokes")
-            fun.add_field(name="minesweeper", value="A fun game of minesweeper will be generated\nsyntax is; `minesweeper [rows] [columns] [mines]`\nMax rows is 11, max columns is 9 and minimum mines is 3")
-            fun.set_footer(text="A bot by; itsPPT#9651, Blackfinix#3706 & EvilGiraffes#7300", icon_url="https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048")
-            #todo remove the complex bs
-            #UTILITY HERE
-            utility = discord.Embed(title="Utility Commands", color=utility_color)
-            utility.add_field(name="steal", value="Steals emojis")
-            utility.add_field(name="ping", value="Pings the bot")
-            utility.set_footer(text="A bot by; itsPPT#9651, Blackfinix#3706 & EvilGiraffes#7300", icon_url="https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048")
-            #MODERATION HERE
-            moderation = discord.Embed(title="Moderation Commands", color=moderation_color)
-            moderation.add_field(name="clear", value="Purges the chat")
-            moderation.add_field(name="mute", value="Mutes someone, default is 10 minutes")
-            moderation.add_field(name="unmute", value="Unmute someone")
-            moderation.set_footer(text="A bot by; itsPPT#9651, Blackfinix#3706 & EvilGiraffes#7300", icon_url="https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048")
-            embeds=[intro, fun, utility, moderation]
+            intro, reactions = await introMenu(prefix)
             embed = await ctx.send(embed=intro)
-            reactions = ['<:PepeLmao:865712134439436328>', '<:PepoGamer:865712213141356565>', '<a:pepeAnimeCaught:865712704315850782>', '<a:pepeban:865714938667991091>'] #fun, games, utility, moderation
             for react in reactions:
                 await embed.add_reaction(emoji=react)
-            # for embed in embeds:
-            #     await ctx.send(content=None, embed=embed)
         else:
             aliases = ''
             syntax = ''
@@ -96,8 +129,6 @@ class gethelp(commands.Cog):
                 if reg.match(val, string=cmd):
                     cmd = aliased_commands.get(val)
 
-            #GENERAL HERE
-            #Remember to change the first if statement in FUN to an elif when general is added lmao
             #FUN HERE
             if cmd == 'ree':
                 aliases = 're|reee|reeee'
@@ -137,11 +168,12 @@ class gethelp(commands.Cog):
                 aliases = 'yourmom|yomom'
                 desc = 'Sends a random yomomma joke'
                 color = fun_color
+            #GAMES HERE
             elif cmd == 'minesweeper':
                 aliases = 'ms'
                 syntax = 'minesweeper [rows] [columns] [mines]'
                 desc = 'A fun game of minesweeper will be generated\nMax rows is 11, max columns is 9 and minimum mines is 3'
-                color = fun_color
+                color = games_color
             #UTILITY HERE
             elif cmd == 'steal':
                 syntax = 'steal [emoji]|steal [emojilink]'
@@ -183,6 +215,47 @@ class gethelp(commands.Cog):
                 await ctx.send(embed=embed)
             else:
                 await ctx.send('Not a valid command')
+
+    @commands.Cog.listener()
+    async def on_reaction_add(self, react, un):
+        ctx = react.message
+        emote = str(react.emoji)
+        embed = ctx.embeds[0]
+        embedAuthorField = embed.author.name
+        if not un.bot and ctx.author.id == 852977382016024646 and reg.search(pattern=r'\AServer Index',
+                                                                             string=embedAuthorField):
+            pf = await getPrefix(ctx, self.bot)
+            prefix = pf[2]
+            if emote == "<:return:867101369814745099>":  # return
+                embed, reactions = await introMenu(prefix)
+                await ctx.clear_reactions()
+                await ctx.edit(embed=embed)
+                for react in reactions:
+                    await ctx.add_reaction(emoji=react)
+            elif emote == '<:PepeLmao:865712134439436328>':  # fun
+                embed, reactions = await funHelp(prefix)
+                await ctx.clear_reactions()
+                await ctx.edit(embed=embed)
+                for react in reactions:
+                    await ctx.add_reaction(emoji=react)
+            elif emote == '<:PepoGamer:865712213141356565>':  # games
+                embed, reactions = await gamesHelp(prefix)
+                await ctx.clear_reactions()
+                await ctx.edit(embed=embed)
+                for react in reactions:
+                    await ctx.add_reaction(emoji=react)
+            elif emote == '<a:pepeAnimeCaught:865712704315850782>':  # utility
+                embed, reactions = await utilityHelp(prefix)
+                await ctx.clear_reactions()
+                await ctx.edit(embed=embed)
+                for react in reactions:
+                    await ctx.add_reaction(emoji=react)
+            elif emote == '<a:pepeban:865714938667991091>':  # moderation
+                embed, reactions = await moderationHelp(prefix)
+                await ctx.clear_reactions()
+                await ctx.edit(embed=embed)
+                for react in reactions:
+                    await ctx.add_reaction(emoji=react)
 
 def setup(bot):
     bot.add_cog(gethelp(bot))
