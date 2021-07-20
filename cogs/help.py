@@ -24,7 +24,8 @@ class gethelp(commands.Cog):
 
     @commands.Cog.listener()
     async def on_reaction_add(self, reaction, user):
-        pass
+        if not user.bot:
+            pass
 
     #todo make into a flipbook
     @commands.command(
