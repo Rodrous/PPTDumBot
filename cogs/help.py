@@ -25,8 +25,9 @@ class gethelp(commands.Cog):
     @commands.Cog.listener()
     async def on_reaction_add(self, react, uid):
         if not uid.bot:
+            ctx = react.message
             embed = discord.Embed(title='test', description='test')
-            await react.message.edit(embed=embed)
+            await ctx.edit(embed=embed)
 
     #todo make into a flipbook
     @commands.command(
