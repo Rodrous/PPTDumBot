@@ -140,13 +140,13 @@ class webmaster(commands.Cog):
 
 
     @commands.Cog.listener()
-    async def on_message(self, message):
-        if reg.search(pattern=r'\bours?\b', string=message.content, flags=reg.I):
+    async def on_message(self, msg):
+        if reg.search(pattern=r'\bours?\b', string=msg.content, flags=reg.I) and not msg.author.bot:
             seq = ["<:doggo:863639575666098186>", "<:pepCom:863639491533340682>", "<:BlackCom:863642798070431744>",
                    "<:Star:863642810879443004>", "<a:Communist:863640421628641320>", "<:comthumb:863646009334169651>",
                    "<:usrBall:863646049028276234>", "<:yeye:863647634361942018>", '<:russianpepe:863647634001887273>']
             rand = random.choice(seq)
-            await message.add_reaction(rand)
+            await msg.add_reaction(rand)
 
 
 def setup(bot):
