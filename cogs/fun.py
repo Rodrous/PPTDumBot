@@ -4,6 +4,7 @@ import requests,random
 from build import generalPurpose as gp
 from build.library import moviequotes
 import re as reg
+import wikipedia
 
 #sends images and quotes
 class webmaster(commands.Cog):
@@ -148,6 +149,21 @@ class webmaster(commands.Cog):
                    "<:usrBall:863646049028276234>", "<:yeye:863647634361942018>", '<:russianpepe:863647634001887273>']
             rand = random.choice(seq)
             await msg.add_reaction(rand)
+
+    @commands.command(
+        name='wikipedia',
+        aliases=['wiki']
+    )
+    async def wikime(self,ctx,*,arg):
+        try:
+            data = wikipedia.summary(arg,sentences=7)
+            await ctx.send(data)
+        except wikipedia.exceptions.DisambiguationError as e:
+           print(type(e))
+           await ctx.send("The Search is highly vauge, it gave multiple outputs which *I* cannot send. Try Something on-point")
+        except Exception as e:
+            await ctx.send("Idk what the fuck happened, ping PPT/Finix/Draf")
+            print(e)
 
 
 def setup(bot):
