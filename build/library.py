@@ -88,12 +88,12 @@ class moviequotes:
         return mq[num]
 
     @classmethod
-    async def per(cls, Type: str, String: str):
+    async def per(cls, Type: str, Regex: str):
         mq = cls.mq
         Type = Type.lower()
         choices = []
         for item in mq:
-            if reg.search(pattern=String, string=item[Type], flags=reg.I):
+            if reg.search(pattern=Regex, string=item[Type], flags=reg.I):
                 choices.append(item)
         if choices:
             return random.choice(choices)
