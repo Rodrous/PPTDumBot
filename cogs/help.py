@@ -199,7 +199,7 @@ class gethelp(commands.Cog):
                             '**Types:**\n'
                             '`random`: Displays a random quote `[default]`\n'
                             '`get [ID]`: Searches for a quote based on its ID\n'
-                            '`per [type: Movie|Character] [search]`: Gives a random quote based on type`',
+                            '`per [type: Movie|Character] [search]`: Gives a random quote based on type',
                     'color': fun_color
                 },
                 #GAMES HERE
