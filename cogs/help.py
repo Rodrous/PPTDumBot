@@ -7,6 +7,7 @@ fun_color = 52382
 utility_color = 16375162
 moderation_color = 13524060
 games_color = 6724095
+bot_avatar = 'https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048'
 
 async def introMenu(prefix):
     embed = discord.Embed(
@@ -20,7 +21,7 @@ async def introMenu(prefix):
         "\n<a:pepeban:865714938667991091> For Moderation"
         , color=11187115)
     embed.set_author(name='Server Index',
-                     icon_url='https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048')
+                     icon_url=bot_avatar)
     reactions = ['<:PepeLmao:865712134439436328>', '<:PepoGamer:865712213141356565>', '<a:pepeAnimeCaught:865712704315850782>', '<a:pepeban:865714938667991091>'] #fun, games, utility, moderation
     return embed, reactions
 
@@ -41,10 +42,11 @@ async def funHelp(prefix):
         f"`{prefix}dadjoke`: Gives you a random dadjoke, enjoy :)\n"
         f"`{prefix}yomomma`: Yomomma so dumb she didnt realize this will output random mom jokes\n"
         f"`{prefix}wikipedia`: Searches for a wikipedia query"
+        f"`{prefix}moviequotes`: Sends a random moviequote"
         # f"`{prefix}`:\n"
         , color=fun_color)
     embed.set_author(name="Server Index -> Fun Commands",
-                     icon_url= 'https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048')
+                     icon_url= bot_avatar)
     embed.set_footer(text="\U00002193 React to return")
     reactions = ['<:return:867101369814745099>']
     return embed, reactions
@@ -58,7 +60,7 @@ async def gamesHelp(prefix):
         # f"`{prefix}`:\n"
     , color=games_color)
     embed.set_author(name="Server Index -> Games",
-                     icon_url='https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048')
+                     icon_url=bot_avatar)
     embed.set_footer(text="\U00002193 React to return")
     reactions = ['<:return:867101369814745099>']
     return embed, reactions
@@ -73,7 +75,7 @@ async def utilityHelp(prefix):
         # f"`{prefix}`:\n"
     , color=utility_color)
     embed.set_author(name="Server Index -> Utility Commands",
-                     icon_url='https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048')
+                     icon_url=bot_avatar)
     embed.set_footer(text="\U00002193 React to return")
     reactions = ['<:return:867101369814745099>']
     return embed, reactions
@@ -90,7 +92,7 @@ async def moderationHelp(prefix):
     , color=moderation_color)
     embed.set_footer(text="\U00002193 React to return")
     embed.set_author(name="Server Index -> Moderation Commands",
-                     icon_url='https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048')
+                     icon_url=bot_avatar)
     reactions = ['<:return:867101369814745099>']
     return embed, reactions
 
@@ -125,7 +127,8 @@ class gethelp(commands.Cog):
                 reg.compile(pattern=r'clear|purge') : 'clear',
                 reg.compile(pattern=r'm(ine)?s(weeper)?') : 'minesweeper',
                 reg.compile(pattern=r'say|speak') : 'say',
-                reg.compile(pattern=r'wiki(pedia)?') : 'wikipedia'
+                reg.compile(pattern=r'wiki(pedia)?') : 'wikipedia',
+                reg.compile(pattern=r'm(ovie)?q(uotes?)?') : 'moviequotes'
             }
             for val in aliased_commands:
                 if reg.match(val, string=cmd):
@@ -189,6 +192,16 @@ class gethelp(commands.Cog):
                     'desc': 'Searches for something on wikipedia',
                     'color': fun_color
                 },
+                'moviequotes': {
+                    'aliases': 'moviequote|mq',
+                    'syntax': f'{prefix}moviequotes [type: OPTIONAL]',
+                    'desc': 'Displays a random moviequote by default\n\n'
+                            '**Types:**\n'
+                            '`random`: Displays a random quote `[default]`\n'
+                            '`get [ID]`: Searches for a quote based on its ID\n'
+                            '`per [type: Movie|Character] [search]`: Gives a random quote based on type`',
+                    'color': fun_color
+                },
                 #GAMES HERE
                 'minesweeper': {
                     'aliases': 'ms',
@@ -219,7 +232,6 @@ class gethelp(commands.Cog):
                     'color': moderation_color
                 },
                 'unmute': {
-                    'aliases': '',
                     'syntax': f'{prefix}unmute [@user]',
                     'desc': 'Unmutes a bitch',
                     'color': moderation_color

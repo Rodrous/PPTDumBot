@@ -1,11 +1,11 @@
 import random
+import re as reg
 
 """
 Feel free to add as many moviequotes as you want, if there is no character or image leave it blank but dont remove it
 """
 
-
-async def moviequotes():
+class moviequotes:
     mq = [
         {"movie": "Dirty Harry [1971]", "character": "Dirty Harry",
          "quote": "You've got to ask yourself one question; Do you feel lucky? well, do ya, punk?",
@@ -71,4 +71,33 @@ async def moviequotes():
         # "quote": "",
         # "image": ""},
     ]
-    return random.choice(mq)
+    id = 1
+    for item in mq:
+        item['id'] = id
+        id += 1
+
+    @classmethod
+    async def random(cls):
+        mq = cls.mq
+        return random.choice(mq)
+
+    @classmethod
+    async def GET(cls, ID: int):
+        mq = cls.mq
+        num = ID - 1
+        return mq[num]
+
+    @classmethod
+    async def per(cls, Type: str, String: str):
+        mq = cls.mq
+        Type = Type.lower()
+        choices = []
+        for item in mq:
+            if reg.search(pattern=String, string=item[Type], flags=reg.I):
+                choices.append(item)
+        if choices:
+            return random.choice(choices)
+
+    @classmethod
+    async def search(cls, String: str):
+        pass

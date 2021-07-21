@@ -22,6 +22,12 @@ async def getPrefix(msg, bot, string:bool=False):
         return ' or '.join(tp[1:]) # ...either in a string as : "@PPTDumbBot or $"...
     return tp # ...or as a List type
 
+async def getPrefix(msg, bot, string:bool=False):
+    tp = await bot.get_prefix(msg)
+    if string:
+        return ' or '.join(tp[1:]) # ...either in a string as : "@PPTDumbBot or $"...
+    return tp # ...or as a List type
+
 #todo Urban Dict Scrapy/Api Add
 
 # from bs4 import BeautifulSoup
@@ -55,9 +61,3 @@ async def getPrefix(msg, bot, string:bool=False):
 #     print(f"{url['def']}\n{url['example']}\n\n{definition_link}")
 
 # WEBSCRAPING URBANDICT, NEEDS TO FIGURE OUT THE EXAMPLE
-
-async def getPrefix(msg, bot, string:bool=False):
-    tp = await bot.get_prefix(msg)
-    if string:
-        return ' or '.join(tp[1:]) # ...either in a string as : "@PPTDumbBot or $"...
-    return tp # ...or as a List type

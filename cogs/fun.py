@@ -129,13 +129,41 @@ class webmaster(commands.Cog):
     @commands.command(
         name='moviequotes',
         aliases=['mq', 'moviequote'])
-    async def movieQuote(self,ctx):
-        quote = await moviequotes()
+    async def movieQuote(self,ctx,*,args = ''):
+        args = args.lower().split()
+        pf = await gp.getPrefix(ctx, self.bot)
+        prefix = pf[2]
+        error_message = {'movie': 'Error 404','character': '',
+                     'quote': f'It was not found, make sure it was the right syntax\nDo `{prefix}help moviequotes` for info on syntax',
+                     'id': 'Contact PPT/Finix/Giraffe if you think its been a mistake',
+                     'image': ''}
+        if not args or args[0] == 'random':
+            quote = await moviequotes.random()
+        elif args[0] == 'get':
+            try:
+                quote = await moviequotes.GET(int(args[1]))
+            except:
+                quote = error_message
+        elif args[0] == 'per':
+            try:
+                string = ''
+                for item in args[2:]:
+                    if string:
+                        string += f"\s{str(item)}"
+                    else:
+                        string = str(item)
+                quote = await moviequotes.per(args[1], string)
+            except:
+                quote = error_message
+        else:
+            quote = error_message
+
         await ctx.send('__**This has not been fully implemented yet**__')
-        string = f'\"{quote["quote"]}\"'
+        string = f'{quote["quote"]}'
         if quote["character"]:
             string = string + f'\n**-{quote["character"]}**'
         embed = discord.Embed(title=quote['movie'] ,description=string, color= 4029286)
+        embed.set_footer(text=f"Quote ID: {quote['id']}")
         if quote["image"]:
             embed.set_thumbnail(url=quote["image"])
         await ctx.send(embed= embed)
