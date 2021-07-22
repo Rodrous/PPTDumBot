@@ -116,8 +116,6 @@ class gethelp(commands.Cog):
             for react in reactions:
                 await embed.add_reaction(emoji=react)
         else:
-            aliases = ''
-            syntax = ''
             cmd = args[0].lower()
             aliased_commands = {
                 reg.compile(pattern=r're+') : 'ree',
