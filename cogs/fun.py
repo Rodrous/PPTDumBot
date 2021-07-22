@@ -181,7 +181,7 @@ class webmaster(commands.Cog):
     )
     async def wikime(self,ctx,*,arg):
         try:
-            data = wikipedia.summary(arg,sentences=7)
+            data = wikipedia.summary(arg,sentences=7,auto_suggest=False)
             await ctx.send(data)
         except wikipedia.exceptions.DisambiguationError as e:
            print(type(e))
