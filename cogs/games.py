@@ -23,6 +23,7 @@ class games(commands.Cog):
             run = False
         if run:
             arr = [[0 for column in range(column)] for rows in range(row)]
+            ms = ''
             border_x = column - 1
             border_y = row - 1
             for num in range(mine):
@@ -53,16 +54,13 @@ class games(commands.Cog):
                 if y != 0 and x != 0:
                     if arr[y - 1][x - 1] != 'X':  # down left
                         arr[y - 1][x - 1] += 1
-            ms = ''
             for row in arr:
-                if ms:
-                    ms = f'{ms}\n' + " ".join(str(cell) for cell in row)
-                else:
-                    ms = " ".join(str(cell) for cell in row)
+                ms += " ".join(str(cell) for cell in row) + "\n"
             replace = {'X': '||:boom:||', '0': '||:zero:||', '1': '||:one:||', '2': '||:two:||', '3': '||:three:||',
                        '4': '||:four:||'}
             for item in replace:
                 ms = ms.replace(item, replace[item])
+
             await ctx.send(ms)
         else:
             await ctx.send(

@@ -142,18 +142,15 @@ class webmaster(commands.Cog):
         elif args[0] == 'get':
             try:
                 quote = await moviequotes.GET(int(args[1]))
-            except:
+            except Exception as e:
+                print(f"Quote fail Get: {e}")
                 quote = error_message
         elif args[0] == 'per':
             try:
-                string = ''
-                for item in args[2:]:
-                    if string:
-                        string += f"\s{str(item)}"
-                    else:
-                        string = str(item)
+                string = "\s".join(args[2:])
                 quote = await moviequotes.per(args[1], string)
-            except:
+            except Exception as e:
+                print(f"Quote fail Per: {e}")
                 quote = error_message
         else:
             quote = error_message
