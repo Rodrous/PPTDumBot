@@ -205,11 +205,11 @@ class gethelp(commands.Cog):
             else:
                 desc = ''
 
-            desc_final = f"**Prefix:** `{prefix}`\n**Name:** `{cmd.capitalize()}`"
+            desc_final = f"**Prefix: ** `{prefix}`\n**Name: ** `{cmd.capitalize()}`"
             if aliases:
-                desc_final = desc_final + f"\n**Aliases:** `{aliases}`"
+                desc_final = desc_final + f"\n**Aliases: ** `{aliases}`"
             if syntax:
-                desc_final = desc_final + f"\n**Syntax:** `{syntax}`"
+                desc_final = desc_final + f"\n**Syntax: ** `{syntax}`"
             if desc:
                 desc_final = desc_final + f"\n\n{desc}"
                 embed = discord.Embed(title="Command Help", description=desc_final, color = color)
