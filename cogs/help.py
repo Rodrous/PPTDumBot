@@ -7,6 +7,7 @@ fun_color = 52382
 utility_color = 16375162
 moderation_color = 13524060
 games_color = 6724095
+bot_avatar = 'https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048'
 
 async def introMenu(prefix):
     embed = discord.Embed(
@@ -20,7 +21,7 @@ async def introMenu(prefix):
         "\n<a:pepeban:865714938667991091> For Moderation"
         , color=11187115)
     embed.set_author(name='Server Index',
-                     icon_url='https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048')
+                     icon_url=bot_avatar)
     reactions = ['<:PepeLmao:865712134439436328>', '<:PepoGamer:865712213141356565>', '<a:pepeAnimeCaught:865712704315850782>', '<a:pepeban:865714938667991091>'] #fun, games, utility, moderation
     return embed, reactions
 
@@ -40,10 +41,12 @@ async def funHelp(prefix):
         f"`{prefix}joke`: Gives you random jokes\n"
         f"`{prefix}dadjoke`: Gives you a random dadjoke, enjoy :)\n"
         f"`{prefix}yomomma`: Yomomma so dumb she didnt realize this will output random mom jokes\n"
+        f"`{prefix}wikipedia`: Searches for a wikipedia query"
+        f"`{prefix}moviequotes`: Sends a random moviequote"
         # f"`{prefix}`:\n"
         , color=fun_color)
     embed.set_author(name="Server Index -> Fun Commands",
-                     icon_url= 'https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048')
+                     icon_url= bot_avatar)
     embed.set_footer(text="\U00002193 React to return")
     reactions = ['<:return:867101369814745099>']
     return embed, reactions
@@ -57,7 +60,7 @@ async def gamesHelp(prefix):
         # f"`{prefix}`:\n"
     , color=games_color)
     embed.set_author(name="Server Index -> Games",
-                     icon_url='https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048')
+                     icon_url=bot_avatar)
     embed.set_footer(text="\U00002193 React to return")
     reactions = ['<:return:867101369814745099>']
     return embed, reactions
@@ -72,7 +75,7 @@ async def utilityHelp(prefix):
         # f"`{prefix}`:\n"
     , color=utility_color)
     embed.set_author(name="Server Index -> Utility Commands",
-                     icon_url='https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048')
+                     icon_url=bot_avatar)
     embed.set_footer(text="\U00002193 React to return")
     reactions = ['<:return:867101369814745099>']
     return embed, reactions
@@ -89,7 +92,7 @@ async def moderationHelp(prefix):
     , color=moderation_color)
     embed.set_footer(text="\U00002193 React to return")
     embed.set_author(name="Server Index -> Moderation Commands",
-                     icon_url='https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048')
+                     icon_url=bot_avatar)
     reactions = ['<:return:867101369814745099>']
     return embed, reactions
 
@@ -123,96 +126,133 @@ class gethelp(commands.Cog):
                 reg.compile(pattern=r'yomom|yourmom') : 'yomomma',
                 reg.compile(pattern=r'clear|purge') : 'clear',
                 reg.compile(pattern=r'm(ine)?s(weeper)?') : 'minesweeper',
-                reg.compile(pattern=r'say|speak') : 'say'
+                reg.compile(pattern=r'say|speak') : 'say',
+                reg.compile(pattern=r'wiki(pedia)?') : 'wikipedia',
+                reg.compile(pattern=r'm(ovie)?q(uotes?)?') : 'moviequotes'
             }
             for val in aliased_commands:
                 if reg.match(val, string=cmd):
                     cmd = aliased_commands.get(val)
 
-            #FUN HERE
-            if cmd == 'ree':
-                aliases = 're|reee|reeee'
-                desc = 'The bot will *REEEEEEEE* out of frustration'
-                color = fun_color
-            elif cmd == 'yeye':
-                aliases = 'yeeye|yeeyee|yeyee'
-                desc = 'Same as ree but *YEEEEEEYEEEEEE*'
-                color = fun_color
-            elif cmd == 'wallpaper':
-                desc = 'Sends a random wallpaper in the size of `1920x1080`'
-                color = fun_color
-            elif cmd == 'cat':
-                desc = 'Sends a random catpic so you can apprieciate all the ADORBS'
-                color = fun_color
-            elif cmd == 'quote':
-                desc = 'Sends a random quote from an anime character'
-                color = fun_color
-            elif cmd == 'dog':
-                desc = 'Sends a random dogpic so you can apprieciate all the ADORBS'
-                color = fun_color
-            elif cmd == 'ily':
-                desc = 'This sends Ily * num\nOnly for Draf and Nissen'
-                color = fun_color
-            elif cmd == 'say':
-                syntax = f'{prefix}say [message]'
-                aliases = 'speak'
-                desc = 'Repeats everything you say, you cannot use this to bypass `@everyone|@here`'
-                color = fun_color
-            elif cmd == 'joke':
-                aliases = 'getjoke|jk'
-                desc = 'Sends a random joke\n\n**Flags:**\n`-ex` sends any jokes, even explicit and dark jokes'
-                color = fun_color
-            elif cmd == 'dadjoke':
-                desc = 'I hate my life, also sends a dadjoke'
-                color = fun_color
-            elif cmd == 'yomomma':
-                aliases = 'yourmom|yomom'
-                desc = 'Sends a random yomomma joke'
-                color = fun_color
-            #GAMES HERE
-            elif cmd == 'minesweeper':
-                aliases = 'ms'
-                syntax = f'{prefix}minesweeper [rows] [columns] [mines]'
-                desc = 'A fun game of minesweeper will be generated\nMax rows is 11, max columns is 9 and minimum mines is 3'
-                color = games_color
-            #UTILITY HERE
-            elif cmd == 'steal':
-                syntax = f'{prefix}steal [emoji]|steal [emojilink]'
-                desc = 'Steals an emoji and adds it to your server'
-                color = utility_color
-            elif cmd == 'ping':
-                desc = 'Pong! sends the latency of the bot'
-                color = utility_color
-            #MODERATION HERE
-            elif cmd == 'clear':
-                aliases = 'purge'
-                syntax = f'{prefix}clear [num]'
-                desc = 'Clears the chat\nwill be bettered in the feature, will add more flags and make it more advanced'
-                color = moderation_color
-            elif cmd == 'mute':
-                syntax = f'{prefix}mute [@user] [minutes]'
-                desc = 'Mutes a bitch, default is 10 minutes'
-                color = moderation_color
-            elif cmd == 'unmute':
-                syntax = f'{prefix}unmute [@user]'
-                desc = 'Unmutes a bitch'
-                color = moderation_color
-            # elif cmd == '':
-            #     aliases = ''
-            #     syntax = f''
-            #     desc = 'REQUIRED'
-            #     color = REQUIRED
-            else:
-                desc = ''
+            switch_case = {
+                #FUN HERE
+                'ree': {
+                    'aliases': 're|reee|reeee',
+                    'desc': 'The bot will *REEEEEEEE* out of frustration',
+                    'color': fun_color
+                },
+                'yeye': {
+                    'aliases': 'yeeye|yeeyee|yeyee',
+                    'desc': 'Same as ree but *YEEEEEEYEEEEEE*',
+                    'color': fun_color
+                },
+                'wallpaper': {
+                    'desc': 'Sends a random wallpaper in the size of `1920x1080`',
+                    'color': fun_color
+                },
+                'cat': {
+                    'desc': 'Sends a random catpic so you can apprieciate all the ADORBS',
+                    'color': fun_color
+                },
+                'quote': {
+                    'desc': 'Sends a random quote from an anime character',
+                    'color': fun_color
+                },
+                'dog': {
+                    'desc': 'Sends a random dogpic so you can apprieciate all the ADORBS',
+                    'color': fun_color
+                },
+                'ily': {
+                    'desc': 'This sends Ily * num\nOnly for Draf and Nissen',
+                    'color': fun_color
+                },
+                'say': {
+                    'aliases': 'speak',
+                    'syntax': f'{prefix}say [message]',
+                    'desc': 'Repeats everything you say, you cannot use this to bypass `@everyone|@here`',
+                    'color': fun_color
+                },
+                'joke': {
+                    'aliases': 'getjoke|jk',
+                    'desc': 'Sends a random joke\n\n**Flags:**\n`-ex` sends any jokes, even explicit and dark jokes',
+                    'color': fun_color
+                },
+                'dadjoke': {
+                    'desc': 'I hate my life, also sends a dadjoke',
+                    'color': fun_color
+                },
+                'yomomma': {
+                    'aliases': 'yourmom|yomom',
+                    'desc': 'Sends a random yomomma joke',
+                    'color': fun_color
+                },
+                'wikipedia': {
+                    'aliases': 'wiki',
+                    'syntax': f'{prefix}wikipedia [query]',
+                    'desc': 'Searches for something on wikipedia',
+                    'color': fun_color
+                },
+                'moviequotes': {
+                    'aliases': 'moviequote|mq',
+                    'syntax': f'{prefix}moviequotes [type: OPTIONAL]',
+                    'desc': 'Displays a random moviequote by default\n\n'
+                            '**Types:**\n'
+                            '`random`: Displays a random quote `[default]`\n'
+                            '`get [ID]`: Searches for a quote based on its ID\n'
+                            '`per [type: Movie|Character] [search]`: Gives a random quote based on type',
+                    'color': fun_color
+                },
+                #GAMES HERE
+                'minesweeper': {
+                    'aliases': 'ms',
+                    'syntax': f'{prefix}minesweeper [rows] [columns] [mines]',
+                    'desc': '',
+                    'color': games_color
+                },
+                #UTILITY HERE
+                'steal': {
+                    'syntax': f'{prefix}steal [emoji]|steal [emojilink]',
+                    'desc': 'Steals an emoji and adds it to your server',
+                    'color': utility_color
+                },
+                'ping': {
+                    'desc': 'Pong! sends the latency of the bot',
+                    'color': utility_color
+                },
+                #MODERATION HERE
+                'clear': {
+                    'aliases': 'purge',
+                    'syntax': f'{prefix}clear [num]',
+                    'desc': 'Clears the chat\nwill be bettered in the feature, will add more flags and make it more advanced',
+                    'color': moderation_color
+                },
+                'mute': {
+                    'syntax': f'{prefix}mute [@user] [minutes]',
+                    'desc': 'Mutes a bitch, default is 10 minutes',
+                    'color': moderation_color
+                },
+                'unmute': {
+                    'syntax': f'{prefix}unmute [@user]',
+                    'desc': 'Unmutes a bitch',
+                    'color': moderation_color
+                },
+                # '': {
+                #     'aliases': '',
+                #     'syntax': f'',
+                #     'desc': 'REQUIRED',
+                #     'color': REQUIRED
+                # },
+            }
+            case = switch_case.get(cmd, None)
+            if case:
+                desc_final = f"**Prefix:** `{prefix}`\n**Name:** `{cmd.capitalize()}`"
+                if case.get('aliases', None):
+                    desc_final = desc_final + f"\n**Aliases:** `{case['aliases']}`"
+                if case.get('syntax', None):
+                    desc_final = desc_final + f"\n**Syntax:** `{case['syntax']}`"
 
-            desc_final = f"**Prefix: ** `{prefix}`\n**Name: ** `{cmd.capitalize()}`"
-            if aliases:
-                desc_final = desc_final + f"\n**Aliases: ** `{aliases}`"
-            if syntax:
-                desc_final = desc_final + f"\n**Syntax: ** `{syntax}`"
-            if desc:
-                desc_final = desc_final + f"\n\n{desc}"
-                embed = discord.Embed(title="Command Help", description=desc_final, color = color)
+                desc_final = desc_final + f"\n\n{case['desc']}"
+                embed = discord.Embed(title="Command Help", description=desc_final, color=case['color'])
                 await ctx.send(embed=embed)
             else:
                 await ctx.send('Not a valid command')
