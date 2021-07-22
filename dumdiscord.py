@@ -1,5 +1,5 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 import base64, random
 from build import generalPurpose as gp
 
@@ -12,10 +12,6 @@ restrictedChannels = ["database"]
 customPrefix = {}
 defaultPrefix = '$'
 
-# add various descriptions here
-descriptions = ['aWYgeW91IGRlY29kZWQgdGhpcyB5b3UncmUgYSBuZXJk', 'Why do i exist, father?',
-                'Serving 7 servers lmao', "ctx.send(f'fuck you {member.mention}')",
-                'Running on biodiesel', "I'm one hell of a butler"]
 
 # You dont care about this a lot, only about the first return, that finds in the dictionary 'customPrefix' the prefix with
 # the key of the guild that called it. This will need rework when we add db so dont care about this too much.
@@ -29,8 +25,7 @@ def determinePrefix(bot, msg):
 
 # This is the same as a client initialization, but bot has more functionalities.
 bot = commands.Bot(command_prefix=determinePrefix,
-    case_insensitive = True, activity=discord.Activity(type=discord.ActivityType.listening, name=f'{defaultPrefix}help | {str(random.choice(descriptions))}'),
-    help_command=None)
+    case_insensitive = True, help_command=None)
 
 # Im sorting them via numbers, so when i do 1: explanation, the explanation is for the line 1 (and its else statement if it exists)
 # 1 : Checks if the command was called inside a server
@@ -94,7 +89,29 @@ async def on_message(msg):
 
     await bot.process_commands(msg)
 
+@bot.event
+async def on_ready():
+    await bot.wait_until_ready()
+    changeDescription.start()
 
+# add various descriptions here
+descriptions = ['aWYgeW91IGRlY29kZWQgdGhpcyB5b3UncmUgYSBuZXJk', 'Why do i exist, father?',
+                'Serving 7 servers lmao', "ctx.send(f'fuck you {member.mention}')",
+                'Running on biodiesel', "I'm one hell of a butler",
+                "The number of members that I serve isnt accurate but I cant be assed to fix it right now."]
+
+@tasks.loop(minutes=30)
+async def changeDescription():
+    totalMembers = []
+    for guild in bot.guilds:
+        totalMembers.extend(guild.members)
+    totalMembersCount = len(totalMembers)
+    randStr = random.choice(descriptions)
+    serving =  f"Serving {totalMembersCount} members in {len(bot.guilds)} servers."
+    print(f'{totalMembersCount} and {len(bot.guilds)}')
+    #print(totalMembers)
+    randChoice = str(random.choice([randStr, serving]))
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f'{defaultPrefix}help | {randChoice}'))
 
 if __name__ == "__main__":
     bot.load_extension('cogs.fun')
