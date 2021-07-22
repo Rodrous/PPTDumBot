@@ -102,13 +102,11 @@ descriptions = ['aWYgeW91IGRlY29kZWQgdGhpcyB5b3UncmUgYSBuZXJk', 'Why do i exist,
 
 @tasks.loop(hours=5)
 async def changeDescription():
-    totalMembers = []
+    totalMembers = 0
     for guild in bot.guilds:
-        totalMembers.extend(guild.members)
-    totalMembersCount = len(totalMembers)
+        totalMembers += guild.member_count
     randStr = random.choice(descriptions)
-    serving =  f"Serving {totalMembersCount} members in {len(bot.guilds)} servers."
-    print(f'{totalMembersCount} and {len(bot.guilds)}')
+    serving =  f"Serving {totalMembers} members in {len(bot.guilds)} servers."
     #print(totalMembers)
     randChoice = str(random.choice([randStr, serving]))
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f'{defaultPrefix}help | {randChoice}'))
