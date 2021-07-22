@@ -100,7 +100,7 @@ descriptions = ['aWYgeW91IGRlY29kZWQgdGhpcyB5b3UncmUgYSBuZXJk', 'Why do i exist,
                 'Running on biodiesel', "I'm one hell of a butler",
                 "The number of members that I serve isnt accurate but I cant be assed to fix it right now."]
 
-@tasks.loop(minutes=30)
+@tasks.loop(hours=5)
 async def changeDescription():
     totalMembers = []
     for guild in bot.guilds:
