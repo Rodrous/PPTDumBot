@@ -94,21 +94,20 @@ async def on_ready():
     await bot.wait_until_ready()
     changeDescription.start()
 
-# add various descriptions here
-descriptions = ['aWYgeW91IGRlY29kZWQgdGhpcyB5b3UncmUgYSBuZXJk', 'Why do i exist, father?',
-                'Serving 7 servers lmao', "ctx.send(f'fuck you {member.mention}')",
-                'Running on biodiesel', "I'm one hell of a butler",
-                "The number of members that I serve isnt accurate but I cant be assed to fix it right now."]
-
 @tasks.loop(hours=5)
 async def changeDescription():
+    # add various descriptions here
+    descriptions = ['Serving','aWYgeW91IGRlY29kZWQgdGhpcyB5b3UncmUgYSBuZXJk',
+                    'Why do i exist, father?', "ctx.send(f'fuck you {member.mention}')",
+                    'Running on biodiesel', "I'm one hell of a butler",
+                    "The number of members that I serve isnt accurate but I cant be assed to fix it right now."]
     totalMembers = 0
     for guild in bot.guilds:
         totalMembers += guild.member_count
-    randStr = random.choice(descriptions)
     serving =  f"Serving {totalMembers} members in {len(bot.guilds)} servers."
+    descriptions.__setitem__(0, serving)
     #print(totalMembers)
-    randChoice = str(random.choice([randStr, serving]))
+    randChoice = str(random.choice(descriptions))
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f'{defaultPrefix}help | {randChoice}'))
 
 if __name__ == "__main__":
