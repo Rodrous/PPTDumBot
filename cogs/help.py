@@ -204,7 +204,8 @@ class gethelp(commands.Cog):
                 'minesweeper': {
                     'aliases': 'ms',
                     'syntax': f'{prefix}minesweeper [rows] [columns] [mines]',
-                    'desc': '',
+                    'desc': 'Generates a random game of Minesweeper\n'
+                            'Max rows is 11, max columns is 9 and minumum bombs is 3, and no weird numbers',
                     'color': games_color
                 },
                 #UTILITY HERE
