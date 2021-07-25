@@ -215,9 +215,11 @@ class moviequotes:
             while loop == True:
                 loop = False
                 randChoice = random.choice(mq)
-                if explicitFilter is True and randChoice["flags"]["Explicit"] is True:
+                explicit = randChoice["flags"]["Explicit"]
+                nsfw = randChoice["flags"]["NSFW"]
+                if explicitFilter is True and explicit is True:
                     loop = True
-                if nsfwFilter is True and randChoice["flags"]["NSFW"] is True:
+                if nsfwFilter is True and nsfw is True:
                     loop = True
         else:
             randChoice = random.choice(mq)
