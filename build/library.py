@@ -181,21 +181,21 @@ class moviequotes:
          "image": "https://static.posters.cz/image/750/plakater/pulp-fiction-cover-i1288.jpg",
          "type": "quote", "flags": {"Explicit": False, "NSFW": False}
          },
-        # {"movie": "Pulp Fiction [1994]", "character": "Marsellus",
-        #  "quote": "What now? Let me tell you what now. I'ma call a coupla hard, pipe-hittin' niggers, who'll go to "
-        #           "work on the homes here with a pair of pliers and a blow torch. You hear me talkin', hillbilly boy? "
-        #           "I ain't through with you by a damn sight. I'ma get medieval on your ass.",
-        #  "image": "https://static.posters.cz/image/750/plakater/pulp-fiction-cover-i1288.jpg",
-        #  "type": "quote", "flags": {"Explicit": True, "NSFW": False}
-        #  },
-        # {"movie": "Pulp Fiction [1994]", "character": "Jules",
-        #  "quote": "Well, I'm a mushroom-cloud-layin' motherfucker, motherfucker! Every time my fingers touch brain, "
-        #           "I'm Superfly T.N.T., I'm the Guns of the Navarone! IN FACT, WHAT THE FUCK AM I DOIN' IN THE BACK? "
-        #           "YOU'RE THE MOTHERFUCKER WHO SHOULD BE ON BRAIN DETAIL! We're fuckin' switchin'! I'm washin' the "
-        #           "windows, and you're pickin' up this nigger's skull!",
-        #  "image": "https://static.posters.cz/image/750/plakater/pulp-fiction-cover-i1288.jpg",
-        #  "type": "quote", "flags": {"Explicit": True, "NSFW": False}
-        #  },
+        {"movie": "Pulp Fiction [1994]", "character": "Marsellus",
+         "quote": "What now? Let me tell you what now. I'ma call a coupla hard, pipe-hittin' niggers, who'll go to "
+                  "work on the homes here with a pair of pliers and a blow torch. You hear me talkin', hillbilly boy? "
+                  "I ain't through with you by a damn sight. I'ma get medieval on your ass.",
+         "image": "https://static.posters.cz/image/750/plakater/pulp-fiction-cover-i1288.jpg",
+         "type": "quote", "flags": {"Explicit": True, "NSFW": False}
+         },
+        {"movie": "Pulp Fiction [1994]", "character": "Jules",
+         "quote": "Well, I'm a mushroom-cloud-layin' motherfucker, motherfucker! Every time my fingers touch brain, "
+                  "I'm Superfly T.N.T., I'm the Guns of the Navarone! IN FACT, WHAT THE FUCK AM I DOIN' IN THE BACK? "
+                  "YOU'RE THE MOTHERFUCKER WHO SHOULD BE ON BRAIN DETAIL! We're fuckin' switchin'! I'm washin' the "
+                  "windows, and you're pickin' up this nigger's skull!",
+         "image": "https://static.posters.cz/image/750/plakater/pulp-fiction-cover-i1288.jpg",
+         "type": "quote", "flags": {"Explicit": True, "NSFW": False}
+         },
         # {"movie": "", "character": "",
         # "quote": "",
         # "image": "",
@@ -208,26 +208,58 @@ class moviequotes:
         id += 1
 
     @classmethod
-    async def random(cls):
+    async def random(cls, explicitFilter: bool = True, nsfwFilter: bool = False):
         mq = cls.mq
-        return random.choice(mq)
+        if explicitFilter is True or nsfwFilter is True:
+            loop = True
+            while loop == True:
+                loop = False
+                randChoice = random.choice(mq)
+                if explicitFilter is True and randChoice["flags"]["Explicit"] is True:
+                    loop = True
+                if nsfwFilter is True and randChoice["flags"]["NSFW"] is True:
+                    loop = True
+        else:
+            randChoice = random.choice(mq)
+
+        return randChoice
 
     @classmethod
-    async def GET(cls, ID: int):
+    async def GET(cls, ID: int, explicitFilter: bool = True, nsfwFilter: bool = False):
         mq = cls.mq
         num = ID - 1
-        return mq[num]
+        quote = mq[num]
+        explicit = quote["flags"]["Explicit"]
+        nsfw = quote["flags"]["NSFW"]
+        if explicitFilter is True and explicit is True:
+            quote = {"movie": "Explicit Filter", "character": "",
+                     "quote": "This quote is explicit and the Explicit Filter is turned on\nTry another one",
+                     "image": "",
+                     "type": "quote", "id": "Contact PPT/BlackFinix/Giraffe if you think theres been a mistake"}
+        if nsfwFilter is True and nsfw is True:
+            quote = {"movie": "NSFW Filter", "character": "",
+                     "quote": "This quote is not safe for work and the NSFW Filter is turned on\nTry another one",
+                     "image": "",
+                     "type": "quote", "id": "Contact PPT/BlackFinix/Giraffe if you think theres been a mistake"}
+        return quote
 
     @classmethod
-    async def per(cls, Type: str, Regex: str):
+    async def per(cls, Type: str, Regex: str, explicitFilter: bool = True, nsfwFilter: bool = False):
         mq = cls.mq
         Type = Type.lower()
         choices = []
         for item in mq:
             if reg.search(pattern=Regex, string=item[Type], flags=reg.I):
                 choices.append(item)
-        if choices:
-            return random.choice(choices)
+        if explicitFilter is True or nsfwFilter is True:
+            for item in choices:
+                explicit = item["flags"]["Explicit"]
+                nsfw = item["flags"]["NSFW"]
+                if explicitFilter is True and explicit is True:
+                    choices.remove(item)
+                elif nsfwFilter is True and nsfw is True:
+                    choices.remove(item)
+        return random.choice(choices)
 
     @classmethod
     async def search(cls, String: str):
