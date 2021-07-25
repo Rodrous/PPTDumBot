@@ -197,7 +197,13 @@ class gethelp(commands.Cog):
                             '**Types:**\n'
                             '`random`: Displays a random quote `[default]`\n'
                             '`get [ID]`: Searches for a quote based on its ID\n'
-                            '`per [type: Movie|Character] [search]`: Gives a random quote based on type',
+                            '`per [type: Movie|Character] [search]`: Gives a random quote based on type'
+                            '\n\n__**This will be added later and explicit is not shown by default**__\n'
+                            '**Blacklist:**\n'
+                            f'By doing: `{prefix}moviequotes [blacklist|bl] [flag: Explicit|NSFW]`\n'
+                            'You can blacklist certain tags in the server:\n'
+                            '`Explicit [Off by default]`: This toggles slurs\n'
+                            '`NSFW [On by default]`: This toggles NSFW quotes',
                     'color': fun_color
                 },
                 #GAMES HERE
