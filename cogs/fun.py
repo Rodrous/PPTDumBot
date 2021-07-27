@@ -36,7 +36,7 @@ class webmaster(commands.Cog):
     async def sendWallpaper(self,ctx):
         data = await gp.getDataFromLink(url="https://picsum.photos/1920/1080", returnFile=True, fileName='Why are you looking at this.png')
         await ctx.send(file=data)
-        
+
     @commands.command(
         name="quote",
         brief="Sends a quote from a movie/anime.",
@@ -52,26 +52,6 @@ class webmaster(commands.Cog):
     async def sendRee(self,ctx):
         num = random.randint(10,100)
         await ctx.send("*R" + "E" * num + "*")
-
-    @commands.command(
-        name="ily",
-        brief="Draf is tooo lazy to type it",
-        help="ily * num + name")
-    async def sendIly(self, ctx):
-        allowed_ids = [323457305855262721, 579036541238640731] #[DRAF, NISSY]
-        AUTHOR = ctx.author.id
-        if allowed_ids.__contains__(AUTHOR):
-            randomint = "1" + "0" * random.randint(10,100)
-            num = random.randint(10,int(randomint))
-            DRAF = allowed_ids[0]
-            NISSY = allowed_ids[1]
-            if AUTHOR == DRAF:
-                name = NISSY
-            elif AUTHOR == NISSY:
-                name = DRAF
-            await ctx.send("ily " + str(num) + f" <@{name}>")
-        else:
-            await ctx.send("you cant use that", delete_after=6)
 
     @commands.command(
         name="say",

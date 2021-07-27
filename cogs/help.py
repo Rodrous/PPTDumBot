@@ -36,7 +36,6 @@ async def funHelp(prefix):
         f"`{prefix}cat`: Sends a Cat pic \U0001F408\n"
         f"`{prefix}dog`: Get a Dog pic \U0001F436\n"
         f"`{prefix}quote`: Sends a random anime quote\n"
-        f"`{prefix}ily`: It sends ily + num cause Draf is too lazy to type\n"
         f"`{prefix}say`: Repeats what you say\n"
         f"`{prefix}joke`: Gives you random jokes\n"
         f"`{prefix}dadjoke`: Gives you a random dadjoke, enjoy :)\n"
@@ -158,10 +157,6 @@ class gethelp(commands.Cog):
                 },
                 'dog': {
                     'desc': 'Sends a random dogpic so you can apprieciate all the ADORBS',
-                    'color': fun_color
-                },
-                'ily': {
-                    'desc': 'This sends Ily * num\nOnly for Draf and Nissen',
                     'color': fun_color
                 },
                 'say': {
