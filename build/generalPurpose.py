@@ -38,7 +38,7 @@ async def feedback_n_bugs_json(ctx, args: str, selectName: str):
     return header, {
         "parent": {"database_id": NOTION_ID},
         "properties": {
-            "name":
+            "Name":
                 {"title": [
                     {"text":
                          {"content": AUTHOR}
