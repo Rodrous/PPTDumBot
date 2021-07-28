@@ -1,5 +1,5 @@
 from discord.ext import commands
-import discord,base64,typing
+import discord,base64,typing, requests
 import re as reg
 from build import generalPurpose as gp
 
@@ -10,6 +10,13 @@ with open("config/allowedguildIds.txt") as file:
 allowedguilds = [base64.b64decode(i).decode('utf-8')  for i in f]
 
 restrictedChannels = ["database"]
+
+def Feedback_n_bug_blacklist(ctx):
+    blacklist = {}
+    blacklist = set(blacklist.values())
+    return ctx.author.id not in blacklist
+
+fbnbug_bl = commands.check(Feedback_n_bug_blacklist)
 
 class syscom(commands.Cog):
     def __init__(self,bot):
@@ -72,6 +79,16 @@ class syscom(commands.Cog):
         except Exception as e:
                 print(f"There is some Error Here, error is defined by: {e}")
                 await ctx.send("This server is already at the limit and cant have more emojis **):**")
+
+    @fbnbug_bl
+    @commands.command(
+        name="feedback",
+        aliases= ["fb"])
+    async def feedBack(self,ctx,*,args):
+        headers, post_content = await gp.feedback_n_bugs_json(ctx, str(args), selectName="Feedback")
+        database = requests.get(url="https://api.notion.com/v1/pages/f3793c8657784e6498c5a1d06ecf1cd7", headers=headers).json()
+        post_url = "https://api.notion.com/v1/pages"
+        post = requests.post(url=post_url, headers=headers, json=post_content)
 
 
 
