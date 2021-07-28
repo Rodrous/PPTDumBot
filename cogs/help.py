@@ -261,28 +261,29 @@ class gethelp(commands.Cog):
     async def on_reaction_add(self, react, un):
         ctx = react.message
         emote = str(react.emoji)
-        embed = ctx.embeds[0]
-        embedAuthorField = embed.author.name
-        if not un.bot and ctx.author.id == 852977382016024646 and reg.search(pattern=r'\AServer Index', string=embedAuthorField):
-            pf = await getPrefix(ctx, self.bot)
-            prefix = pf[2]
-            if emote == "<:return:867101369814745099>":  # return
-                embed, reactions = await introMenu(prefix)
-            elif emote == '<:PepeLmao:865712134439436328>':  # fun
-                embed, reactions = await funHelp(prefix)
-            elif emote == '<:PepoGamer:865712213141356565>':  # games
-                embed, reactions = await gamesHelp(prefix)
-            elif emote == '<a:pepeAnimeCaught:865712704315850782>':  # utility
-                embed, reactions = await utilityHelp(prefix)
-            elif emote == '<a:pepeban:865714938667991091>':  # moderation
-                embed, reactions = await moderationHelp(prefix)
-            else:
-                embed, reactions = None, None
-            if embed and reactions:
-                await ctx.clear_reactions()
-                await ctx.edit(embed=embed)
-                for react in reactions:
-                    await ctx.add_reaction(emoji=react)
+        if ctx.embeds:
+            embed = ctx.embeds[0]
+            embedAuthorField = embed.author.name
+            if not un.bot and ctx.author.id == 852977382016024646 and reg.search(pattern=r'\AServer Index', string=embedAuthorField):
+                pf = await getPrefix(ctx, self.bot)
+                prefix = pf[2]
+                if emote == "<:return:867101369814745099>":  # return
+                    embed, reactions = await introMenu(prefix)
+                elif emote == '<:PepeLmao:865712134439436328>':  # fun
+                    embed, reactions = await funHelp(prefix)
+                elif emote == '<:PepoGamer:865712213141356565>':  # games
+                    embed, reactions = await gamesHelp(prefix)
+                elif emote == '<a:pepeAnimeCaught:865712704315850782>':  # utility
+                    embed, reactions = await utilityHelp(prefix)
+                elif emote == '<a:pepeban:865714938667991091>':  # moderation
+                    embed, reactions = await moderationHelp(prefix)
+                else:
+                    embed, reactions = None, None
+                if embed and reactions:
+                    await ctx.clear_reactions()
+                    await ctx.edit(embed=embed)
+                    for react in reactions:
+                        await ctx.add_reaction(emoji=react)
 
 
 def setup(bot):
