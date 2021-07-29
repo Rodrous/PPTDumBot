@@ -100,7 +100,8 @@ async def changeDescription():
     descriptions = ['Serving','aWYgeW91IGRlY29kZWQgdGhpcyB5b3UncmUgYSBuZXJk',
                     'Why do i exist, father?', "ctx.send(f'fuck you {member.mention}')",
                     'Running on biodiesel', "I'm one hell of a butler",
-                    "The number of members that I serve isnt accurate but I cant be assed to fix it right now."]
+                    "The number of members that I serve isnt accurate but I cant be assed to fix it right now.",
+                    "Waiting for Hot Topic to sell 'Distressed iPhones", "Blackfinix codes this bot too"]
     totalMembers = 0
     for guild in bot.guilds:
         totalMembers += guild.member_count
