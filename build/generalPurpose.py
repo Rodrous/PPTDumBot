@@ -22,61 +22,6 @@ async def getPrefix(msg, bot, string:bool=False):
         return ' or '.join(tp[1:]) # ...either in a string as : "@PPTDumbBot or $"...
     return tp # ...or as a List type
 
-async def feedback_n_bugs_json(ctx, args: str, selectName: str) -> "header, json":
-    with open("config/notion.txt") as file:
-        f = file.readlines()
-    n = [base64.b64decode(i).decode('utf-8') for i in f]
-
-    NOTION_KEY = str(n[0])
-    NOTION_ID = str(n[1])
-    AUTHOR = str(ctx.author)
-    AUTHOR_ID = int(ctx.author.id)
-    MSG = args
-    print(NOTION_ID)
-    print(NOTION_KEY)
-    header = {"Authorization": NOTION_KEY, "Notion-Version": "2021-05-13"}
-    return header, {
-        "parent": {"database_id": NOTION_ID},
-        "properties": {
-            "Name":
-                {"title": [
-                    {"text":
-                         {"content": AUTHOR}
-                     }
-                ]
-                },
-            "Description":
-                {"rich_text": [
-                    {"text":
-                         {"content": MSG}
-                     }
-                ]
-                },
-            "Type":
-                {"select":
-                     {"name": selectName}
-                 },
-            "ID": {
-                "number": AUTHOR_ID
-            }
-        },
-        "children": [
-            {
-                "object": "block",
-                "type": "paragraph",
-                "paragraph": {
-                    "text": [
-                        {"type":
-                             "text",
-                         "text":
-                             {"content": MSG}
-                         }
-                    ]
-                }
-            }
-        ]
-    }
-
 #todo Urban Dict Scrapy/Api Add
 
 # from bs4 import BeautifulSoup

@@ -69,6 +69,8 @@ async def utilityHelp(prefix):
         title= "Utility Commands",
         description=
         f"**For more info on each commands do** `{prefix}help [command]`\n*There you will also find Syntax, Aliases and Flags for commands*\n\n"
+        f"`{prefix}feedback [message]`: Send us feedback!\n"
+        f"`{prefix}bugs [message]`: Report bugs you find\n"
         f"`{prefix}steal`: Grabs emoji's and puts it in your server\n"
         f"`{prefix}ping`: Pings the bot\n"
         # f"`{prefix}`:\n"
@@ -125,7 +127,9 @@ class gethelp(commands.Cog):
                 reg.compile(pattern=r'm(ine)?s(weeper)?') : 'minesweeper',
                 reg.compile(pattern=r'say|speak') : 'say',
                 reg.compile(pattern=r'wiki(pedia)?') : 'wikipedia',
-                reg.compile(pattern=r'm(ovie)?q(uotes?)?') : 'moviequotes'
+                reg.compile(pattern=r'm(ovie)?q(uotes?)?') : 'moviequotes',
+                reg.compile(pattern=r'f(eed)?b(ack)?'): 'feedback',
+                reg.compile(pattern=r'bug-?rep(ort)?|bugs'): 'bugreport'
             }
             for val in aliased_commands:
                 if reg.match(val, string=cmd):
@@ -217,6 +221,18 @@ class gethelp(commands.Cog):
                 },
                 'ping': {
                     'desc': 'Pong! sends the latency of the bot',
+                    'color': utility_color
+                },
+                'feedback': {
+                    'aliases': 'fb',
+                    'syntax': f'{prefix}feedback [message]',
+                    'desc': 'This allows you to send us feedback, if you wish to add a command or whatever you feel you want to tell us devs!',
+                    'color': utility_color
+                },
+                'bugreport': {
+                    'aliases': 'bugrep|bug-rep|bug-report|bugs',
+                    'syntax': f'{prefix}bugreport [message]',
+                    'desc': 'Here you can report bugs to us',
                     'color': utility_color
                 },
                 #MODERATION HERE
