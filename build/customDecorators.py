@@ -5,7 +5,7 @@ def devsOnly(ctx):
         "Ppt": 311919809895858177,
         "Finix": 239762173440557057,
     }
-    devs = list(devs.values())
+    devs = set(devs.values())
     return devs.__contains__(ctx.author.id)
 
 def private(ctx):
@@ -27,7 +27,7 @@ def private(ctx):
         # Friend Alts
         "Karma | EllaJD": 845876972222808065
     }
-    whitelist = list(whitelist.values())
+    whitelist = set(whitelist.values())
     return whitelist.__contains__(ctx.author.id)
 
 """      Specific     """

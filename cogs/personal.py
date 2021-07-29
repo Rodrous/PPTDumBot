@@ -44,7 +44,7 @@ class personal(commands.Cog):
             "Xan": 307210893144621068,
             "Gabo": 480170339335143426
         }
-        pinged_people_list = list(pinged_people.values())
+        pinged_people_list = set(pinged_people.values())
         AUTHOR = ctx.author.id
         if pinged_people_list.__contains__(AUTHOR):
             pinged_people_list.remove(AUTHOR)
