@@ -109,7 +109,7 @@ async def changeDescription():
     descriptions.__setitem__(0, serving)
     #print(totalMembers)
     randChoice = str(random.choice(descriptions))
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f'{defaultPrefix}help | {randChoice}'))
+    await bot.change_presence(activity=discord.Game(name=f'{randChoice}'))
 
 if __name__ == "__main__":
     bot.load_extension('cogs.fun')
