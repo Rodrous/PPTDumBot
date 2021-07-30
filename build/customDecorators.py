@@ -34,7 +34,7 @@ def private(ctx):
 def Feedback_n_bug_blacklist(ctx):
     blacklist = {
         #Devs
-        # "Giraffe": 323457305855262721,
+        "Giraffe": 323457305855262721,
         "Ppt": 311919809895858177,
         "Finix": 239762173440557057,
         #Devs Alts
