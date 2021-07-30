@@ -4,6 +4,7 @@ import re as reg
 from build import generalPurpose as gp
 from build.customDecorators import Feedback_n_bug_blacklist
 from build import notion
+from build.library import loadingFunnyMessages
 
 
 with open("config/allowedguildIds.txt") as file:
@@ -82,18 +83,30 @@ class syscom(commands.Cog):
         name="feedback",
         aliases= ["fb"])
     async def feedBack(self,ctx,*,args):
+        loading_msg = await loadingFunnyMessages()
+        msg = await ctx.send(loading_msg)
         headers, post_content = await notion.feedback_n_bugs_json(ctx, str(args), selectName="Feedback")
         post_url = "https://api.notion.com/v1/pages"
-        requests.post(url=post_url, headers=headers, json=post_content).json()
+        response = requests.post(url=post_url, headers=headers, json=post_content)
+        if response.status_code == 200:
+            await msg.edit(content="Feedback sent!")
+        else:
+            await msg.edit(content="Something happened, please try again or contact staff")
 
     @feedbackNbugsBlacklist
     @commands.command(
         name="bugreport",
         aliases=["bugs", "bugrep", "bug-report", "bug-rep"])
     async def bugReport(self, ctx, *, args):
+        loading_msg = await loadingFunnyMessages()
+        msg = await ctx.send(loading_msg)
         headers, post_content = await notion.feedback_n_bugs_json(ctx, str(args), selectName="Bugs")
         post_url = "https://api.notion.com/v1/pages"
-        requests.post(url=post_url, headers=headers, json=post_content).json()
+        response = requests.post(url=post_url, headers=headers, json=post_content)
+        if response.status_code == 200:
+            await msg.edit(content="Bug Report sent!")
+        else:
+            await msg.edit(content="Something happened, please try again or contact staff")
 
 
 
