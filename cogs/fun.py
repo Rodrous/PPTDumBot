@@ -3,6 +3,7 @@ from discord.ext import commands
 import requests,random
 from build import generalPurpose as gp
 from build.library import moviequotes
+from build.urbanDict import searchitem
 import re as reg
 import wikipedia
 
@@ -169,6 +170,15 @@ class webmaster(commands.Cog):
         except Exception as e:
             await ctx.send("Idk what the fuck happened, ping PPT/Finix/Draf")
             print(e)
+
+    @commands.command(
+        name="dict",
+        aliases=['urban']
+    )
+    async def urban(self,ctx,*,arg):
+        search = searchitem(arg)
+        await ctx.send(search)
+
 
 
 def setup(bot):
