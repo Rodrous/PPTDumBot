@@ -18,6 +18,8 @@ class webmaster(commands.Cog):
         help='Sends a cat image.')
     async def sendCat(self,ctx):
         data = await gp.getDataFromLink(url="https://aws.random.cat/meow", json=True, jsonType='file', returnFile=True, fileName='Cat.png')
+        if data == None:
+            return await ctx.send("Couldnt Retrieve image from server.")
         await ctx.send("From PPT with \U0001F49A")
         await ctx.send(file=data)
 
@@ -27,8 +29,8 @@ class webmaster(commands.Cog):
         help='Fucking furry.')
     async def sendDog(self,ctx):
         data = await gp.getDataFromLink(url="https://dog.ceo/api/breeds/image/random", json=True, jsonType='message', returnFile=True, fileName='Dog.png')
-       if data == None:
-            await ctx.send("Couldnt Retrieve image from server.")
+        if data == None:
+            return await ctx.send("Couldnt Retrieve image from server.")
         await ctx.send("From PPT with \U0001F49A")
         await ctx.send(file=data)
 
@@ -39,7 +41,7 @@ class webmaster(commands.Cog):
     async def sendWallpaper(self,ctx):
         data = await gp.getDataFromLink(url="https://picsum.photos/1920/1080", returnFile=True, fileName='Why are you looking at this.png')
         if data == None:
-            await ctx.send("Couldnt Retrieve image from server.")
+            return await ctx.send("Couldnt Retrieve image from server.")
         await ctx.send(file=data)
 
     @commands.command(
