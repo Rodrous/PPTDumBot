@@ -3,6 +3,7 @@ from discord.ext import commands
 import requests,random
 from build import generalPurpose as gp
 from build.library import moviequotes
+from build.urbanDict import searchitem
 import re as reg
 import wikipedia
 
@@ -17,6 +18,8 @@ class webmaster(commands.Cog):
         help='Sends a cat image.')
     async def sendCat(self,ctx):
         data = await gp.getDataFromLink(url="https://aws.random.cat/meow", json=True, jsonType='file', returnFile=True, fileName='Cat.png')
+        if data == None:
+            return await ctx.send("Couldnt Retrieve image from server.")
         await ctx.send("From PPT with \U0001F49A")
         await ctx.send(file=data)
 
@@ -26,6 +29,8 @@ class webmaster(commands.Cog):
         help='Fucking furry.')
     async def sendDog(self,ctx):
         data = await gp.getDataFromLink(url="https://dog.ceo/api/breeds/image/random", json=True, jsonType='message', returnFile=True, fileName='Dog.png')
+        if data == None:
+            return await ctx.send("Couldnt Retrieve image from server.")
         await ctx.send("From PPT with \U0001F49A")
         await ctx.send(file=data)
 
@@ -35,6 +40,8 @@ class webmaster(commands.Cog):
         help='Sends a wallpaper with size of 1920x1080')
     async def sendWallpaper(self,ctx):
         data = await gp.getDataFromLink(url="https://picsum.photos/1920/1080", returnFile=True, fileName='Why are you looking at this.png')
+        if data == None:
+            return await ctx.send("Couldnt Retrieve image from server.")
         await ctx.send(file=data)
 
     @commands.command(
@@ -169,6 +176,15 @@ class webmaster(commands.Cog):
         except Exception as e:
             await ctx.send("Idk what the fuck happened, ping PPT/Finix/Draf")
             print(e)
+
+    @commands.command(
+        name="dict",
+        aliases=['urban']
+    )
+    async def urban(self,ctx,*,arg):
+        search = searchitem(arg)
+        await ctx.send(search)
+
 
 
 def setup(bot):
