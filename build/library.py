@@ -1,11 +1,10 @@
 import random
 import re as reg
 
-"""
-Feel free to add as many moviequotes as you want, if there is no character or image leave it blank but dont remove it
-"""
-
 class moviequotes:
+    """
+    Feel free to add as many moviequotes as you want, if there is no character or image leave it blank but dont remove it
+    """
     mq = [
         {"movie": "Dirty Harry [1971]", "character": "Dirty Harry",
          "quote": "You've got to ask yourself one question; Do you feel lucky? well, do ya, punk?",
