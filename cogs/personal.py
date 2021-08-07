@@ -1,13 +1,13 @@
 from discord.ext import commands
 import discord, random
-from build.generalPurpose import getPrefix
+from build.generalPurpose import getPrefix, botAvatar
 from build.customDecorators import private, devsOnly
 import re as reg
 
 devsonly = commands.check(devsOnly)
 private = commands.check(private)
 private_embed_color = 6724095
-bot_avatar = 'https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048'
+bot_avatar = botAvatar()
 
 class personal(commands.Cog):
     def __init__(self,bot):

@@ -1,13 +1,13 @@
 from discord.ext import commands
 import discord
 import re as reg
-from build.generalPurpose import getPrefix
+from build.generalPurpose import getPrefix, botAvatar
 
 fun_color = 52382
 utility_color = 16375162
 moderation_color = 13524060
 games_color = 6724095
-bot_avatar = 'https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048'
+bot_avatar = botAvatar()
 
 async def introMenu(prefix):
     embed = discord.Embed(
