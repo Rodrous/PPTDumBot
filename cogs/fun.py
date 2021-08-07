@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import requests,random
 from build import generalPurpose as gp
-from build.library import moviequotes
+from build.library import moviequotes, loadingFunnyMessages
 from build.urbanDict import searchitem
 import re as reg
 import wikipedia
@@ -20,8 +20,7 @@ class webmaster(commands.Cog):
         data = await gp.getDataFromLink(url="https://aws.random.cat/meow", json=True, jsonType='file', returnFile=True, fileName='Cat.png')
         if data == None:
             return await ctx.send("Couldnt Retrieve image from server.")
-        await ctx.send("From PPT with \U0001F49A")
-        await ctx.send(file=data)
+        await ctx.send(content="From PPT with \U0001F49A", file=data)
 
     @commands.command(
         name='dog',
@@ -31,8 +30,7 @@ class webmaster(commands.Cog):
         data = await gp.getDataFromLink(url="https://dog.ceo/api/breeds/image/random", json=True, jsonType='message', returnFile=True, fileName='Dog.png')
         if data == None:
             return await ctx.send("Couldnt Retrieve image from server.")
-        await ctx.send("From PPT with \U0001F49A")
-        await ctx.send(file=data)
+        await ctx.send(content= "From PPT with \U0001F49A", file=data)
 
     @commands.command(
         name='wallpaper',
@@ -49,8 +47,10 @@ class webmaster(commands.Cog):
         brief="Sends a quote from a movie/anime.",
         help="Sends a random quote")
     async def sendQuote(self,ctx):
+        loading = await loadingFunnyMessages()
+        msg = await ctx.send(loading)
         url = requests.get('https://animechan.vercel.app/api/random').json()
-        await ctx.send(f"A quote from {url['character']} : {url['quote']}")
+        await msg.edit(content=f"A quote from {url['character']} : {url['quote']}")
 
     @commands.command(
         aliases=['re', 'ree', 'reee', 'reeee'],
@@ -87,22 +87,26 @@ class webmaster(commands.Cog):
         help="a random joke, can be explicit or offensive so beware")
     async def sendJoke(self,ctx, *, args = 'null'):
         # https://sv443.net/jokeapi/v2/
+        loading = await loadingFunnyMessages()
+        msg = await ctx.send(loading)
         if str(args).count('-ex') >= 1:
             url = requests.get('https://v2.jokeapi.dev/joke/Any').json()
         else:
             url = requests.get('https://v2.jokeapi.dev/joke/Any?safe-mode').json()
         if url['type'] == 'single':
-            await ctx.send(url['joke'])
+            await msg.edit(content=url['joke'])
         elif url['type'] == 'twopart':
-            await ctx.send(f"{url['setup']}\n{url['delivery']}")
+            await msg.edit(content=f"{url['setup']}\n{url['delivery']}")
 
     @commands.command(
         name="dadjoke",
         brief='i hate my life',
         help='you hate me')
     async def sendDadjoke(self,ctx):
+        loading = await loadingFunnyMessages()
+        msg = await ctx.send(loading)
         url = requests.get("https://icanhazdadjoke.com/", headers={"accept" : "application/json"}).json()
-        await ctx.send(url['joke'])
+        await msg.edit(content=url['joke'])
 
     @commands.command(
         name='yomomma',
@@ -110,13 +114,17 @@ class webmaster(commands.Cog):
         brief='we like mom jokes',
         help='sends a random yomomma joke')
     async def sendMomjoke(self,ctx):
+        loading = await loadingFunnyMessages()
+        msg = await ctx.send(loading)
         url = requests.get('https://api.yomomma.info/').json()
-        await ctx.send(url['joke'])
+        await msg.edit(content=url['joke'])
 
     @commands.command(
         name='moviequotes',
         aliases=['mq', 'moviequote'])
     async def movieQuote(self,ctx,*,args = ''):
+        loading = await loadingFunnyMessages()
+        msg = await ctx.send(loading)
         args = args.lower().split()
         pf = await gp.getPrefix(ctx, self.bot)
         prefix = pf[2]
@@ -150,7 +158,7 @@ class webmaster(commands.Cog):
         embed.set_footer(text=f"Quote ID: {quote['id']}")
         if quote["image"]:
             embed.set_thumbnail(url=quote["image"])
-        await ctx.send(embed= embed)
+        await msg.edit(content=None, embed= embed)
 
 
     @commands.Cog.listener()
