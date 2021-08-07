@@ -160,6 +160,29 @@ class webmaster(commands.Cog):
             embed.set_thumbnail(url=quote["image"])
         await msg.edit(content=None, embed= embed)
 
+    @commands.command(
+        name='wikipedia',
+        aliases=['wiki']
+    )
+    async def wikime(self, ctx, *, arg):
+        try:
+            data = wikipedia.summary(arg, sentences=7, auto_suggest=False)
+            await ctx.send(data)
+        except wikipedia.exceptions.DisambiguationError as e:
+            print(type(e))
+            await ctx.send(
+                "The Search is highly vauge, it gave multiple outputs which *I* cannot send. Try Something on-point")
+        except Exception as e:
+            await ctx.send("Idk what the fuck happened, ping PPT/Finix/Draf")
+            print(e)
+
+    @commands.command(
+        name="dict",
+        aliases=['urban', 'urbandict', 'define']
+    )
+    async def urban(self, ctx, *, arg):
+        search = searchitem(arg)
+        await ctx.send(search)
 
     @commands.Cog.listener()
     async def on_message(self, msg):
@@ -169,30 +192,6 @@ class webmaster(commands.Cog):
                    "<:usrBall:863646049028276234>", "<:yeye:863647634361942018>", '<:russianpepe:863647634001887273>']
             rand = random.choice(seq)
             await msg.add_reaction(rand)
-
-    @commands.command(
-        name='wikipedia',
-        aliases=['wiki']
-    )
-    async def wikime(self,ctx,*,arg):
-        try:
-            data = wikipedia.summary(arg,sentences=7,auto_suggest=False)
-            await ctx.send(data)
-        except wikipedia.exceptions.DisambiguationError as e:
-           print(type(e))
-           await ctx.send("The Search is highly vauge, it gave multiple outputs which *I* cannot send. Try Something on-point")
-        except Exception as e:
-            await ctx.send("Idk what the fuck happened, ping PPT/Finix/Draf")
-            print(e)
-
-    @commands.command(
-        name="dict",
-        aliases=['urban']
-    )
-    async def urban(self,ctx,*,arg):
-        search = searchitem(arg)
-        await ctx.send(search)
-
 
 
 def setup(bot):

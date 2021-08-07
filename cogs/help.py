@@ -40,8 +40,9 @@ async def funHelp(prefix):
         f"`{prefix}joke`: Gives you random jokes\n"
         f"`{prefix}dadjoke`: Gives you a random dadjoke, enjoy :)\n"
         f"`{prefix}yomomma`: Yomomma so dumb she didnt realize this will output random mom jokes\n"
-        f"`{prefix}wikipedia`: Searches for a wikipedia query"
-        f"`{prefix}moviequotes`: Sends a random moviequote"
+        f"`{prefix}wikipedia`: Searches for a wikipedia query\n"
+        f"`{prefix}urbandict`: Searches definition for a word\n"
+        f"`{prefix}moviequotes`: Sends a random moviequote\n"
         # f"`{prefix}`:\n"
         , color=fun_color)
     embed.set_author(name="Server Index -> Fun Commands",
@@ -129,7 +130,8 @@ class gethelp(commands.Cog):
                 reg.compile(pattern=r'wiki(pedia)?') : 'wikipedia',
                 reg.compile(pattern=r'm(ovie)?q(uotes?)?') : 'moviequotes',
                 reg.compile(pattern=r'f(eed)?b(ack)?'): 'feedback',
-                reg.compile(pattern=r'bug-?rep(ort)?|bugs'): 'bugreport'
+                reg.compile(pattern=r'bug-?rep(ort)?|bugs'): 'bugreport',
+                reg.compile(pattern=r'(urban)?dict|urban|define'): 'dict'
             }
             for val in aliased_commands:
                 if reg.match(val, string=cmd):
@@ -205,6 +207,12 @@ class gethelp(commands.Cog):
                             '`NSFW [On by default]`: This toggles NSFW quotes',
                     'color': fun_color
                 },
+                'dict': {
+                    'aliases': 'urban|urbandict|define',
+                    'syntax': f'{prefix}dict [words]',
+                    'desc': 'Will give you the urban dictionary definition of something',
+                    'color': fun_color
+                },
                 #GAMES HERE
                 'minesweeper': {
                     'aliases': 'ms',
@@ -253,7 +261,7 @@ class gethelp(commands.Cog):
                     'color': moderation_color
                 },
                 # '': {
-                #     'aliases': '',
+                #     'aliases': '{prefix}',
                 #     'syntax': f'',
                 #     'desc': 'REQUIRED',
                 #     'color': REQUIRED
