@@ -131,12 +131,12 @@ class webmaster(commands.Cog):
         error_message = {'movie': 'Error 404','character': '',
                      'quote': f'It was not found, make sure it was the right syntax\nDo `{prefix}help moviequotes` for info on syntax',
                      'id': 'Contact PPT/Finix/Giraffe if you think its been a mistake',
-                     'image': ''}
+                     'image': '', 'type': 'quote'}
         if not args or args[0] == 'random':
             quote = await moviequotes.random()
         elif args[0] == 'get':
             try:
-                quote = await moviequotes.GET(int(args[1]))
+                quote = await moviequotes.get(int(args[1]))
             except Exception as e:
                 print(f"Quote fail Get: {e}")
                 quote = error_message
@@ -150,9 +150,8 @@ class webmaster(commands.Cog):
         else:
             quote = error_message
 
-        await ctx.send('__**This has not been fully implemented yet**__')
         string = f'{quote["quote"]}'
-        if quote["character"]:
+        if quote.get('character', None):
             string = string + f'\n**-{quote["character"]}**'
         embed = discord.Embed(title=quote['movie'] ,description=string, color= 4029286)
         embed.set_footer(text=f"Quote ID: {quote['id']}")
