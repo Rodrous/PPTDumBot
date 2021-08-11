@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 import requests,random
-from build import generalPurpose as gp
+from build.generalPurpose import dumbot, getDataFromLink
 from build.library import moviequotes, loadingFunnyMessages
 from build.urbanDict import searchitem
 import re as reg
@@ -17,7 +17,7 @@ class webmaster(commands.Cog):
         brief='Sends an image of a cute (*most of the times*) cat ꓷ:',
         help='Sends a cat image.')
     async def sendCat(self,ctx):
-        data = await gp.getDataFromLink(url="https://aws.random.cat/meow", json=True, jsonType='file', returnFile=True, fileName='Cat.png')
+        data = await getDataFromLink(url="https://aws.random.cat/meow", json=True, jsonType='file', returnFile=True, fileName='Cat.png')
         if data == None:
             return await ctx.send("Couldnt Retrieve image from server.")
         await ctx.send(content="From PPT with \U0001F49A", file=data)
@@ -27,7 +27,7 @@ class webmaster(commands.Cog):
         brief='Sends an image of a heckin good doggo ꓷ:',
         help='Fucking furry.')
     async def sendDog(self,ctx):
-        data = await gp.getDataFromLink(url="https://dog.ceo/api/breeds/image/random", json=True, jsonType='message', returnFile=True, fileName='Dog.png')
+        data = await getDataFromLink(url="https://dog.ceo/api/breeds/image/random", json=True, jsonType='message', returnFile=True, fileName='Dog.png')
         if data == None:
             return await ctx.send("Couldnt Retrieve image from server.")
         await ctx.send(content= "From PPT with \U0001F49A", file=data)
@@ -37,7 +37,7 @@ class webmaster(commands.Cog):
         brief='Sends a wallpaper.',
         help='Sends a wallpaper with size of 1920x1080')
     async def sendWallpaper(self,ctx):
-        data = await gp.getDataFromLink(url="https://picsum.photos/1920/1080", returnFile=True, fileName='Why are you looking at this.png')
+        data = await getDataFromLink(url="https://picsum.photos/1920/1080", returnFile=True, fileName='Why are you looking at this.png')
         if data == None:
             return await ctx.send("Couldnt Retrieve image from server.")
         await ctx.send(file=data)
@@ -126,7 +126,7 @@ class webmaster(commands.Cog):
         loading = await loadingFunnyMessages()
         msg = await ctx.send(loading)
         args = args.lower().split()
-        pf = await gp.getPrefix(ctx, self.bot)
+        pf = await dumbot.getPrefix(ctx, self.bot)
         prefix = pf[2]
         error_message = {'movie': 'Error 404','character': '',
                      'quote': f'It was not found, make sure it was the right syntax\nDo `{prefix}help moviequotes` for info on syntax',

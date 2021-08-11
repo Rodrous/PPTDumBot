@@ -1,13 +1,13 @@
 from discord.ext import commands
 import discord, random
-from build.generalPurpose import getPrefix, botAvatar
+from build.generalPurpose import dumbot
 from build.customDecorators import private, devsOnly
 import re as reg
 
 devsonly = commands.check(devsOnly)
 private = commands.check(private)
 private_embed_color = 6724095
-bot_avatar = botAvatar()
+bot_avatar = dumbot.avatar()
 
 class personal(commands.Cog):
     def __init__(self,bot):
@@ -61,7 +61,7 @@ class personal(commands.Cog):
     async def personalHelp(self, ctx, *, args= ''):
         await ctx.message.channel.purge(limit=1)
         args = args.split()
-        pf = await getPrefix(ctx, self.bot)
+        pf = await dumbot.getPrefix(ctx, self.bot)
         prefix = pf[2]
         if not args:
             embed = discord.Embed(

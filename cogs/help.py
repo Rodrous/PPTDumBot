@@ -1,13 +1,13 @@
 from discord.ext import commands
 import discord
 import re as reg
-from build.generalPurpose import getPrefix, botAvatar
+from build.generalPurpose import dumbot
 
 fun_color = 52382
 utility_color = 16375162
 moderation_color = 13524060
 games_color = 6724095
-bot_avatar = botAvatar()
+bot_avatar = dumbot.avatar()
 
 async def introMenu(prefix):
     embed = discord.Embed(
@@ -110,7 +110,7 @@ class gethelp(commands.Cog):
                 help = 'What else do you need to know bro, just run the command')
     async def sendHelp(self, ctx, *, args = ''):
         args = args.split()
-        pf = await getPrefix(ctx, self.bot)
+        pf = await dumbot.getPrefix(ctx, self.bot)
         prefix = pf[2]
         if not args:
             intro, reactions = await introMenu(prefix)
@@ -289,7 +289,7 @@ class gethelp(commands.Cog):
             embed = ctx.embeds[0]
             embedAuthorField = embed.author.name
             if not un.bot and ctx.author.id == 852977382016024646 and reg.search(pattern=r'\AServer Index', string=embedAuthorField):
-                pf = await getPrefix(ctx, self.bot)
+                pf = await dumbot.getPrefix(ctx, self.bot)
                 prefix = pf[2]
                 if emote == "<:return:867101369814745099>":  # return
                     embed, reactions = await introMenu(prefix)

@@ -15,12 +15,17 @@ async def getDataFromLink(url:str, json:bool=False, jsonType:str='', returnFile:
                 return discord.File(data,fileName)
             return data
 
-# Returns the prefix...
-async def getPrefix(msg, bot, string:bool=False):
-    tp = await bot.get_prefix(msg)
-    if string:
-        return ' or '.join(tp[1:]) # ...either in a string as : "@PPTDumbBot or $"...
-    return tp # ...or as a List type
+class dumbot:
 
-def botAvatar():
-    return 'https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048'
+    @staticmethod
+    async def getPrefix(msg, bot, string:bool=False):
+        # Returns the prefix...
+        tp = await bot.get_prefix(msg)
+        if string:
+            return ' or '.join(tp[1:]) # ...either in a string as : "@PPTDumbBot or $"...
+        return tp # ...or as a List type
+
+    @staticmethod
+    #todo make this actually find the bot av url and make it async, remember to uncuck it in help menues
+    def avatar():
+        return 'https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048'
