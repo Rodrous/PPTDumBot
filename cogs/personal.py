@@ -1,6 +1,6 @@
 from discord.ext import commands
 import discord, random
-from build.generalPurpose import dumbot
+from build.generalPurpose import dumbot, getDataFromLink
 from build.customDecorators import private, devsOnly
 import re as reg
 
@@ -31,6 +31,13 @@ class personal(commands.Cog):
             elif AUTHOR == NISSY:
                 name = DRAF
             await ctx.send("ily " + str(num) + f" <@{name}>")
+
+    # @devsonly
+    # @commands.command(
+    #     name="test"
+    # )
+    # async def test(self, ctx):
+    #     tiktok = "https://vm.tiktok.com/ZMRN4uyaF/"
 
     @private
     @commands.command(
