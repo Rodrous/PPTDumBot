@@ -16,7 +16,7 @@ async def feedback_n_bugs_json(ctx, args: str, selectName: str) -> "header, json
     AUTHOR_ID = int(ctx.author.id)
     MSG = args
     header = {"Authorization": NOTION_KEY, "Notion-Version": "2021-05-13"}
-    return header, {
+    data = {
         "parent": {
             "database_id": NOTION_ID
         },
@@ -56,3 +56,4 @@ async def feedback_n_bugs_json(ctx, args: str, selectName: str) -> "header, json
             }
         ]
     }
+    return header, data
