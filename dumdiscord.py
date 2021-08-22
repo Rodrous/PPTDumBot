@@ -10,7 +10,7 @@ id = base64.b64decode(f).decode('utf-8')
 restrictedChannels = ["database"]
 
 customPrefix = {}
-defaultPrefix = '!'
+defaultPrefix = '$'
 
 
 # You dont care about this a lot, only about the first return, that finds in the dictionary 'customPrefix' the prefix with
