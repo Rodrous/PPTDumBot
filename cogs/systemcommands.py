@@ -38,9 +38,9 @@ class syscom(commands.Cog):
     @commands.has_guild_permissions(manage_emojis = True)
     @commands.has_permissions(manage_emojis=True)
     async def stealEmoji(self, ctx, *, args = ''):
-        gLimit = ctx.guild.emoji_limit
-        gCurr = len(await ctx.guild.fetch_emojis())
-        print(str(gCurr)+'/'+str(gLimit)+' emojis')
+        #gLimit = ctx.guild.emoji_limit
+        #gCurr = len(await ctx.guild.fetch_emojis())
+        #print(str(gCurr)+'/'+str(gLimit)+' emojis')
         # if gCurr >= gLimit:
         #         return await ctx.send("This server is already at the limit and cant have more emojis **):**\n(If you think this is an error,contact Blackfinix/EvilGiraffes/PPT)")
         turl = 'https://cdn.discordapp.com/emojis/'
@@ -55,7 +55,6 @@ class syscom(commands.Cog):
                 return await ctx.send(f'Added the emoji {newEm} to the server with the name : "{name}"')
 
             else:
-                print('got in else')
                 if reg.match(pattern='<a?:.*:\d*>',string=msg[0]):
                     name = '_'.join(msg[1:]) or (''.join(reg.findall(pattern='(?<=:)[a-zA-Z1-9~_]*(?=:)', string=msg[0])))
                 else:
@@ -76,6 +75,7 @@ class syscom(commands.Cog):
 
         except Exception as e:
                 print(f"There is some Error Here, error is defined by: {e}")
+                await gp.dumbot.sendErrorToChannel(self, ctx, e)
                 await ctx.send("Some error occured, please try again or ping the devs **):**")
 
     @feedbackNbugsBlacklist

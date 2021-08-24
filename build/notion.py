@@ -1,6 +1,6 @@
 import base64
 
-async def feedback_n_bugs_json(ctx, args: str, selectName: str) -> "header, json":
+async def feedback_n_bugs_json(ctx, args: str, selectName: str):
     with open("config/notion.txt") as file:
         f = file.readlines()
     notion = []

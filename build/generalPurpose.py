@@ -1,5 +1,9 @@
+from discord.ext.commands import bot
 import requests,aiohttp,io
 import discord, base64
+from discord.ext import commands
+
+errorChannelID = int(855808866994487306)
 
 async def getDataFromLink(url:str, json:bool=False, jsonType:str='', returnFile:bool=False, fileName:str='aRandomName.png'):
     link = url
@@ -29,3 +33,8 @@ class dumbot:
     #todo make this actually find the bot av url and make it async, remember to uncuck it in help menues
     def avatar():
         return 'https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048'
+
+    #@commands.command(name='chan')
+    async def sendErrorToChannel(self, ctx, error : Exception):
+        await commands.Bot.get_channel(self.bot, errorChannelID).send(error)
+        await commands.Bot.get_channel(self.bot, errorChannelID).send(f"Error in guild: **{ctx.guild}**, channel: **{ctx.channel}**, in message: {ctx.message}")
