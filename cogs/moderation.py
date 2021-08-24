@@ -1,5 +1,6 @@
 from discord.ext import commands
 import discord,base64,typing,asyncio
+from build.generalPurpose import dumbot
 
 with open("config/allowedguildIds.txt") as file:
     f = file.readlines()
@@ -46,6 +47,7 @@ class moderation(commands.Cog):
                                             add_reactions=False)
             except Exception as e:
                 print(f"Fuck you!:- {e}")
+                await dumbot.sendErrorToChannel(self, ctx, e)
             await user.add_roles(getRole)
         else:
             await user.add_roles(getRole)

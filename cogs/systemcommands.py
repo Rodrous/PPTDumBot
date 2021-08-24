@@ -1,7 +1,7 @@
 from discord.ext import commands
 import discord,base64,typing, requests
 import re as reg
-from build import generalPurpose as gp
+from build.generalPurpose import dumbot, getDataFromLink
 from build.customDecorators import Feedback_n_bug_blacklist
 from build import notion
 from build.library import loadingFunnyMessages
@@ -49,7 +49,7 @@ class syscom(commands.Cog):
         try:
             msg = args.split()
             if reg.match(pattern='https://cdn.discordapp.com/emojis/', string=msg[0]):
-                data = await gp.getDataFromLink(url=str(msg[0]), fileName='WhyAreYouLookingAtThis')
+                data = await getDataFromLink(url=str(msg[0]), fileName='WhyAreYouLookingAtThis')
                 name = '_'.join(msg[1:]) or 'RandomName'
                 newEm = await ctx.guild.create_custom_emoji(name=name, image=data.getvalue(), reason=f'{ctx.author.mention} triggered the command : $steal')
                 return await ctx.send(f'Added the emoji {newEm} to the server with the name : "{name}"')
@@ -68,14 +68,14 @@ class syscom(commands.Cog):
                     turl += str(eid) + '.png'
                     #url = f"https://cdn.discordapp.com/emojis/853662523843674112.png"
 
-                data = await gp.getDataFromLink(url=turl, fileName="WhyAreYouLookingAtThis")
+                data = await getDataFromLink(url=turl, fileName="WhyAreYouLookingAtThis")
 
                 newEm = await ctx.guild.create_custom_emoji(name=name, image=data.getvalue(), reason=f'{ctx.author.mention} triggered the command : $steal')
                 return await ctx.send(f'Added the emoji {newEm} to the server with the name : "{name}"')
 
         except Exception as e:
                 print(f"There is some Error Here, error is defined by: {e}")
-                await gp.dumbot.sendErrorToChannel(self, ctx, e)
+                await dumbot.sendErrorToChannel(self, ctx,"Steal", e)
                 await ctx.send("Some error occured, please try again or ping the devs **):**")
 
     @feedbackNbugsBlacklist
