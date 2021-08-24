@@ -76,7 +76,7 @@ class syscom(commands.Cog):
 
         except Exception as e:
                 print(f"There is some Error Here, error is defined by: {e}")
-                await ctx.send("This server is already at the limit and cant have more emojis **):**")
+                await ctx.send("Some error occured, please try again or ping the devs **):**")
 
     @feedbackNbugsBlacklist
     @commands.command(
