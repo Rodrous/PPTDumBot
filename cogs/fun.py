@@ -1,8 +1,8 @@
 import discord
 from discord.ext import commands
 import requests,random
-from build import generalPurpose as gp
-from build.library import moviequotes
+from build.generalPurpose import dumbot, getDataFromLink
+from build.library import moviequotes, loadingFunnyMessages
 from build.urbanDict import searchitem
 import re as reg
 import wikipedia
@@ -17,29 +17,27 @@ class webmaster(commands.Cog):
         brief='Sends an image of a cute (*most of the times*) cat ꓷ:',
         help='Sends a cat image.')
     async def sendCat(self,ctx):
-        data = await gp.getDataFromLink(url="https://aws.random.cat/meow", json=True, jsonType='file', returnFile=True, fileName='Cat.png')
+        data = await getDataFromLink(url="https://aws.random.cat/meow", json=True, jsonType='file', returnFile=True, fileName='Cat.png')
         if data == None:
             return await ctx.send("Couldnt Retrieve image from server.")
-        await ctx.send("From PPT with \U0001F49A")
-        await ctx.send(file=data)
+        await ctx.send(content="From PPT with \U0001F49A", file=data)
 
     @commands.command(
         name='dog',
         brief='Sends an image of a heckin good doggo ꓷ:',
         help='Fucking furry.')
     async def sendDog(self,ctx):
-        data = await gp.getDataFromLink(url="https://dog.ceo/api/breeds/image/random", json=True, jsonType='message', returnFile=True, fileName='Dog.png')
+        data = await getDataFromLink(url="https://dog.ceo/api/breeds/image/random", json=True, jsonType='message', returnFile=True, fileName='Dog.png')
         if data == None:
             return await ctx.send("Couldnt Retrieve image from server.")
-        await ctx.send("From PPT with \U0001F49A")
-        await ctx.send(file=data)
+        await ctx.send(content= "From PPT with \U0001F49A", file=data)
 
     @commands.command(
         name='wallpaper',
         brief='Sends a wallpaper.',
         help='Sends a wallpaper with size of 1920x1080')
     async def sendWallpaper(self,ctx):
-        data = await gp.getDataFromLink(url="https://picsum.photos/1920/1080", returnFile=True, fileName='Why are you looking at this.png')
+        data = await getDataFromLink(url="https://picsum.photos/1920/1080", returnFile=True, fileName='Why are you looking at this.png')
         if data == None:
             return await ctx.send("Couldnt Retrieve image from server.")
         await ctx.send(file=data)
@@ -49,8 +47,10 @@ class webmaster(commands.Cog):
         brief="Sends a quote from a movie/anime.",
         help="Sends a random quote")
     async def sendQuote(self,ctx):
+        loading = await loadingFunnyMessages()
+        msg = await ctx.send(loading)
         url = requests.get('https://animechan.vercel.app/api/random').json()
-        await ctx.send(f"A quote from {url['character']} : {url['quote']}")
+        await msg.edit(content=f"A quote from {url['character']} : {url['quote']}")
 
     @commands.command(
         aliases=['re', 'ree', 'reee', 'reeee'],
@@ -87,22 +87,26 @@ class webmaster(commands.Cog):
         help="a random joke, can be explicit or offensive so beware")
     async def sendJoke(self,ctx, *, args = 'null'):
         # https://sv443.net/jokeapi/v2/
+        loading = await loadingFunnyMessages()
+        msg = await ctx.send(loading)
         if str(args).count('-ex') >= 1:
             url = requests.get('https://v2.jokeapi.dev/joke/Any').json()
         else:
             url = requests.get('https://v2.jokeapi.dev/joke/Any?safe-mode').json()
         if url['type'] == 'single':
-            await ctx.send(url['joke'])
+            await msg.edit(content=url['joke'])
         elif url['type'] == 'twopart':
-            await ctx.send(f"{url['setup']}\n{url['delivery']}")
+            await msg.edit(content=f"{url['setup']}\n{url['delivery']}")
 
     @commands.command(
         name="dadjoke",
         brief='i hate my life',
         help='you hate me')
     async def sendDadjoke(self,ctx):
+        loading = await loadingFunnyMessages()
+        msg = await ctx.send(loading)
         url = requests.get("https://icanhazdadjoke.com/", headers={"accept" : "application/json"}).json()
-        await ctx.send(url['joke'])
+        await msg.edit(content=url['joke'])
 
     @commands.command(
         name='yomomma',
@@ -110,25 +114,29 @@ class webmaster(commands.Cog):
         brief='we like mom jokes',
         help='sends a random yomomma joke')
     async def sendMomjoke(self,ctx):
+        loading = await loadingFunnyMessages()
+        msg = await ctx.send(loading)
         url = requests.get('https://api.yomomma.info/').json()
-        await ctx.send(url['joke'])
+        await msg.edit(content=url['joke'])
 
     @commands.command(
         name='moviequotes',
         aliases=['mq', 'moviequote'])
     async def movieQuote(self,ctx,*,args = ''):
+        loading = await loadingFunnyMessages()
+        msg = await ctx.send(loading)
         args = args.lower().split()
-        pf = await gp.getPrefix(ctx, self.bot)
+        pf = await dumbot.getPrefix(ctx, self.bot)
         prefix = pf[2]
         error_message = {'movie': 'Error 404','character': '',
                      'quote': f'It was not found, make sure it was the right syntax\nDo `{prefix}help moviequotes` for info on syntax',
                      'id': 'Contact PPT/Finix/Giraffe if you think its been a mistake',
-                     'image': ''}
+                     'image': '', 'type': 'quote'}
         if not args or args[0] == 'random':
             quote = await moviequotes.random()
         elif args[0] == 'get':
             try:
-                quote = await moviequotes.GET(int(args[1]))
+                quote = await moviequotes.get(int(args[1]))
             except Exception as e:
                 print(f"Quote fail Get: {e}")
                 quote = error_message
@@ -142,16 +150,38 @@ class webmaster(commands.Cog):
         else:
             quote = error_message
 
-        await ctx.send('__**This has not been fully implemented yet**__')
         string = f'{quote["quote"]}'
-        if quote["character"]:
+        if quote.get('character', None):
             string = string + f'\n**-{quote["character"]}**'
         embed = discord.Embed(title=quote['movie'] ,description=string, color= 4029286)
         embed.set_footer(text=f"Quote ID: {quote['id']}")
         if quote["image"]:
             embed.set_thumbnail(url=quote["image"])
-        await ctx.send(embed= embed)
+        await msg.edit(content=None, embed= embed)
 
+    @commands.command(
+        name='wikipedia',
+        aliases=['wiki']
+    )
+    async def wikime(self, ctx, *, arg):
+        try:
+            data = wikipedia.summary(arg, sentences=7, auto_suggest=False)
+            await ctx.send(data)
+        except wikipedia.exceptions.DisambiguationError as e:
+            print(type(e))
+            await ctx.send(
+                "The Search is highly vauge, it gave multiple outputs which *I* cannot send. Try Something on-point")
+        except Exception as e:
+            await ctx.send("Idk what the fuck happened, ping PPT/Finix/Draf")
+            print(e)
+
+    @commands.command(
+        name="dict",
+        aliases=['urban', 'urbandict', 'define']
+    )
+    async def urban(self, ctx, *, arg):
+        search = searchitem(arg)
+        await ctx.send(search)
 
     @commands.Cog.listener()
     async def on_message(self, msg):
@@ -161,30 +191,6 @@ class webmaster(commands.Cog):
                    "<:usrBall:863646049028276234>", "<:yeye:863647634361942018>", '<:russianpepe:863647634001887273>']
             rand = random.choice(seq)
             await msg.add_reaction(rand)
-
-    @commands.command(
-        name='wikipedia',
-        aliases=['wiki']
-    )
-    async def wikime(self,ctx,*,arg):
-        try:
-            data = wikipedia.summary(arg,sentences=7,auto_suggest=False)
-            await ctx.send(data)
-        except wikipedia.exceptions.DisambiguationError as e:
-           print(type(e))
-           await ctx.send("The Search is highly vauge, it gave multiple outputs which *I* cannot send. Try Something on-point")
-        except Exception as e:
-            await ctx.send("Idk what the fuck happened, ping PPT/Finix/Draf")
-            print(e)
-
-    @commands.command(
-        name="dict",
-        aliases=['urban']
-    )
-    async def urban(self,ctx,*,arg):
-        search = searchitem(arg)
-        await ctx.send(search)
-
 
 
 def setup(bot):

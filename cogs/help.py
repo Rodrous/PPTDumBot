@@ -1,13 +1,13 @@
 from discord.ext import commands
 import discord
 import re as reg
-from build.generalPurpose import getPrefix
+from build.generalPurpose import dumbot
 
 fun_color = 52382
 utility_color = 16375162
 moderation_color = 13524060
 games_color = 6724095
-bot_avatar = 'https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048'
+bot_avatar = dumbot.avatar()
 
 async def introMenu(prefix):
     embed = discord.Embed(
@@ -40,8 +40,9 @@ async def funHelp(prefix):
         f"`{prefix}joke`: Gives you random jokes\n"
         f"`{prefix}dadjoke`: Gives you a random dadjoke, enjoy :)\n"
         f"`{prefix}yomomma`: Yomomma so dumb she didnt realize this will output random mom jokes\n"
-        f"`{prefix}wikipedia`: Searches for a wikipedia query"
-        f"`{prefix}moviequotes`: Sends a random moviequote"
+        f"`{prefix}wikipedia`: Searches for a wikipedia query\n"
+        f"`{prefix}urbandict`: Searches definition for a word\n"
+        f"`{prefix}moviequotes`: Sends a random moviequote\n"
         # f"`{prefix}`:\n"
         , color=fun_color)
     embed.set_author(name="Server Index -> Fun Commands",
@@ -109,7 +110,7 @@ class gethelp(commands.Cog):
                 help = 'What else do you need to know bro, just run the command')
     async def sendHelp(self, ctx, *, args = ''):
         args = args.split()
-        pf = await getPrefix(ctx, self.bot)
+        pf = await dumbot.getPrefix(ctx, self.bot)
         prefix = pf[2]
         if not args:
             intro, reactions = await introMenu(prefix)
@@ -129,7 +130,8 @@ class gethelp(commands.Cog):
                 reg.compile(pattern=r'wiki(pedia)?') : 'wikipedia',
                 reg.compile(pattern=r'm(ovie)?q(uotes?)?') : 'moviequotes',
                 reg.compile(pattern=r'f(eed)?b(ack)?'): 'feedback',
-                reg.compile(pattern=r'bug-?rep(ort)?|bugs'): 'bugreport'
+                reg.compile(pattern=r'bug-?rep(ort)?|bugs'): 'bugreport',
+                reg.compile(pattern=r'(urban)?dict|urban|define'): 'dict'
             }
             for val in aliased_commands:
                 if reg.match(val, string=cmd):
@@ -205,6 +207,12 @@ class gethelp(commands.Cog):
                             '`NSFW [On by default]`: This toggles NSFW quotes',
                     'color': fun_color
                 },
+                'dict': {
+                    'aliases': 'urban|urbandict|define',
+                    'syntax': f'{prefix}dict [words]',
+                    'desc': 'Will give you the urban dictionary definition of something',
+                    'color': fun_color
+                },
                 #GAMES HERE
                 'minesweeper': {
                     'aliases': 'ms',
@@ -253,7 +261,7 @@ class gethelp(commands.Cog):
                     'color': moderation_color
                 },
                 # '': {
-                #     'aliases': '',
+                #     'aliases': '{prefix}',
                 #     'syntax': f'',
                 #     'desc': 'REQUIRED',
                 #     'color': REQUIRED
@@ -281,7 +289,7 @@ class gethelp(commands.Cog):
             embed = ctx.embeds[0]
             embedAuthorField = embed.author.name
             if not un.bot and ctx.author.id == 852977382016024646 and reg.search(pattern=r'\AServer Index', string=embedAuthorField):
-                pf = await getPrefix(ctx, self.bot)
+                pf = await dumbot.getPrefix(ctx, self.bot)
                 prefix = pf[2]
                 if emote == "<:return:867101369814745099>":  # return
                     embed, reactions = await introMenu(prefix)

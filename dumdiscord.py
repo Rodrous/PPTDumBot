@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands, tasks
 import base64, random
-from build import generalPurpose as gp
+from build.generalPurpose import dumbot
 
 with open("config/client.txt") as file:
     f = file.readline()
@@ -48,7 +48,7 @@ async def setPrefix(msg, *,prefixes = ''):
         if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels): # 2
             customPrefix[msg.guild.id] = prefixes.split() or defaultPrefix # 3
             bot.command_prefix = determinePrefix(bot, msg) # 4
-            await msg.send(f"Prefixes set as : {await gp.getPrefix(msg, bot, True)}") # 5
+            await msg.send(f"Prefixes set as : {await dumbot.getPrefix(msg, bot, True)}") # 5
         else:
             await msg.channel.send(content = 'You cant use that here yet.', delete_after=6)
     else :
@@ -62,7 +62,7 @@ async def setPrefix(msg, *,prefixes = ''):
 async def sendPrefix(msg):
     if msg.channel.type is not discord.ChannelType.private: # Same as the 'setprefix'
         if msg.guild.id == 826148528870129675 and (str(msg.channel) not in restrictedChannels): # Same as the 'setprefix'
-            await msg.channel.send(f"Current default prefix is : {await gp.getPrefix(msg, bot, True)}") # Same as the 'setprefix'
+            await msg.channel.send(f"Current default prefix is : {await dumbot.getPrefix(msg, bot, True)}") # Same as the 'setprefix'
         else : 
             await msg.channel.send(content = 'You cant use that here yet.', delete_after = 6)
     else :
