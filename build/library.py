@@ -467,16 +467,6 @@ class moviequotes:
              "image": "https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_.jpg",
              "type": "dialogue", "flags": {"Explicit": False, "NSFW": False}
              },
-            {"movie": "The Wolf Of Wall Street [2013]", "character": "",
-             "quote": "",
-             "image": "https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_.jpg",
-             "type": "quote", "flags": {"Explicit": False, "NSFW": False}
-             },
-            {"movie": "The Wolf Of Wall Street [2013]",
-             "quote": "",
-             "image": "https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_.jpg",
-             "type": "dialogue", "flags": {"Explicit": False, "NSFW": False}
-             },
             # Quote template
             # {"movie": "", "character": "",
             # "quote": "",
