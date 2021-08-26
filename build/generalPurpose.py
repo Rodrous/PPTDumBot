@@ -1,5 +1,8 @@
-import requests,aiohttp,io
+from discord.ext.commands import bot
+import requests,aiohttp,io, datetime
 import discord, base64
+from discord.ext import commands
+
 
 async def getDataFromLink(url:str, json:bool=False, jsonType:str='', returnFile:bool=False, fileName:str='aRandomName.png'):
     link = url
@@ -29,3 +32,22 @@ class dumbot:
     #todo make this actually find the bot av url and make it async, remember to uncuck it in help menues
     def avatar():
         return 'https://cdn.discordapp.com/avatars/852977382016024646/12f7f96521114553fc7f4b2766dd086f.png?size=2048'
+
+    async def sendErrorToChannel(self, ctx, commandName: str, error : Exception):
+        """
+        :param self: self.bot
+        :param ctx: context
+        :param error: exception
+        :return:
+        """
+        errorChannelID = 879773094561083492
+        embed = discord.Embed(title="Error log",description=f"Command error was raised in: **{commandName}**" ,timestamp=datetime.datetime.now(),color=13524060)
+        embed.add_field(name="Guild", value=ctx.guild, inline=True)
+        embed.add_field(name="Channel", value=ctx.channel.mention, inline=True)
+        embed.add_field(name="Channel ID", value=ctx.channel.id, inline=True)
+        embed.add_field(name="Author Name", value=ctx.author, inline=True)
+        embed.add_field(name="Author", value=ctx.author.mention, inline=True)
+        embed.add_field(name="Author ID", value=ctx.author.id, inline=True)
+        embed.add_field(name="In Message", value=ctx.message.content, inline=False)
+        embed.add_field(name="Error", value=error, inline=False)
+        await commands.Bot.get_channel(self.bot, errorChannelID).send(embed=embed)

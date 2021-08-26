@@ -139,6 +139,7 @@ class webmaster(commands.Cog):
                 quote = await moviequotes.get(int(args[1]))
             except Exception as e:
                 print(f"Quote fail Get: {e}")
+                await dumbot.sendErrorToChannel(self, ctx, "Moviequotes.get", e)
                 quote = error_message
         elif args[0] == 'per':
             try:
@@ -146,6 +147,7 @@ class webmaster(commands.Cog):
                 quote = await moviequotes.per(args[1], string)
             except Exception as e:
                 print(f"Quote fail Per: {e}")
+                await dumbot.sendErrorToChannel(self, ctx, "Moviequotes.per", e)
                 quote = error_message
         else:
             quote = error_message
@@ -173,6 +175,7 @@ class webmaster(commands.Cog):
                 "The Search is highly vauge, it gave multiple outputs which *I* cannot send. Try Something on-point")
         except Exception as e:
             await ctx.send("Idk what the fuck happened, ping PPT/Finix/Draf")
+            await dumbot.sendErrorToChannel(self, ctx,"Wikipedia", e)
             print(e)
 
     @commands.command(

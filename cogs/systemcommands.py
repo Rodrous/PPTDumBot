@@ -1,7 +1,7 @@
 from discord.ext import commands
 import discord,base64,typing, requests
 import re as reg
-from build import generalPurpose as gp
+from build.generalPurpose import dumbot, getDataFromLink
 from build.customDecorators import Feedback_n_bug_blacklist
 from build import notion
 from build.library import loadingFunnyMessages
@@ -38,9 +38,9 @@ class syscom(commands.Cog):
     @commands.has_guild_permissions(manage_emojis = True)
     @commands.has_permissions(manage_emojis=True)
     async def stealEmoji(self, ctx, *, args = ''):
-        gLimit = ctx.guild.emoji_limit
-        gCurr = len(await ctx.guild.fetch_emojis())
-        print(str(gCurr)+'/'+str(gLimit)+' emojis')
+        #gLimit = ctx.guild.emoji_limit
+        #gCurr = len(await ctx.guild.fetch_emojis())
+        #print(str(gCurr)+'/'+str(gLimit)+' emojis')
         # if gCurr >= gLimit:
         #         return await ctx.send("This server is already at the limit and cant have more emojis **):**\n(If you think this is an error,contact Blackfinix/EvilGiraffes/PPT)")
         turl = 'https://cdn.discordapp.com/emojis/'
@@ -49,13 +49,12 @@ class syscom(commands.Cog):
         try:
             msg = args.split()
             if reg.match(pattern='https://cdn.discordapp.com/emojis/', string=msg[0]):
-                data = await gp.getDataFromLink(url=str(msg[0]), fileName='WhyAreYouLookingAtThis')
+                data = await getDataFromLink(url=str(msg[0]), fileName='WhyAreYouLookingAtThis')
                 name = '_'.join(msg[1:]) or 'RandomName'
                 newEm = await ctx.guild.create_custom_emoji(name=name, image=data.getvalue(), reason=f'{ctx.author.mention} triggered the command : $steal')
                 return await ctx.send(f'Added the emoji {newEm} to the server with the name : "{name}"')
 
             else:
-                print('got in else')
                 if reg.match(pattern='<a?:.*:\d*>',string=msg[0]):
                     name = '_'.join(msg[1:]) or (''.join(reg.findall(pattern='(?<=:)[a-zA-Z1-9~_]*(?=:)', string=msg[0])))
                 else:
@@ -69,14 +68,15 @@ class syscom(commands.Cog):
                     turl += str(eid) + '.png'
                     #url = f"https://cdn.discordapp.com/emojis/853662523843674112.png"
 
-                data = await gp.getDataFromLink(url=turl, fileName="WhyAreYouLookingAtThis")
+                data = await getDataFromLink(url=turl, fileName="WhyAreYouLookingAtThis")
 
                 newEm = await ctx.guild.create_custom_emoji(name=name, image=data.getvalue(), reason=f'{ctx.author.mention} triggered the command : $steal')
                 return await ctx.send(f'Added the emoji {newEm} to the server with the name : "{name}"')
 
         except Exception as e:
                 print(f"There is some Error Here, error is defined by: {e}")
-                await ctx.send("This server is already at the limit and cant have more emojis **):**")
+                await dumbot.sendErrorToChannel(self, ctx,"Steal", e)
+                await ctx.send("Some error occured, please try again or ping the devs **):**")
 
     @feedbackNbugsBlacklist
     @commands.command(
