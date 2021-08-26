@@ -3,3 +3,4 @@ aiohttp
 requests
 wikipedia
 bs4
+pymongo[srv]

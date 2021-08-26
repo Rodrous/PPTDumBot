@@ -2,15 +2,15 @@ import discord
 from discord.ext import commands, tasks
 import base64, random
 from build.generalPurpose import dumbot
-
 with open("config/client.txt") as file:
     f = file.readline()
 
 id = base64.b64decode(f).decode('utf-8')
 restrictedChannels = ["database"]
-
+intents = discord.Intents.default()
+intents.members = True
 customPrefix = {}
-defaultPrefix = '$'
+defaultPrefix = '!'
 
 
 # You dont care about this a lot, only about the first return, that finds in the dictionary 'customPrefix' the prefix with
@@ -25,7 +25,7 @@ def determinePrefix(bot, msg):
 
 # This is the same as a client initialization, but bot has more functionalities.
 bot = commands.Bot(command_prefix=determinePrefix,
-    case_insensitive = True, help_command=None)
+    case_insensitive = True, help_command=None, intents=intents)
 
 # Im sorting them via numbers, so when i do 1: explanation, the explanation is for the line 1 (and its else statement if it exists)
 # 1 : Checks if the command was called inside a server
@@ -118,4 +118,5 @@ if __name__ == "__main__":
     bot.load_extension('cogs.moderation')
     bot.load_extension('cogs.games')
     bot.load_extension('cogs.personal')
+    bot.load_extension('cogs.database')
     bot.run(id)
