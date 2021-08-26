@@ -35,7 +35,7 @@ class dumbot:
 
     async def sendErrorToChannel(self, ctx, commandName: str, error : Exception):
         """
-        :param self: self.bot
+        :param self: self
         :param ctx: context
         :param error: exception
         :return:
