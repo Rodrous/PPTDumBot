@@ -7,13 +7,18 @@ class moviequotes:
     async def movielist():
         """
         Feel free to add as many moviequotes as you want
+        Flags:
+            Explicit: racial slurs, or similar (swearing dont count)
+            NSFW: Anything that mentions something sexual
         Quote type quotes: If you do not know the character or image leave it blank, do NOT remove it
         Dialogue type quotes: There is no character in this type so you need to HIGHLIGHT characters in this fashion:
                               **Peter:** Dialogue comes here\n
                               **Sofia:** Next Dialogue comes here
                               Remember the \n newline character after each except the last one
+        Templates at the bottom of the list
         """
         mq = [
+            # DIRTY HARRY
             {"movie": "Dirty Harry [1971]", "character": "Dirty Harry",
              "quote": "You've got to ask yourself one question; Do you feel lucky? well, do ya, punk?",
              "image": "https://prod.cdn.bbaws.net/TDC_Blockbuster_-_Production/79/16/WB-0008_po-reg-medium_orig.jpg",
@@ -24,16 +29,19 @@ class moviequotes:
              "image": "https://images-na.ssl-images-amazon.com/images/S/pv-target-images/8f7c63364fbd9d1b804c755ca7cd93309aa4f44e95ee87c1a341413a1486ffbe._RI_V_TTW_.jpg",
              "type": "quote", "flags": {"Explicit": False, "NSFW": False}
              },
+            # GODFATHER
             {"movie": "The Godfather [1972]", "character": "Don Vito Corleone",
              "quote": "I'm gonna make him an offer he cant refuse",
              "image": "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
              "type": "quote", "flags": {"Explicit": False, "NSFW": False}
              },
+            # PSYCHO
             {"movie": "Psycho [1960]", "character": "Norman Bates",
              "quote": "A boy's best friend is his mother",
              "image": "https://tuploads.s3.eu-west-1.amazonaws.com/production/uploads/event/image/107693/default_5404___7979721490.jpg",
              "type": "quote", "flags": {"Explicit": False, "NSFW": False}
              },
+            # ACE VENTURA
             {"movie": "Ace Ventura Pet Detective [1994]", "character": "Ace Ventura",
              "quote": "Captain's Log, stardate 23.9, rounded off to the... nearest decimal point. We've... traveled back "
                       "in time to save an ancient species from... total annihilation. SO FAR... no... signs of aquatic "
@@ -47,6 +55,7 @@ class moviequotes:
              "image": "https://m.media-amazon.com/images/M/MV5BYmVhNmFmOGYtZjgwNi00ZGQ0LThiMmQtOGZjMDUzNzJhMGIzXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg",
              "type": "quote", "flags": {"Explicit": False, "NSFW": False}
              },
+            # GROUNDHOG DAY
             {"movie": "Groundhog Day [1993]", "character": "Larry",
              "quote": "People just don't understand what is involved in this. This is an art-form! You know, I think that "
                       "most people just think that I hold a camera and point at stuff, but there is a heck of a lot more "
@@ -54,6 +63,7 @@ class moviequotes:
              "image": "https://resizing.flixster.com/BpqNxyKbd_9M2NmFo_XEIAT6yPw=/206x305/v2/https://flxt.tmsimg.com/assets/p14569_p_v10_ay.jpg",
              "type": "quote", "flags": {"Explicit": False, "NSFW": False}
              },
+            # THE MASK
             {"movie": "The Mask [1994]", "character": "The Mask",
              "quote": "Our love is like a red, red rose... and I am a little thorny.",
              "image": "https://cdn.cdon.com/media-dynamic/images/product/movie/dvd/image4/the_mask_nordic-17812141-frntl.jpg?impolicy=product&w=340&h=340",
@@ -64,6 +74,7 @@ class moviequotes:
              "image": "https://cdn.cdon.com/media-dynamic/images/product/movie/dvd/image4/the_mask_nordic-17812141-frntl.jpg?impolicy=product&w=340&h=340",
              "type": "quote", "flags": {"Explicit": False, "NSFW": False}
              },
+            # POLICE ACADEMY
             {"movie": "Police Academy [1984]", "character": "Cadet Eugene Tackleberry",
              "quote": "Drop that stereo before I blow your goddamn nuts off, asshole.",
              "image": "https://m.media-amazon.com/images/M/MV5BMjNiMWVhNjAtMzgyYS00NzRhLWJmNGUtNzdiOGFhMmY5NDUwL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg",
@@ -76,6 +87,7 @@ class moviequotes:
              "image": "https://m.media-amazon.com/images/M/MV5BMzdlYmZiMDctMWNiZS00YmY5LWEzMjYtMTY4ZDg3NTg2MjUxL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg",
              "type": "quote", "flags": {"Explicit": False, "NSFW": False}
              },
+            # AUSTIN POWERS
             {"movie": "Austin Powers: The Spy Who Shagged Me [1999]", "character": "Austin Powers",
              "quote": "So, shall we shag now, or shall we shag later? How do you like to do it? Do you like to wash up "
                       "first? Top and tails? A whore's bath? Personally, before I'm on the JOB, I like to give my "
@@ -103,6 +115,7 @@ class moviequotes:
              "image": "https://lh3.googleusercontent.com/proxy/ZJMqjotntOWvKAwjs2wMiKs5mIgwBz_eCarGjuQPOMfzYWxx-6rWI-ZCHmsu1Vx4vu6PilzRGBrhHR-VhoChqg3kzaY7zpyWm3ZXf6cuxSNEmVRwRgi0X2aVVzaue1gnOmp3-4tz6YObNlP2b0xpOy_Q",
              "type": "quote", "flags": {"Explicit": False, "NSFW": False}
              },
+            # BATMAN
             {"movie": "Batman The Dark Knight [2008]", "character": "The Joker",
              "quote": "Don't talk like one of them. You're not! Even if you'd like to be. To them, you're just a freak, "
                       "like me! They need you right now, but when they don't, they'll cast you out, like a leper! You "
@@ -141,11 +154,13 @@ class moviequotes:
              "image": "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_.jpg",
              "type": "quote", "flags": {"Explicit": False, "NSFW": False}
              },
+            # SCARFACE
             {"movie": "Scarface [1983]", "character": "Tony Montana",
              "quote": "You wanna fuck with me? Okay. You wanna play rough? Okay. Say hello to my little friend!",
              "image": "https://m.media-amazon.com/images/M/MV5BNjdjNGQ4NDEtNTEwYS00MTgxLTliYzQtYzE2ZDRiZjFhZmNlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_FMjpg_UX1000_.jpg",
              "type": "quote", "flags": {"Explicit": False, "NSFW": False}
              },
+            # RAMBO
             {"movie": "Rambo V: Last Blood [2019]", "character": "John Rambo",
              "quote": "I've lived in a world of death. I've watched people I've loved die. Some fast with a bullet, "
                       "some not enough left to bury. All these years I've kept my secrets, but the time has come to face "
@@ -160,6 +175,7 @@ class moviequotes:
              "image": "http://www.platekompaniet.no//globalassets/imported-images/dvd/2001676149.jpg",
              "type": "quote", "flags": {"Explicit": False, "NSFW": False}
              },
+            # PULP FICTION
             {"movie": "Pulp Fiction [1994]", "character": "Jules",
              "quote": "There's a passage I got memorized. Ezekiel 25:17. \"The path of the righteous man is beset on all "
                       "sides by the inequities of the selfish and the tyranny of evil men. Blessed is he who, in the name "
@@ -222,6 +238,7 @@ class moviequotes:
              "image": "https://static.posters.cz/image/750/plakater/pulp-fiction-cover-i1288.jpg",
              "type": "dialogue", "flags": {"Explicit": False, "NSFW": False}
              },
+            # THE BALLAD OF BUSTER SCRUGGS
             {"movie": "The Ballad Of Buster Scruggs [2018]", "character": "Buster Scruggs",
              "quote": "There's just gotta be a place up ahead where men ain't low-down and poker's played fair. "
                       "If there weren't, what are all the songs about? I'll see y'all there. And we can sing together "
@@ -241,6 +258,7 @@ class moviequotes:
              "image": "https://m.media-amazon.com/images/M/MV5BYjRkYTI3M2EtZWQ4Ny00OTA2LWFmMTMtY2E4MTEyZmNjOTMxXkEyXkFqcGdeQXVyNDg4NjY5OTQ@._V1_.jpg",
              "type": "quote", "flags": {"Explicit": False, "NSFW": False}
              },
+            # LOTR
             {"movie": "The Lord of the Rings: The Return of the King [2003]", "character": "Aragorn",
              "quote": "Hold your ground, hold your ground! Sons of Gondor, of Rohan, my brothers! I see in your eyes "
                       "the same fear that would take the heart of me. A day may come when the courage of men fails, "
@@ -275,6 +293,7 @@ class moviequotes:
              "image": "https://m.media-amazon.com/images/M/MV5BNzA5ZDNlZWMtM2NhNS00NDJjLTk4NDItYTRmY2EwMWZlMTY3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
              "type": "dialogue", "flags": {"Explicit": False, "NSFW": False}
              },
+            # BACK TO THE FUTURE
             {"movie": "Back to the Future [1985]", "character": "George McFly",
              "quote": "Last night, Darth Vader came down from Planet Vulcan and told me that if I didn't take Lorraine out, that he'd melt my brain.",
              "image": "https://static.posters.cz/image/750/plakater/back-to-the-future-i2795.jpg",
@@ -289,13 +308,182 @@ class moviequotes:
              "image": "https://static.posters.cz/image/750/plakater/back-to-the-future-i2795.jpg",
              "type": "dialogue", "flags": {"Explicit": False, "NSFW": False}
              },
-            #Quote template
+            # THE LION KING
+            {"movie": "The Lion King [1994]",
+             "quote": "**Adult Simba:** I know what I have to do. But going back means I'll have to face my past. I've been running from it for so long.\n"
+                      "[Rafiki hits Simba on the head with his stick]\n"
+                      "**Adult Simba:** Ow! Jeez, what was that for?\n"
+                      "**Rafiki:** It doesn't matter. It's in the past.\n"
+                      "**Adult Simba:** Yeah, but it still hurts.\n"
+                      "**Rafiki:** Oh yes, the past can hurt. But from the way I see it, you can either run from it, or... learn from it.\n"
+                      "[swings his stick again at Simba, who ducks out of the way]\n"
+                      "**Rafiki:** Ha. You see? So what are you going to do?\n"
+                      "**Adult Simba:** First, I'm gonna take your stick.\n"
+                      "**Rafiki:** No, no, no, no, not the stick! Hey, where you going?\n"
+                      "**Adult Simba:** I'm going back!\n"
+                      "**Rafiki:** Good! Go on! Get out of here!",
+             "image": "https://m.media-amazon.com/images/M/MV5BYTYxNGMyZTYtMjE3MS00MzNjLWFjNmYtMDk3N2FmM2JiM2M1XkEyXkFqcGdeQXVyNjY5NDU4NzI@._V1_FMjpg_UX1000_.jpg",
+             "type": "dialogue", "flags": {"Explicit": False, "NSFW": False}
+             },
+            {"movie": "The Lion King [1994]",
+             "quote": "**Mufasa:** Everything you see exists together in a delicate balance. As king, you need to "
+                      "understand that balance and respect all the creatures, from the crawling ant to the leaping "
+                      "antelope.\n"
+                      "**Young Simba:** But, Dad, don't we eat the antelope?\n"
+                      "**Mufasa:** Yes, Simba, but let me explain. When we die, our bodies become the grass, "
+                      "and the antelope eat the grass. And so we are all connected in the great Circle of Life.",
+             "image": "https://m.media-amazon.com/images/M/MV5BYTYxNGMyZTYtMjE3MS00MzNjLWFjNmYtMDk3N2FmM2JiM2M1XkEyXkFqcGdeQXVyNjY5NDU4NzI@._V1_FMjpg_UX1000_.jpg",
+             "type": "dialogue", "flags": {"Explicit": False, "NSFW": False}
+             },
+            {"movie": "The Lion King [1994]",
+             "quote": "**Timon:** Gee. He looks blue\n"
+                      "**Pumbaa:** I'd say brownish-gold.\n"
+                      "**Timon:** No, no, no. I mean he's depressed.",
+             "image": "https://m.media-amazon.com/images/M/MV5BYTYxNGMyZTYtMjE3MS00MzNjLWFjNmYtMDk3N2FmM2JiM2M1XkEyXkFqcGdeQXVyNjY5NDU4NzI@._V1_FMjpg_UX1000_.jpg",
+             "type": "dialogue", "flags": {"Explicit": False, "NSFW": False}
+             },
+            {"movie": "The Lion King [1994]",
+             "quote": "**Pumbaa:** You know, kid, in times like this my buddy Timon here says \"you got to put your behind in your past.\"\n"
+                      "**Timon:** No, no, no. Amateur. Lie down before you hurt yourself. It's \"You got to put your past behind you.\"",
+             "image": "https://m.media-amazon.com/images/M/MV5BYTYxNGMyZTYtMjE3MS00MzNjLWFjNmYtMDk3N2FmM2JiM2M1XkEyXkFqcGdeQXVyNjY5NDU4NzI@._V1_FMjpg_UX1000_.jpg",
+             "type": "dialogue", "flags": {"Explicit": False, "NSFW": False}
+             },
+            # FIGHT CLUB
+            {"movie": "Fight Club [1999]", "character": "Tyler Durden",
+             "quote": "Man, I see in fight club the strongest and smartest men who've ever lived. I see all this "
+                      "potential, and I see squandering. God damn it, an entire generation pumping gas, "
+                      "waiting tables; slaves with white collars. Advertising has us chasing cars and clothes, "
+                      "working jobs we hate so we can buy shit we don't need. We're the middle children of history, "
+                      "man. No purpose or place. We have no Great War. No Great Depression. Our Great War's a "
+                      "spiritual war... our Great Depression is our lives. We've all been raised on television to "
+                      "believe that one day we'd all be millionaires, and movie gods, and rock stars. But we won't. "
+                      "And we're slowly learning that fact. And we're very, very pissed off.",
+             "image": "https://m.media-amazon.com/images/M/MV5BMmEzNTkxYjQtZTc0MC00YTVjLTg5ZTEtZWMwOWVlYzY0NWIwXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
+             "type": "quote", "flags": {"Explicit": False, "NSFW": False}
+             },
+            {"movie": "Fight Club [1999]", "character": "Tyler Durden",
+             "quote": "Listen up, maggots. You are not special. You are not a beautiful or unique snowflake. "
+                      "You're the same decaying organic matter as everything else.",
+             "image": "https://m.media-amazon.com/images/M/MV5BMmEzNTkxYjQtZTc0MC00YTVjLTg5ZTEtZWMwOWVlYzY0NWIwXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
+             "type": "quote", "flags": {"Explicit": False, "NSFW": False}
+             },
+            {"movie": "Fight Club [1999]", "character": "Tyler Durden",
+             "quote": "You're not your job. You're not how much money you have in the bank. You're not the car you "
+                      "drive. You're not the contents of your wallet. You're not your fucking khakis. You're the "
+                      "all-singing, all-dancing crap of the world.",
+             "image": "https://m.media-amazon.com/images/M/MV5BMmEzNTkxYjQtZTc0MC00YTVjLTg5ZTEtZWMwOWVlYzY0NWIwXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
+             "type": "quote", "flags": {"Explicit": False, "NSFW": False}
+             },
+            {"movie": "Fight Club [1999]", "character": "Tyler Durden",
+             "quote": "Gentlemen, welcome to Fight Club. The first rule of Fight Club is: you do not talk about Fight "
+                      "Club. The second rule of Fight Club is: you DO NOT talk about Fight Club! Third rule of Fight "
+                      "Club: someone yells \"stop!\", goes limp, taps out, the fight is over. Fourth rule: only two "
+                      "guys to a fight. Fifth rule: one fight at a time, fellas. Sixth rule: No shirts, "
+                      "no shoes. Seventh rule: fights will go on as long as they have to. And the eighth and final "
+                      "rule: if this is your first time at Fight Club, you have to fight.",
+             "image": "https://m.media-amazon.com/images/M/MV5BMmEzNTkxYjQtZTc0MC00YTVjLTg5ZTEtZWMwOWVlYzY0NWIwXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
+             "type": "quote", "flags": {"Explicit": False, "NSFW": False}
+             },
+            {"movie": "Fight Club [1999]", "character": "Tyler Durden",
+             "quote": "It could be worse. A woman could cut off your penis while you're sleeping and toss it out the window of a moving car.",
+             "image": "https://m.media-amazon.com/images/M/MV5BMmEzNTkxYjQtZTc0MC00YTVjLTg5ZTEtZWMwOWVlYzY0NWIwXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
+             "type": "quote", "flags": {"Explicit": False, "NSFW": True}
+             },
+            {"movie": "Fight Club [1999]", "character": "Narrator",
+             "quote": "You wake up at Seatac, SFO, LAX. You wake up at O'Hare, Dallas-Fort Worth, BWI. Pacific, "
+                      "mountain, central. Lose an hour, gain an hour. This is your life, and it's ending one minute "
+                      "at a time. You wake up at Air Harbor International. If you wake up at a different time, "
+                      "in a different place, could you wake up as a different person?",
+             "image": "https://m.media-amazon.com/images/M/MV5BMmEzNTkxYjQtZTc0MC00YTVjLTg5ZTEtZWMwOWVlYzY0NWIwXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
+             "type": "quote", "flags": {"Explicit": False, "NSFW": False}
+             },
+            # THE WOLF OF WALL STREET
+            {"movie": "The Wolf Of Wall Street [2013]", "character": "Jordan Belfort",
+             "quote": "Let me tell you something. There's no nobility in poverty. I have been a rich man and I have "
+                      "been a poor man. And I choose rich every fuckin' time. Because, at least as a rich man, "
+                      "when I have to face my problems, I show up in the back of the limo, wearing a $2000 suit and a "
+                      "$40,000 gold fuckin' watch.",
+             "image": "https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_.jpg",
+             "type": "quote", "flags": {"Explicit": False, "NSFW": False}
+             },
+            {"movie": "The Wolf Of Wall Street [2013]", "character": "Jordan Belfort",
+             "quote": "I fucked her brains out... for eleven seconds.",
+             "image": "https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_.jpg",
+             "type": "quote", "flags": {"Explicit": False, "NSFW": True}
+             },
+            {"movie": "The Wolf Of Wall Street [2013]",
+             "quote": "**Jordan Belfort:** Brad, show them how it's done. Sell me that pen. Watch. Go on.\n"
+                      "**Brad:** You want me to sell you this fucking pen?\n"
+                      "**Jordan Belfort:** That's my boy right there. Can fucking sell anything.\n"
+                      "**Brad:** Why don't you do me a favor. Write your name down on that napkin for me.\n"
+                      "**Jordan Belfort:** I don't have a pen.\n"
+                      "**Brad:** Exactly. Supply and demand, my friend.",
+             "image": "https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_.jpg",
+             "type": "dialogue", "flags": {"Explicit": False, "NSFW": False}
+             },
+            {"movie": "The Wolf Of Wall Street [2013]",
+             "quote": "**Jordan Belfort:** People say shit... I mean like, you married your cousin or some stupid shit.\n"
+                      "**Donnie Azoff:** Yeah, my wife is my cousin or whatever, but it's not like what you think.\n"
+                      "**Jordan Belfort:** Is she like, a first cousin?\n"
+                      "**Donnie Azoff:** Her father is the brother of my mom. Like, we grew up together, and she grew "
+                      "up hot, you know, she fucking grew up hot. And all my friends are trying to fuck her, "
+                      "you know, and I'm not gonna let one of these assholes fuck my cousin. So I used the cousin "
+                      "thing, as like, an in with her. I'm not like, gonna let someone else fuck my cousin, "
+                      "you know? If anyone's gonna fuck my cousin, it's gonna be me. Out of respect.",
+             "image": "https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_.jpg",
+             "type": "dialogue", "flags": {"Explicit": False, "NSFW": True}
+             },
+            {"movie": "The Wolf Of Wall Street [2013]", "character": "Jordan Belfort",
+             "quote": "An I.P.O. is an initial public offering. It's the first time a stock is offered for sale to "
+                      "the general population. Now as the firm taking the company public, we set the initial sales "
+                      "price then sold those shares right back to our friends. Yet...\n"
+                      "Look, I know you're not following what I'm saying anyway, right? That's... that's okay, "
+                      "that doesn't matter. The real question is this: was all this legal? Absolutely fucking not. "
+                      "But we were making more money than we knew what do with.",
+             "image": "https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_.jpg",
+             "type": "quote", "flags": {"Explicit": False, "NSFW": False}
+             },
+            {"movie": "The Wolf Of Wall Street [2013]", "character": "Jordan Belfort",
+             "quote": "So you listen to me and you listen well. Are you behind on your credit card bills? Good, "
+                      "pick up the phone and start dialing! Is your landlord ready to evict you? Good! Pick up the "
+                      "phone and start dialing! Does your girlfriend think you're a fucking worthless loser? Good! "
+                      "Pick up the phone and start dialing! I want you to deal with your problems by becoming rich!",
+             "image": "https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_.jpg",
+             "type": "quote", "flags": {"Explicit": False, "NSFW": False}
+             },
+            {"movie": "The Wolf Of Wall Street [2013]",
+             "quote": "**Donnie Azoff:** I check my messages every day when I come home from work... my answering "
+                      "machine... zero! I got a blinkling light because I don't have shit from you. I got my wife... "
+                      "I got my wife checking the messages every forty-five minutes calling the office saying. \"Has "
+                      "Brad apologized yet? Is there an apology message on the machine?\" I don't have jack-shit. You "
+                      "know what? That's not how you treat people.\n"
+                      "**Brad:** You gotta be a fucking pal... You know what, I'm gonna give you a fucking pass, just give me the case.\n"
+                      "**Donnie Azoff:** You're gonna give me a pass?\n"
+                      "**Brad:** Look, it's a figure of fucking speech, just give me the fucking...\n"
+                      "**Donnie Azoff:** Oh my God, the emperor of Fucksville came down from Fucksville to give me a "
+                      "pass! Hey, what are the citizens of Fucksville doing today when their emperor's gone? Is it, "
+                      "is it mayhem? Are people looting and raping? What are all the little fuckheads doing while "
+                      "you're here?",
+             "image": "https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_.jpg",
+             "type": "dialogue", "flags": {"Explicit": False, "NSFW": False}
+             },
+            {"movie": "The Wolf Of Wall Street [2013]", "character": "",
+             "quote": "",
+             "image": "https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_.jpg",
+             "type": "quote", "flags": {"Explicit": False, "NSFW": False}
+             },
+            {"movie": "The Wolf Of Wall Street [2013]",
+             "quote": "",
+             "image": "https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_.jpg",
+             "type": "dialogue", "flags": {"Explicit": False, "NSFW": False}
+             },
+            # Quote template
             # {"movie": "", "character": "",
             # "quote": "",
             # "image": "",
             # "type": "quote", "flags": {"Explicit": False, "NSFW": False}
             #  },
-            #Dialogue template
+            # Dialogue template
             # {"movie": "",
             #  "quote": "",
             #  "image": "",
