@@ -11,6 +11,7 @@ class database(commands.Cog):
             checkExist(ctx.guild.id, member.id)
 
     @commands.Cog.listener()
+    @commands.has_permissions(administrator=True)
     async def on_member_join(self,member):
         checkExist(member.guild.id,member.id)
         if(checkMuted(member.guild.id,member.id)):
@@ -29,7 +30,14 @@ class database(commands.Cog):
                 await member.add_roles(getRole)
             else:
                 await member.add_roles(getRole)
-            
+    
+    @commands.Cog.listener()
+    async def on_message(self,ctx):
+        messageIncrement(ctx.guild.id,ctx.author.id)
+    
+    @commands.Cog.listener()
+    async def on_message_delete(self,ctx):
+        messageDecrement(ctx.guild.id,ctx.author.id)
 
 def setup(bot):
     bot.add_cog(database(bot))
