@@ -1,4 +1,5 @@
 import discord
+from itertools import chain
 from discord.ext import commands, tasks
 import base64, random
 from build.generalPurpose import dumbot
@@ -100,14 +101,20 @@ async def changeDescription():
     descriptions = ['Serving','aWYgeW91IGRlY29kZWQgdGhpcyB5b3UncmUgYSBuZXJk',
                     'Why do i exist, father?', "ctx.send(f'fuck you {member.mention}')",
                     'Running on biodiesel', "I'm one hell of a butler",
-                    "The number of members that I serve isnt accurate but I cant be assed to fix it right now.",
                     "Waiting for Hot Topic to sell 'Distressed iPhones'", "Blackfinix codes this bot too"]
-    totalMembers = 0
+
+    membersList =  []
+    #Counts total Members in a guild and adds them to a list
     for guild in bot.guilds:
-        totalMembers += guild.member_count
+       iterableObj = await guild.fetch_members().flatten()
+       for members in iterableObj:
+           membersList.append(members)
+    #Converting the list to a set to remove duplicates
+    totalMembers = len(set(membersList))    
+       
     serving =  f"Serving {totalMembers} members in {len(bot.guilds)} servers."
     descriptions.__setitem__(0, serving)
-    #print(totalMembers)
+
     randChoice = str(random.choice(descriptions))
     await bot.change_presence(activity=discord.Game(name=f'{randChoice}'))
 
