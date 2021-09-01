@@ -6,7 +6,6 @@ from build.customDecorators import Feedback_n_bug_blacklist
 from build import notion
 from build.library import loadingFunnyMessages
 
-
 with open("config/allowedguildIds.txt") as file:
     f = file.readlines()
 
@@ -108,6 +107,27 @@ class syscom(commands.Cog):
         else:
             await msg.edit(content="Something happened, please try again or contact staff")
 
+    @commands.Cog.listener()
+    async def on_message(self, msg):
+        # msg = await commands.Bot.get_channel(self.bot, ).fetch_message()
+        ctx = msg.channel
+        crossChannelLinkRegex = reg.compile(r"https://discord.com/channels/(\d*)/(\d*)/(\d*)")
+        if matches := reg.match(pattern=crossChannelLinkRegex, string=msg.content):
+            channelid = int(matches[2])
+            messageid = int(matches[3])
+            fetchedMessage = await commands.Bot.get_channel(self.bot, channelid).fetch_message(messageid)
+            if fetchedMessage.embeds:
+                fetchedEmbed = fetchedMessage.embeds[0]
+                fetchedAuthor = fetchedMessage.author
+                pfp = fetchedAuthor.avatar_url
+                print(pfp)
+                info = discord.Embed(description= f"[Embed Link]({matches[0]})")
+                info.set_author(name=fetchedMessage.author)
+                await ctx.send(embed=fetchedEmbed)
+                await ctx.send(embed=info)
+            else:
+                print(False)
+            # await ctx.send(fetchedMessage.content)
 
 
 
