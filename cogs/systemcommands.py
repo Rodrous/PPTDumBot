@@ -121,6 +121,7 @@ class syscom(commands.Cog):
                 fetchedAuthor = fetchedMessage.author
                 pfp = fetchedAuthor.avatar_url
                 print(pfp)
+                await ctx.send(pfp)
                 info = discord.Embed(description= f"[Embed Link]({matches[0]})")
                 info.set_author(name=fetchedMessage.author)
                 await ctx.send(embed=fetchedEmbed)
