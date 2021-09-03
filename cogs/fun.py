@@ -16,8 +16,9 @@ class webmaster(commands.Cog):
         name='cat',
         brief='Sends an image of a cute (*most of the times*) cat ꓷ:',
         help='Sends a cat image.')
-    async def sendCat(self,ctx):
-        data = await getDataFromLink(url="https://aws.random.cat/meow", json=True, jsonType='file', returnFile=True, fileName='Cat.png')
+    async def sendCat(self,ctx,*,arg):
+        url = random.choice(['https://cataas.com/cat/gif',"https://cataas.com/cat", f"https://cataas.com//cat/says/{arg}"])
+        data = await getDataFromLink(url=url, json=False, jsonType='file', returnFile=True, fileName='Cat.png')
         if data == None:
             return await ctx.send("Couldnt Retrieve image from server.")
         await ctx.send(content="From PPT with \U0001F49A", file=data)
