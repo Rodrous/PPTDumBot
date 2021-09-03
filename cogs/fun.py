@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 import discord
 from discord.ext import commands
 import requests,random
@@ -16,12 +17,8 @@ class webmaster(commands.Cog):
         name='cat',
         brief='Sends an image of a cute (*most of the times*) cat ꓷ:',
         help='Sends a cat image.')
-    async def sendCat(self,ctx,*,arg):
-        url = random.choice(['https://cataas.com/cat/gif',"https://cataas.com/cat", f"https://cataas.com//cat/says/{arg}"])
-        data = await getDataFromLink(url=url, json=False, jsonType='file', returnFile=True, fileName='Cat.png')
-        if data == None:
-            return await ctx.send("Couldnt Retrieve image from server.")
-        await ctx.send(content="From PPT with \U0001F49A", file=data)
+    async def sendCat(self,ctx):
+        await ctx.send("Command Disabled Until Further Update")
 
     @commands.command(
         name='dog',
