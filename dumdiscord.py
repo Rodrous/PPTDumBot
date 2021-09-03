@@ -11,7 +11,7 @@ restrictedChannels = ["database"]
 intents = discord.Intents.default()
 intents.members = True
 customPrefix = {}
-defaultPrefix = '!'
+defaultPrefix = '$'
 
 
 # You dont care about this a lot, only about the first return, that finds in the dictionary 'customPrefix' the prefix with
