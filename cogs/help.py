@@ -75,6 +75,8 @@ async def utilityHelp(prefix):
         f"`{prefix}steal`: Grabs emoji's and puts it in your server\n"
         f"`{prefix}ping`: Pings the bot\n"
         # f"`{prefix}`:\n"
+        "If you send a message link in this server you can show the message Cross Channels"
+
     , color=utility_color)
     embed.set_author(name="Server Index -> Utility Commands",
                      icon_url=bot_avatar)

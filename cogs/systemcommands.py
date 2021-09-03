@@ -109,25 +109,34 @@ class syscom(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, msg):
-        # msg = await commands.Bot.get_channel(self.bot, ).fetch_message()
+        # Cross channel message linking command
         ctx = msg.channel
         crossChannelLinkRegex = reg.compile(r"https://discord.com/channels/(\d*)/(\d*)/(\d*)")
         if matches := reg.match(pattern=crossChannelLinkRegex, string=msg.content):
+            args = msg.content.split()
+            messageLink = matches[0]
             channelid = int(matches[2])
             messageid = int(matches[3])
             fetchedMessage = await commands.Bot.get_channel(self.bot, channelid).fetch_message(messageid)
-            if fetchedMessage.embeds:
+            fetchedAuthor = fetchedMessage.author
+            messageAuthor = msg.author
+            pfp = fetchedAuthor.avatar
+            sameGuild = msg.guild.id == fetchedMessage.guild.id
+            if len(args) <= 1 and sameGuild:
+                await ctx.purge(limit=1)
+            if fetchedMessage.embeds and sameGuild:
                 fetchedEmbed = fetchedMessage.embeds[0]
-                fetchedAuthor = fetchedMessage.author
-                pfp = fetchedAuthor.avatar_url
-                print(pfp)
-                info = discord.Embed(description= f"[Embed Link]({matches[0]})")
-                info.set_author(name=fetchedMessage.author)
+                info = discord.Embed(description= f"[Embed Link]({messageLink})")
+                info.set_author(name=fetchedAuthor, icon_url=pfp)
+                info.set_footer(text=f"Triggered by: {messageAuthor}", icon_url=messageAuthor.avatar)
                 await ctx.send(embed=fetchedEmbed)
                 await ctx.send(embed=info)
-            else:
-                print(False)
-            # await ctx.send(fetchedMessage.content)
+            elif sameGuild:
+                description = f"[Message]({messageLink}) **in** {msg.channel.mention}\n{fetchedMessage.content}"
+                embed = discord.Embed(description=description)
+                embed.set_author(name=fetchedAuthor, icon_url=pfp)
+                embed.set_footer(text=f"Triggered by: {messageAuthor}", icon_url=messageAuthor.avatar)
+                await ctx.send(embed=embed)
 
 
 
