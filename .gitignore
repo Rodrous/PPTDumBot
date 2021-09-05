@@ -1,7 +1,6 @@
 # Default ignored files
 /shelf/
 /workspace.xml
-config/
 __pycache__/
 *.py[cod]
 *$py.class
