@@ -1,0 +1,6 @@
+version: "3"
+services:
+  discord:
+    restart: always
+    build: .
+    network_mode: bridge
