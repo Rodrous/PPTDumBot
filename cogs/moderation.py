@@ -21,6 +21,8 @@ class moderation(commands.Cog):
                 "This was a mistake\n<https://discordapp.com/oauth2/authorize?client_id=852977382016024646&scope=bot&permissions=0>")
         else:
             await ctx.send(content='You cant use that here yet.', delete_after=6)
+    
+    # ------------------------------------------------------------------------------
 
     @commands.command(
         name='clear',
@@ -30,6 +32,8 @@ class moderation(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def clearChat(self, ctx, amount: typing.Optional[int] = 1):
         await ctx.message.channel.purge(limit=int(amount))
+    
+    # ------------------------------------------------------------------------------
 
     @commands.command(
         help = "Mutes a person, Format:- <user> <time in minutes (Default=10)> <reason> (Default= Being a Biotch)"
@@ -56,6 +60,8 @@ class moderation(commands.Cog):
         await user.send(f"You were muted because {reason}")
         await asyncio.sleep(int(time) * 60)
         await user.remove_roles(getRole)
+
+    # ------------------------------------------------------------------------------
 
     @commands.command(
         help="Unmutes a person"

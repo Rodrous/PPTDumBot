@@ -25,6 +25,8 @@ async def introMenu(prefix):
     reactions = ['<:PepeLmao:865712134439436328>', '<:PepoGamer:865712213141356565>', '<a:pepeAnimeCaught:865712704315850782>', '<a:pepeban:865714938667991091>'] #fun, games, utility, moderation
     return embed, reactions
 
+# ------------------------------------------------------------------------------
+
 async def funHelp(prefix):
     embed = discord.Embed(
         title='Fun Commands',
@@ -51,6 +53,8 @@ async def funHelp(prefix):
     reactions = ['<:return:867101369814745099>']
     return embed, reactions
 
+# ------------------------------------------------------------------------------
+
 async def gamesHelp(prefix):
     embed = discord.Embed(
         title= "Games",
@@ -64,6 +68,8 @@ async def gamesHelp(prefix):
     embed.set_footer(text="\U00002193 React to return")
     reactions = ['<:return:867101369814745099>']
     return embed, reactions
+
+# ------------------------------------------------------------------------------
 
 async def utilityHelp(prefix):
     embed = discord.Embed(
@@ -84,6 +90,8 @@ async def utilityHelp(prefix):
     reactions = ['<:return:867101369814745099>']
     return embed, reactions
 
+# ------------------------------------------------------------------------------
+
 async def moderationHelp(prefix):
     embed = discord.Embed(
         title= "Moderation Commands",
@@ -99,6 +107,8 @@ async def moderationHelp(prefix):
                      icon_url=bot_avatar)
     reactions = ['<:return:867101369814745099>']
     return embed, reactions
+
+# ------------------------------------------------------------------------------
 
 class gethelp(commands.Cog):
 
@@ -283,6 +293,8 @@ class gethelp(commands.Cog):
             else:
                 await ctx.send('Not a valid command')
 
+    # ------------------------------------------------------------------------------
+    
     @commands.Cog.listener()
     async def on_reaction_add(self, react, un):
         ctx = react.message
