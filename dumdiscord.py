@@ -69,6 +69,8 @@ async def sendPrefix(msg):
     else :
         await msg.channel.send(content = f'Prefix for DMs is : {defaultPrefix} or by Mentioning me.')
 
+
+
 # Resets the prefix by calling the 'setprefix' command but with the default prefix as an argument
 @bot.command(
             name = "resetprefix",
@@ -83,6 +85,8 @@ async def resetPrefix(msg):
             await msg.channel.send('You cant use that here yet.', delete_after=6)
     else:
         await msg.channel.send('This is a Server-Only command.', delete_after=6)
+
+
 
 @bot.event
 async def on_message(msg):
@@ -101,7 +105,13 @@ async def changeDescription():
     descriptions = ['Serving','aWYgeW91IGRlY29kZWQgdGhpcyB5b3UncmUgYSBuZXJk',
                     'Why do i exist, father?', "ctx.send(f'fuck you {member.mention}')",
                     'Running on biodiesel', "I'm one hell of a butler",
-                    "Waiting for Hot Topic to sell 'Distressed iPhones'", "Blackfinix codes this bot too"]
+                    "Waiting for Hot Topic to sell 'Distressed iPhones'", "Blackfinix codes this bot too",
+                    "What is love? Baby dont hurt me", 'Never make the same mistake twice; there are so many new ones to make',
+                    'Life is beautiful… from Friday to Sunday', 'Time is precious. Waste it wisely', 
+                    'Ill be back before you can pronounce actillimandataquerin altosapaoyabayadoondib',
+                    'I’m right 90% \of the time, so why worry about the other 3%?',' I’d grill your cheese! ~Me when flirting',
+                    'When life gives you lemonade, make lemons.'
+                    ]
 
     membersList =  []
     #Counts total Members in a guild and adds them to a list
