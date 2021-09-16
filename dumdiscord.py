@@ -93,6 +93,7 @@ async def on_message(msg):
 @bot.event
 async def on_ready():
     await bot.wait_until_ready()
+    await commands.Bot.get_channel(bot, 879773094561083492).send('Restarted Successfully!')
     changeDescription.start()
 
 @tasks.loop(hours=5)
