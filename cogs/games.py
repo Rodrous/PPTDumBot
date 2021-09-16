@@ -5,65 +5,61 @@ class games(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+# ------------------------------------------------------------------------------
+
     @commands.command(
         name='minesweeper',
-        aliases=['ms'])
-    async def mineSweeper(self, ctx, rows=8, columns=8, mines=5):
-        run = True
-        row = int(rows)
-        column = int(columns)
-        mine = int(mines)
-        if row > 11:
-            run = False
-        elif column > 9:
-            run = False
-        elif mine < 3:
-            run = False
-        elif mine >= (row - 1) + (column - 1):
-            run = False
-        if run:
-            arr = [[0 for column in range(column)] for rows in range(row)]
-            ms = ''
-            border_x = column - 1
-            border_y = row - 1
-            for num in range(mine):
-                x = random.randint(0, border_x)
-                y = random.randint(0, border_y)
-                arr[y][x] = 'X'
-                if x != border_x:
-                    if arr[y][x + 1] != 'X':  # right
-                        arr[y][x + 1] += 1
-                if x != 0:
-                    if arr[y][x - 1] != 'X':  # left
-                        arr[y][x - 1] += 1
-                if y != border_y:
-                    if arr[y + 1][x] != 'X':  # up
-                        arr[y + 1][x] += 1
-                if y != 0:
-                    if arr[y - 1][x] != 'X':  # down
-                        arr[y - 1][x] += 1
-                if y != border_y and x != border_x:
-                    if arr[y + 1][x + 1] != 'X':  # up right
-                        arr[y + 1][x + 1] += 1
-                if y != 0 and x != border_x:
-                    if arr[y - 1][x + 1] != 'X':  # down right
-                        arr[y - 1][x + 1] += 1
-                if y != border_y and x != 0:
-                    if arr[y + 1][x - 1] != 'X':  # up left
-                        arr[y + 1][x - 1] += 1
-                if y != 0 and x != 0:
-                    if arr[y - 1][x - 1] != 'X':  # down left
-                        arr[y - 1][x - 1] += 1
-            for row in arr:
-                ms += " ".join(str(cell) for cell in row) + "\n"
-            replace = {'X': '||:boom:||', '0': '||:zero:||', '1': '||:one:||', '2': '||:two:||', '3': '||:three:||',
-                       '4': '||:four:||'}
-            for item in replace:
-                ms = ms.replace(item, replace[item])
+        aliases=['ms','mines'])
+    async def mineSweeper(self, ctx, inputRows=8, inputColumns=8, inputMines=5):
+        rows = int(inputRows)
+        columns = int(inputColumns)
+        mines = int(inputMines)
+        if ((rows < 5 or columns > 9 or columns < 3 or mines < 1 or (mines >= (rows - 1) * (columns - 1) - 2)) or (rows * columns > 99)):
+            return await ctx.send(
+                'Range of rows : [5,..]\nRange of columns : [3,9]\nRange of bombs : [1,..]\n**No weird numbers**'+
+                '\nSyntax is `minesweeper|ms|mines [rows] [columns] [mines]`\n'+
+                '**Careful of character limit!** `Rows` times `Columns` must be lower than 100.\n'+
+                'For example, `ms 10 10` is bad, but `ms 10 9` is fine')
 
-            await ctx.send(ms)
-        else:
-            await ctx.send(
-                'Max rows is 11, max columns is 9 and minumum bombs is 3, and no weird numbers\nSyntax is `minesweeper [rows] [columns] [mines]`')
+        msMap = [[0 for column in range(columns)] for row in range(rows)]
+        borderX = columns - 1
+        borderY = rows - 1
+        ms = ''
+        for num in range(mines):
+            x = 0
+            y = 0
+            while True:
+                tx = random.randint(0, borderX)
+                ty = random.randint(0, borderY)
+                if (msMap[ty][tx] != 'X'):
+                    msMap[ty][tx] = 'X'
+                    x = tx
+                    y = ty
+                    #print(f'{x},{y}')
+                    break
+            for i in range(x-1, x+2):
+                for j in range(y-1, y+2):
+                    if (i < 0 or j < 0):
+                        continue
+                    try:
+                        if (msMap[j][i] != 'X'):
+                            msMap[j][i] += 1
+                            #print(f'{i} and {j}')
+                    except Exception as e:
+                        continue
+        for row in msMap:
+           ms += " ".join(str(cell) for cell in row) + "\n"
+        print(ms)
+        # print(msMap)
+
+        replace = {'X': '||:boom:||', '0': '||:zero:||', '1': '||:one:||', '2': '||:two:||', '3': '||:three:||',
+                    '4': '||:four:||','5': '||:five:||','6': '||:six:||','7': '||:seven:||','8': '||:eight:||'}
+        for item in replace:
+            ms = ms.replace(item, replace[item])
+
+        await ctx.send(ms)
+
+# ------------------------------------------------------------------------------
+
 def setup(bot):
     bot.add_cog(games(bot))

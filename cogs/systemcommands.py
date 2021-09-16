@@ -29,6 +29,8 @@ class syscom(commands.Cog):
         embed.add_field(name="Pong", value=f"{round(self.bot.latency * 1000)}ms")
         await msg.send(embed=embed)
 
+    # ------------------------------------------------------------------------------
+
     @commands.command(
         name = 'steal',
         brief = 'FBI OPEN UP',
@@ -76,6 +78,8 @@ class syscom(commands.Cog):
                 print(f"There is some Error Here, error is defined by: {e}")
                 await dumbot.sendErrorToChannel(self, ctx,"Steal", e)
                 await ctx.send("Some error occured, please try again or ping the devs **):**")
+    
+    # ------------------------------------------------------------------------------
 
     @feedbackNbugsBlacklist
     @commands.command(
@@ -92,6 +96,8 @@ class syscom(commands.Cog):
         else:
             await msg.edit(content="Something happened, please try again or contact staff")
 
+    # ------------------------------------------------------------------------------
+
     @feedbackNbugsBlacklist
     @commands.command(
         name="bugreport",
@@ -106,6 +112,8 @@ class syscom(commands.Cog):
             await msg.edit(content="Bug Report sent!")
         else:
             await msg.edit(content="Something happened, please try again or contact staff")
+
+    # ------------------------------------------------------------------------------
 
     @commands.Cog.listener()
     async def on_message(self, msg):

@@ -33,7 +33,6 @@ def private(ctx):
 
 """      Specific     """
 def Feedback_n_bug_blacklist(ctx):
-    blacklist = {
-    }
+    blacklist = {}
     blacklist = set(blacklist.values())
     return ctx.author.id not in blacklist
