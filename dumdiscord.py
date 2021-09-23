@@ -10,6 +10,7 @@ id = base64.b64decode(f).decode('utf-8')
 restrictedChannels = ["database"]
 intents = discord.Intents.default()
 intents.members = True
+intents.voice_states = True
 customPrefix = {}
 defaultPrefix = '$'
 
@@ -137,4 +138,5 @@ if __name__ == "__main__":
     bot.load_extension('cogs.games')
     bot.load_extension('cogs.personal')
     bot.load_extension('cogs.database')
+    bot.load_extension('cogs.music')
     bot.run(id)

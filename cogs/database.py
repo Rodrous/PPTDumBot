@@ -3,7 +3,10 @@ from build.backEnd import *
 import discord
 from build.generalPurpose import dumbot
 class database(commands.Cog):
-    
+
+    def __init__(self, bot):
+        self.bot = bot
+
     @commands.command("populate")
     async def populate(self, ctx):
         memebers = await ctx.guild.fetch_members().flatten()
