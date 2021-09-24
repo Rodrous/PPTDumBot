@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3 AS main
 
 WORKDIR /app
 
@@ -9,4 +9,9 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-CMD ["python", "dumdiscord.py"]
+FROM alpine
+RUN apk add --no-cache ffmpeg
+COPY --from=main . .
+WORKDIR /app
+CMD ["python","dumdiscord.py"]
+
