@@ -1,12 +1,9 @@
 import discord
-from itertools import chain
 from discord.ext import commands, tasks
-import base64, random
+import random,os
 from build.generalPurpose import dumbot
-with open("config/client.txt") as file:
-    f = file.readline()
 
-id = base64.b64decode(f).decode('utf-8')
+id = os.environ.get('clientId')
 restrictedChannels = ["database"]
 intents = discord.Intents.default()
 intents.members = True

@@ -2,10 +2,9 @@ from discord.ext import commands
 import discord,base64,typing,asyncio
 from build.generalPurpose import dumbot
 from build.backEnd import mute,unmute
-with open("config/allowedguildIds.txt") as file:
-    f = file.readlines()
+import os
 
-allowedguilds = [base64.b64decode(i).decode('utf-8')  for i in f]
+allowedguilds = [os.environ.get('allowedGuild')]
 
 class moderation(commands.Cog):
     def __init__(self,bot):

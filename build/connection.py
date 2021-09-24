@@ -1,8 +1,10 @@
-import pymongo,base64
+import os
+
+import pymongo
 
 #Obfuscated this code because whynot
 def connection ():
-    OOO000O0O0O0O00OO =base64 .b64decode ('bW9uZ29kYitzcnY6Ly9ib3Q6YmxlaDEyM0BjbHVzdGVyMC5kajZieC5tb25nb2RiLm5ldC9teUZpcnN0RGF0YWJhc2U/cmV0cnlXcml0ZXM9dHJ1ZSZ3PW1ham9yaXR5').decode ('Utf-8')
+    OOO000O0O0O0O00OO = os.environ.get("mongoDb")
     O00OOO0O0OOO0O00O =pymongo .MongoClient (OOO000O0O0O0O00OO )
     return O00OOO0O0OOO0O00O 
 
