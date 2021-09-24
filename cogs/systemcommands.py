@@ -1,15 +1,12 @@
 from discord.ext import commands
-import discord,base64,typing, requests
+import discord,os, requests
 import re as reg
 from build.generalPurpose import dumbot, getDataFromLink
 from build import checks
 from build import notion
 from build.library import loadingFunnyMessages
 
-with open("config/allowedguildIds.txt") as file:
-    f = file.readlines()
-
-allowedguilds = [base64.b64decode(i).decode('utf-8')  for i in f]
+allowedguilds = [os.environ.get('allowedGuild')]
 
 restrictedChannels = ["database"]
 
