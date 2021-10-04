@@ -40,7 +40,7 @@ def private(*args):
 """      Specific     """
 def Feedback_n_bug_blacklist(*args):
     def predicate(ctx):
-        blacklist = {"Giraffe | Gif": 701049734382485615}
+        blacklist = {}
         blacklist = set(blacklist.values())
         return ctx.author.id not in blacklist
     return commands.check(predicate)
