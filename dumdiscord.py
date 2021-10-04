@@ -98,7 +98,8 @@ async def on_message(msg):
 @bot.event
 async def on_ready():
     await bot.wait_until_ready()
-    await commands.Bot.get_channel(bot, 879773094561083492).send('Restarted Successfully!')
+    embed = discord.Embed(title="Bot Restarted Successfully!", color=52382)
+    await commands.Bot.get_channel(bot, 879773094561083492).send(embed=embed)
     changeDescription.start()
 
 @tasks.loop(hours=5)
