@@ -109,7 +109,7 @@ async def changeDescription():
                     "What is love? Baby dont hurt me", 'Never make the same mistake twice; there are so many new ones to make',
                     'Life is beautiful… from Friday to Sunday', 'Time is precious. Waste it wisely', 
                     'Ill be back before you can pronounce actillimandataquerin altosapaoyabayadoondib',
-                    'I’m right 90% \of the time, so why worry about the other 3%?',' I’d grill your cheese! ~Me when flirting',
+                    'I’m right 90\% of the time, so why worry about the other 3%?',' I’d grill your cheese! ~Me when flirting',
                     'When life gives you lemonade, make lemons.'
                     ]
 
