@@ -89,7 +89,7 @@ class music(commands.Cog):
     async def resume(self, ctx):
         if (ctx.voice_client):
             await ctx.voice_client.resume()
-    
+
     @commands.command(name="shuffle")
     async def shuffle(self,ctx):
         random.shuffle(self.queue)
