@@ -136,5 +136,4 @@ if __name__ == "__main__":
     bot.load_extension('cogs.games')
     bot.load_extension('cogs.personal')
     bot.load_extension('cogs.database')
-    bot.load_extension('cogs.music')
     bot.run(id)
