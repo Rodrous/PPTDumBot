@@ -12,7 +12,7 @@ def checkExist(guildId, UserId):
         print("Adding someone new!")
         addVal(guildId,UserId)
 
-def checkMuted(guildId, UserId):
+def checkMuted(guildId, UserId) -> bool:
     muted = col.find({"$and":[{'guildId':guildId},{'UserId':UserId},{'muteStatus':True}]}).count()
     if muted >=1:
         return True

@@ -6,7 +6,7 @@ from build.library import moviequotes, loadingFunnyMessages
 from build.urbanDict import searchitem
 import re as reg
 import wikipedia
-
+from typing import List,Dict
 #sends images and quotes
 class webmaster(commands.Cog):
     def __init__(self,bot):
@@ -173,7 +173,7 @@ class webmaster(commands.Cog):
         except Exception as e:
             await ctx.send("Idk what the fuck happened, ping PPT/Finix/Draf")
             await dumbot.sendErrorToChannel(self, ctx,"Wikipedia", e)
-            print(e)
+
 
     @commands.command(
         name="dict",
@@ -191,6 +191,37 @@ class webmaster(commands.Cog):
     #                "<:usrBall:863646049028276234>", "<:yeye:863647634361942018>", '<:russianpepe:863647634001887273>']
     #         rand = random.choice(seq)
     #         await msg.add_reaction(rand)
+    @commands.command(name="temp")
+    async def tempratureConversion(self,ctx,*,arg):
+        x = arg.split()
+        if len(x) > 1:
+            arg = arg.replace(" ", "")
+        if reg.match("[0-9]+[a-zA-Z]",arg):
+            tempMap:Dict[str,List[str]] = {}
+            valueNeeded: List[int] = [i for i in arg if i.isdigit()]
+            numberRequired: int = int("".join(valueNeeded))
+            if arg[-1].upper() == "C":
+                tempMap[arg] = [str(int((numberRequired * 9/5) + 32)) + "F" , str(numberRequired + 273)+"K"]
+                #Convert to Celcius
+            elif arg[-1].upper() == "K":
+                tempMap[arg] = [str(int((numberRequired - 273.15)*9/5 + 32)) + "F" , str(numberRequired + 273)+"C"]
+            elif arg[-1].upper() == "F":
+                tempMap[arg] = [str(int((numberRequired - 32) * 5/9)) + "C", str(int((numberRequired -32)*5/9 + 273.15)) + "K" ]
+
+
+        #Todo do Graphical Changes
+        # embed = discord.Embed()
+        # embed.set_author(name=f"{arg[:-1]}°{arg[-1]}" )
+        # for i,j in tempMap.items():
+        #     for x in j:
+        #         embed.add_field(name=f"°{x[-1]}", value=f"{x[:-1]}")
+        # await ctx.send(embed=embed)
+
+        await ctx.send(tempMap)
+
+
+
+
 
 
 def setup(bot):
