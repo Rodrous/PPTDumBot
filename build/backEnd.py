@@ -79,10 +79,16 @@ async def addQuote(movie:str,character:str,quote:List[List[Union[str,Optional[Di
             )
 
 async def getRandomQuote(noOfDocuments:int=1):
-    # return [i async for i in
     async for i in quoteCol.aggregate([{'$sample':{'size':noOfDocuments}}]):
         return i
 
+async def addWaitingMessage(message:str) -> None:
+    await LoadingMessage.update_one({'message':message},{'$setOnInsert':{'message':message}},upsert=True)
+
+
+async def getRandomLoadingMessage(noOfDocuments:int=1):
+    async for i in LoadingMessage.aggregate([{'$sample': {'size':noOfDocuments}}]):
+        return i['message']
 
 if __name__ == "build.backEnd" or __name__ == "__main__":
     loop = asyncio.get_event_loop()
@@ -91,5 +97,6 @@ if __name__ == "build.backEnd" or __name__ == "__main__":
     """ Creating a DB or getting a DB Object doesnt do any IO work, so awaiting it is not required"""
     col = createDb(conn, 'DiscordBot', 'UserInfo')
     quoteCol = createDb(conn, "DiscordBot", "Quotes")
+    LoadingMessage = createDb(conn,"DiscordBot","LoadingMessage")
 
 
