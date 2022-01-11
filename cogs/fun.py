@@ -193,8 +193,6 @@ class webmaster(commands.Cog):
 
         try:
             await asyncio.wait_for(quoteObj.getMovieQuote(),timeout=10)
-
-
             embed = discord.Embed(
                 title=quoteObj.movieName,
                 description=quoteObj.quote,
@@ -202,7 +200,7 @@ class webmaster(commands.Cog):
             )
             embed.set_footer(text=f"Type: {quoteObj.type}")
             embed.set_thumbnail(url=quoteObj.imageUrl)
-            await msg.edit(embed=embed)
+            await msg.edit(content="",embed=embed)
         except asyncio.TimeoutError:
             await msg.edit(content=f"Whoops I couldn't find it.")
 
