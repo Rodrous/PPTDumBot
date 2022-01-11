@@ -1,8 +1,11 @@
+import asyncio
+import time
+
 import discord
 from discord.ext import commands
 import requests,random
 from build.generalPurpose import dumbot, getDataFromLink
-from build.library import moviequotes, loadingFunnyMessages
+from build.library import loadingFunnyMessages, moviequotes
 from build.urbanDict import searchitem
 import re as reg
 import wikipedia
@@ -116,47 +119,6 @@ class webmaster(commands.Cog):
         url = requests.get('https://api.yomomma.info/').json()
         await msg.edit(content=url['joke'])
 
-    @commands.command(
-        name='moviequotes',
-        aliases=['mq', 'moviequote'])
-    async def movieQuote(self,ctx,*,args = ''):
-        loading = await loadingFunnyMessages()
-        msg = await ctx.send(loading)
-        args = args.lower().split()
-        pf = await dumbot.getPrefix(ctx, self.bot)
-        prefix = pf[2]
-        error_message = {'movie': 'Error 404','character': '',
-                     'quote': f'It was not found, make sure it was the right syntax\nDo `{prefix}help moviequotes` for info on syntax',
-                     'id': 'Contact PPT/Finix/Giraffe if you think its been a mistake',
-                     'image': '', 'type': 'quote'}
-        if not args or args[0] == 'random':
-            quote = await moviequotes.random()
-        elif args[0] == 'get':
-            try:
-                quote = await moviequotes.get(int(args[1]))
-            except Exception as e:
-                print(f"Quote fail Get: {e}")
-                await dumbot.sendErrorToChannel(self, ctx, "Moviequotes.get", e)
-                quote = error_message
-        elif args[0] == 'per':
-            try:
-                string = "\s".join(args[2:])
-                quote = await moviequotes.per(args[1], string)
-            except Exception as e:
-                print(f"Quote fail Per: {e}")
-                await dumbot.sendErrorToChannel(self, ctx, "Moviequotes.per", e)
-                quote = error_message
-        else:
-            quote = error_message
-
-        string = f'{quote["quote"]}'
-        if quote.get('character', None):
-            string = string + f'\n**-{quote["character"]}**'
-        embed = discord.Embed(title=quote['movie'] ,description=string, color= 4029286)
-        embed.set_footer(text=f"Quote ID: {quote['id']}")
-        if quote["image"]:
-            embed.set_thumbnail(url=quote["image"])
-        await msg.edit(content=None, embed= embed)
 
     @commands.command(
         name='wikipedia',
@@ -167,7 +129,7 @@ class webmaster(commands.Cog):
             data = wikipedia.summary(arg, sentences=7, auto_suggest=False)
             await ctx.send(data)
         except wikipedia.exceptions.DisambiguationError as e:
-            print(type(e))
+            pass
             await ctx.send(
                 "The Search is highly vauge, it gave multiple outputs which *I* cannot send. Try Something on-point")
         except Exception as e:
@@ -219,7 +181,30 @@ class webmaster(commands.Cog):
 
         await ctx.send(tempMap)
 
+    @commands.command(name='moviequotes', aliases=['mq'])
+    async def movieQuote(self,ctx,explicit:bool=False,nsfw:bool=False) -> None:
+        if explicit in ["explicit","true","allow"]:
+            explicit = True
+        if nsfw in["nsfw","true","allow"]:
+            nsfw = True
+        loading = await loadingFunnyMessages()
+        msg = await ctx.send(loading)
+        quoteObj = moviequotes(explicit,nsfw)
 
+        try:
+            await asyncio.wait_for(quoteObj.getMovieQuote(),timeout=10)
+
+
+            embed = discord.Embed(
+                title=quoteObj.movieName,
+                description=quoteObj.quote,
+                color=discord.Color.random()
+            )
+            embed.set_footer(text=f"Type: {quoteObj.type}")
+            embed.set_thumbnail(url=quoteObj.imageUrl)
+            await msg.edit(embed=embed)
+        except asyncio.TimeoutError:
+            await msg.edit(content=f"Whoops I couldn't find it.")
 
 
 

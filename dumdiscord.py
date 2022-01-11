@@ -1,3 +1,5 @@
+import asyncio
+
 import discord
 from itertools import chain
 from discord.ext import commands, tasks
@@ -86,7 +88,6 @@ async def resetPrefix(msg):
             await msg.channel.send('You cant use that here yet.', delete_after=6)
     else:
         await msg.channel.send('This is a Server-Only command.', delete_after=6)
-
 
 
 @bot.event

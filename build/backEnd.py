@@ -86,11 +86,12 @@ async def addWaitingMessage(message:str) -> None:
     await LoadingMessage.update_one({'message':message},{'$setOnInsert':{'message':message}},upsert=True)
 
 
-async def getRandomLoadingMessage(noOfDocuments:int=1):
+async def getRandomLoadingMessage(noOfDocuments:int=1) -> str:
     async for i in LoadingMessage.aggregate([{'$sample': {'size':noOfDocuments}}]):
         return i['message']
 
-if __name__ == "build.backEnd" or __name__ == "__main__":
+
+if __name__ == "build.backEnd":
     loop = asyncio.get_event_loop()
     conn = loop.run_until_complete(connection())
 
