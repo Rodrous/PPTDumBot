@@ -9,7 +9,7 @@ from build.library import loadingFunnyMessages, moviequotes
 from build.urbanDict import searchitem
 import re as reg
 import wikipedia
-from typing import List,Dict
+from typing import List,Dict,Union
 #sends images and quotes
 class webmaster(commands.Cog):
     def __init__(self,bot):
@@ -182,11 +182,25 @@ class webmaster(commands.Cog):
         await ctx.send(tempMap)
 
     @commands.command(name='moviequotes', aliases=['mq'])
-    async def movieQuote(self,ctx,explicit:bool=False,nsfw:bool=False) -> None:
-        if explicit in ["explicit","true","allow"]:
-            explicit = True
-        if nsfw in["nsfw","true","allow"]:
-            nsfw = True
+    async def movieQuote(self,ctx,*,args) -> None:
+        args = args.lower().split()
+        explicit:bool = False
+        nsfw:bool = False
+
+        match args[0]:
+            case "explicit":
+                explicit = True
+            case "nsfw":
+                nsfw = True
+
+
+        if len(args)>=2:
+            match args[1]:
+                case "nsfw":
+                    nsfw = True
+                case "explicit":
+                    explicit = True
+
         loading = await loadingFunnyMessages()
         msg = await ctx.send(loading)
         quoteObj = moviequotes(explicit,nsfw)
