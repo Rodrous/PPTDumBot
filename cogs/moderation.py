@@ -1,12 +1,10 @@
 from discord.ext import commands
 import discord, base64, typing, asyncio
 from build.generalPurpose import dumbot
-from build.backEnd import mute, unmute
+from build.backEnd import mute,unmute
+import os
 
-with open("config/allowedguildIds.txt") as file:
-    f = file.readlines()
-
-allowedguilds = [base64.b64decode(i).decode('utf-8') for i in f]
+allowedguilds = [os.environ.get('allowedGuild')]
 
 
 class moderation(commands.Cog):
@@ -44,6 +42,7 @@ class moderation(commands.Cog):
     async def mute(self, ctx, user: discord.Member, time=10, reason="being a biotch"):
         getRole = discord.utils.get(ctx.guild.roles, name="Muted")
         await mute(ctx.guild.id, user.id)
+
         if not getRole:
             try:
                 muted = await ctx.guild.create_role(name="Muted", reason="Because People do be bitch")
@@ -66,6 +65,7 @@ class moderation(commands.Cog):
     @commands.command(
         help="Unmutes a person"
     )
+
     async def unmute(self, ctx, user: discord.Member):
         await unmute(ctx.guild.id, user.id)
         getRole = discord.utils.get(ctx.guild.roles, name="Muted")

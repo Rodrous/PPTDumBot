@@ -11,13 +11,13 @@ class database(commands.Cog):
     async def populate(self, ctx):
         memebers = await ctx.guild.fetch_members().flatten()
         for member in memebers:
-            await checkExist(ctx.guild.id, member.id)
+            checkExist(ctx.guild.id, member.id)
 
     @commands.Cog.listener()
     @commands.has_permissions(administrator=True)
     async def on_member_join(self,member):
-        await checkExist(member.guild.id,member.id)
-        if await checkMuted(member.guild.id, member.id):
+        checkExist(member.guild.id,member.id)
+        if(checkMuted(member.guild.id,member.id)):
             getRole = discord.utils.get(member.guild.roles, name="Muted")
             if not getRole:
                 try:
@@ -33,14 +33,14 @@ class database(commands.Cog):
                 await member.add_roles(getRole)
             else:
                 await member.add_roles(getRole)
-
+    
     @commands.Cog.listener()
     async def on_message(self,ctx):
-        await messageIncrement(ctx.guild.id,ctx.author.id)
-
+        messageIncrement(ctx.guild.id,ctx.author.id)
+    
     @commands.Cog.listener()
     async def on_message_delete(self,ctx):
-        await messageDecrement(ctx.guild.id,ctx.author.id)
+        messageDecrement(ctx.guild.id,ctx.author.id)
 
 def setup(bot):
     bot.add_cog(database(bot))

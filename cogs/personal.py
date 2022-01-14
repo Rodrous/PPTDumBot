@@ -1,11 +1,11 @@
 from discord.ext import commands
 import discord, random
 from build.generalPurpose import dumbot
-from build.customDecorators import private, devsOnly
+from build import checks
+
 import re as reg
 
-devsonly = commands.check(devsOnly)
-private = commands.check(private)
+
 private_embed_color = 6724095
 bot_avatar = dumbot.avatar()
 
@@ -13,7 +13,6 @@ class personal(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
 
-    @private
     @commands.command(
         name="ily",
         brief="Draf is tooo lazy to type it",
@@ -32,7 +31,6 @@ class personal(commands.Cog):
                 name = DRAF
             await ctx.send("ily " + str(num) + f" <@{name}>")
 
-    @private
     @commands.command(
         name="vc")
     async def wannaVc(self, ctx):
@@ -54,7 +52,7 @@ class personal(commands.Cog):
             await ctx.send(string)
 
     """    HELP MENU    """
-    @private
+    @checks.private()
     @commands.command(
         name="personalhelp",
         aliases=["phelp", "pershelp", "privhelp", "privatehelp"])
