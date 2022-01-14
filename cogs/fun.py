@@ -192,5 +192,7 @@ class webmaster(commands.Cog):
             await msg.edit(content=f"Whoops I couldn't find it.")
 
 
+
+
 def setup(bot):
     bot.add_cog(webmaster(bot))
