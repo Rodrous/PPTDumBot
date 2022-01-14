@@ -1,6 +1,4 @@
 import asyncio
-import time
-
 import discord
 from discord.ext import commands
 import requests,random
@@ -9,7 +7,7 @@ from build.library import loadingFunnyMessages, moviequotes
 from build.urbanDict import searchitem
 import re as reg
 import wikipedia
-from typing import List,Dict,Union
+
 #sends images and quotes
 class webmaster(commands.Cog):
     def __init__(self,bot):
@@ -158,7 +156,7 @@ class webmaster(commands.Cog):
     async def movieQuote(self,ctx,*,arg="None") -> None:
         explicit:bool = False
         nsfw:bool = False
-        print(arg)
+
         try:
             args = arg.lower().split()
             match args[0]:
@@ -175,7 +173,6 @@ class webmaster(commands.Cog):
                         explicit = True
         except Exception:
             pass
-
 
         loading = await loadingFunnyMessages()
         msg = await ctx.send(loading)
