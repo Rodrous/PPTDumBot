@@ -1,15 +1,20 @@
-import discord
-from discord.ext import commands, tasks
-import random,os
-from build.generalPurpose import dumbot
+import asyncio
 
-id = os.environ.get('clientId')
+import discord
+from itertools import chain
+from discord.ext import commands, tasks
+import base64, random
+from build.generalPurpose import dumbot
+with open("config/client.txt") as file:
+    f = file.readline()
+
+id = base64.b64decode(f).decode('utf-8')
 restrictedChannels = ["database"]
 intents = discord.Intents.default()
 intents.members = True
 intents.voice_states = True
 customPrefix = {}
-defaultPrefix = '$'
+defaultPrefix = '-'
 
 
 # You dont care about this a lot, only about the first return, that finds in the dictionary 'customPrefix' the prefix with
@@ -85,32 +90,23 @@ async def resetPrefix(msg):
         await msg.channel.send('This is a Server-Only command.', delete_after=6)
 
 
-
 @bot.event
 async def on_message(msg):
     # Add stuff here, but DO NOT DELETE THE LINE BELOW!! or nothing will work
 
     await bot.process_commands(msg)
 
-@bot.event
-async def on_ready():
-    await bot.wait_until_ready()
-    embed = discord.Embed(title="Bot Restarted Successfully!", color=52382)
-    await commands.Bot.get_channel(bot, 879773094561083492).send(embed=embed)
-    changeDescription.start()
+# @bot.event
+# async def on_ready():
+#     await bot.wait_until_ready()
+#     embed = discord.Embed(title="Bot Restarted Successfully!", color=52382)
+#     await commands.Bot.get_channel(bot, 879773094561083492).send(embed=embed)
+#     changeDescription.start()
 
 @tasks.loop(hours=5)
 async def changeDescription():
-    # add various descriptions here
-    descriptions = ['Serving','aWYgeW91IGRlY29kZWQgdGhpcyB5b3UncmUgYSBuZXJk',
-                    'Why do i exist, father?', "ctx.send(f'fuck you {member.mention}')",
-                    'Running on biodiesel', "I'm one hell of a butler",
-                    "Waiting for Hot Topic to sell 'Distressed iPhones'", "Blackfinix codes this bot too",
-                    "What is love? Baby dont hurt me", 'Never make the same mistake twice; there are so many new ones to make',
-                    'Life is beautiful… from Friday to Sunday', 'Time is precious. Waste it wisely', 
-                    'Ill be back before you can pronounce actillimandataquerin altosapaoyabayadoondib',
-                    'I’m right 90\% of the time, so why worry about the other 3%?',' I’d grill your cheese! ~Me when flirting',
-                    'When life gives you lemonade, make lemons.'
+    # Todo get an Api call to get random quotes from server
+    descriptions = [ "Needs new Description"
                     ]
 
     membersList =  []

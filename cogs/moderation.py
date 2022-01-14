@@ -40,7 +40,7 @@ class moderation(commands.Cog):
     @commands.has_permissions(administrator=True)
     async def mute(self,ctx,user: discord.Member,time = 10,reason="being a biotch"):
         getRole = discord.utils.get(ctx.guild.roles, name="Muted")
-        mute(ctx.guild.id,user.id)
+        await mute(ctx.guild.id,user.id)
         if not getRole:
             try:
                 muted = await ctx.guild.create_role(name="Muted", reason="Because People do be bitch")
@@ -66,7 +66,7 @@ class moderation(commands.Cog):
         help="Unmutes a person"
     )
     async def unmute(self,ctx,user: discord.Member):
-        unmute(ctx.guild.id,user.id)
+        await unmute(ctx.guild.id,user.id)
         getRole = discord.utils.get(ctx.guild.roles, name="Muted")
         await user.remove_roles(getRole)
         await ctx.send("Done!")

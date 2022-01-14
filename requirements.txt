@@ -3,7 +3,4 @@ aiohttp
 requests
 wikipedia
 bs4
-pymongo[srv]
-pynacl
-ffmpeg
-youtube_dl
+motor
