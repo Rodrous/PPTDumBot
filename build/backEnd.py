@@ -2,21 +2,16 @@ import asyncio
 from build.connection import createDb,connection
 from typing import Dict,List,Optional,Union
 
+async def addVal(guildId,UserId,muteStatus=False):
+    await col.insert_one({'guildId':guildId,'UserId':UserId,'muteStatus':muteStatus})
 
-conn = connection()
-col = createDb(conn,'DiscordBot','UserInfo')
-
-def addVal(guildId,UserId,muteStatus=False,banStatus=False):
-    col.insert_one({'guildId':guildId,'UserId':UserId,'muteStatus':muteStatus})
-
-def checkExist(guildId, UserId):
-    count = col.find({"$and":[{'guildId':guildId},{'UserId':UserId}]}).count()
+async def checkExist(guildId, UserId):
+    count = await col.count_documents({"$and":[{'guildId':guildId},{'UserId':UserId}]})
     if count == 0:
         await addVal(guildId,UserId)
 
-
-def checkMuted(guildId, UserId):
-    muted = col.find({"$and":[{'guildId':guildId},{'UserId':UserId},{'muteStatus':True}]}).count()
+async def checkMuted(guildId, UserId) -> bool:
+    muted = await col.count_documents({"$and":[{'guildId':guildId},{'UserId':UserId},{'muteStatus':True}]})
     if muted >=1:
         return True
     return False
