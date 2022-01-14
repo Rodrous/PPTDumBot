@@ -145,61 +145,37 @@ class webmaster(commands.Cog):
         search = searchitem(arg)
         await ctx.send(search)
 
-    # @commands.Cog.listener()
-    # async def on_message(self, msg):
-    #     if reg.search(pattern=r'\bours?\b', string=msg.content, flags=reg.I) and not msg.author.bot:
-    #         seq = ["<:doggo:863639575666098186>", "<:pepCom:863639491533340682>", "<:BlackCom:863642798070431744>",
-    #                "<:Star:863642810879443004>", "<a:Communist:863640421628641320>", "<:comthumb:863646009334169651>",
-    #                "<:usrBall:863646049028276234>", "<:yeye:863647634361942018>", '<:russianpepe:863647634001887273>']
-    #         rand = random.choice(seq)
-    #         await msg.add_reaction(rand)
-    @commands.command(name="temp")
-    async def tempratureConversion(self,ctx,*,arg):
-        x = arg.split()
-        if len(x) > 1:
-            arg = arg.replace(" ", "")
-        if reg.match("[0-9]+[a-zA-Z]",arg):
-            tempMap:Dict[str,List[str]] = {}
-            valueNeeded: List[int] = [i for i in arg if i.isdigit()]
-            numberRequired: int = int("".join(valueNeeded))
-            if arg[-1].upper() == "C":
-                tempMap[arg] = [str(int((numberRequired * 9/5) + 32)) + "F" , str(numberRequired + 273)+"K"]
-                #Convert to Celcius
-            elif arg[-1].upper() == "K":
-                tempMap[arg] = [str(int((numberRequired - 273.15)*9/5 + 32)) + "F" , str(numberRequired + 273)+"C"]
-            elif arg[-1].upper() == "F":
-                tempMap[arg] = [str(int((numberRequired - 32) * 5/9)) + "C", str(int((numberRequired -32)*5/9 + 273.15)) + "K" ]
-
-
-        #Todo do Graphical Changes
-        # embed = discord.Embed()
-        # embed.set_author(name=f"{arg[:-1]}°{arg[-1]}" )
-        # for i,j in tempMap.items():
-        #     for x in j:
-        #         embed.add_field(name=f"°{x[-1]}", value=f"{x[:-1]}")
-        # await ctx.send(embed=embed)
-
-        await ctx.send(tempMap)
+    @commands.Cog.listener()
+    async def on_message(self, msg):
+        if reg.search(pattern=r'\bours?\b', string=msg.content, flags=reg.I) and not msg.author.bot:
+            seq = ["<:doggo:863639575666098186>", "<:pepCom:863639491533340682>", "<:BlackCom:863642798070431744>",
+                   "<:Star:863642810879443004>", "<a:Communist:863640421628641320>", "<:comthumb:863646009334169651>",
+                   "<:usrBall:863646049028276234>", "<:yeye:863647634361942018>", '<:russianpepe:863647634001887273>']
+            rand = random.choice(seq)
+            await msg.add_reaction(rand)
 
     @commands.command(name='moviequotes', aliases=['mq'])
-    async def movieQuote(self,ctx,*,args) -> None:
-        args = args.lower().split()
+    async def movieQuote(self,ctx,*,arg="None") -> None:
         explicit:bool = False
         nsfw:bool = False
-
-        match args[0]:
-            case "explicit":
-                explicit = True
-            case "nsfw":
-                nsfw = True
-
-
-        if len(args)>=2:
-            match args[1]:
-                case "nsfw":
-                    nsfw = True
+        print(arg)
+        try:
+            args = arg.lower().split()
+            match args[0]:
                 case "explicit":
                     explicit = True
+                case "nsfw":
+                    nsfw = True
+
+            if len(args) >= 2:
+                match args[1]:
+                    case "nsfw":
+                        nsfw = True
+                    case "explicit":
+                        explicit = True
+        except Exception:
+            pass
+
 
         loading = await loadingFunnyMessages()
         msg = await ctx.send(loading)

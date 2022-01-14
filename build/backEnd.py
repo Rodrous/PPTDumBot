@@ -8,7 +8,6 @@ async def addVal(guildId,UserId,muteStatus=False):
 async def checkExist(guildId, UserId):
     count = await col.count_documents({"$and":[{'guildId':guildId},{'UserId':UserId}]})
     if count == 0:
-        print("Adding someone new!")
         await addVal(guildId,UserId)
 
 async def checkMuted(guildId, UserId) -> bool:
@@ -95,7 +94,6 @@ async def getRandomLoadingMessage(noOfDocuments:int=1) -> str:
 if __name__ == "build.backEnd":
     loop = asyncio.get_event_loop()
     conn = loop.run_until_complete(connection())
-
     """ Creating a DB or getting a DB Object doesnt do any IO work, so awaiting it is not required"""
     col = createDb(conn, 'DiscordBot', 'UserInfo')
     quoteCol = createDb(conn, "DiscordBot", "Quotes")
