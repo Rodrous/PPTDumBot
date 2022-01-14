@@ -1,6 +1,0 @@
-git+https://github.com/Rapptz/discord.py
-aiohttp
-requests
-wikipedia
-bs4
-motor
