@@ -1,0 +1,12 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.ipynb_checkpoints
+profile_default/
+ipython_config.py
+.pytype/
+*.pyc
