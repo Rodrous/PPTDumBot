@@ -32,7 +32,7 @@ async def React(ctx: discord.Message, Emote: discord.Reaction, User: discord.Use
     await ctx.clear_reactions()
     await ctx.edit(embed=embed)
     for react in reaction:
-        await event.ctx.add_reaction(react)
+        await event.ctx.add_reaction(react.value)
     event.Loop = False
 
 

@@ -4,6 +4,7 @@ import discord
 
 from helpMenu.commands import CommandCategory
 from helpMenu.helpMenuEntry import HelpMenuEntry
+from helpMenu.reactions import Reaction
 from build.generalPurpose import dumbot
 
 botAvatar = dumbot.avatar()
@@ -22,7 +23,7 @@ async def Intro(prefix):
         , color=11187115)
     embed.set_author(name='Server Index',
                      icon_url=botAvatar)
-    reactions = ['<:PepeLmao:865712134439436328>', '<:PepoGamer:865712213141356565>', '<a:pepeAnimeCaught:865712704315850782>', '<a:pepeban:865714938667991091>']  # fun, games, utility, moderation
+    reactions = [Reaction.Fun, Reaction.Games, Reaction.Utility, Reaction.Moderation]
     return embed, reactions
 
 
@@ -36,7 +37,7 @@ async def Fun(Prefix):
     embed.set_author(name="Server Index -> Fun Commands",
                      icon_url=botAvatar)
     embed.set_footer(text="\U00002193 React to return")
-    reactions = ['<:return:867101369814745099>']
+    reactions = [Reaction.Return]
     return embed, reactions
 
 
@@ -50,7 +51,7 @@ async def Games(Prefix):
     embed.set_author(name="Server Index -> Games",
                      icon_url=botAvatar)
     embed.set_footer(text="\U00002193 React to return")
-    reactions = ['<:return:867101369814745099>']
+    reactions = [Reaction.Return]
     return embed, reactions
 
 
@@ -66,7 +67,7 @@ async def Utility(Prefix):
     embed.set_author(name="Server Index -> Utility Commands",
                      icon_url=botAvatar)
     embed.set_footer(text="\U00002193 React to return")
-    reactions = ['<:return:867101369814745099>']
+    reactions = [Reaction.Return]
     return embed, reactions
 
 
@@ -80,7 +81,7 @@ async def Moderation(Prefix):
     embed.set_footer(text="\U00002193 React to return")
     embed.set_author(name="Server Index -> Moderation Commands",
                      icon_url=botAvatar)
-    reactions = ['<:return:867101369814745099>']
+    reactions = [Reaction.Return]
     return embed, reactions
 
 

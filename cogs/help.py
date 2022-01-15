@@ -28,7 +28,7 @@ class getHelp(commands.Cog):
             embed: discord.Message = await ctx.send(embed=intro)
             startupLoop[embed.id] = True
             for react in reactions:
-                await embed.add_reaction(emoji=react)
+                await embed.add_reaction(react.value)
             del startupLoop[embed.id]
         else:
             requestedCommand = args[0]
