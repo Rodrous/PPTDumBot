@@ -9,7 +9,7 @@ import re as reg
 private_embed_color = 6724095
 bot_avatar = Dumbot.avatar()
 
-class personal(commands.Cog):
+class Personal(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
 
@@ -18,7 +18,7 @@ class personal(commands.Cog):
         brief="Draf is tooo lazy to type it",
         help="ily * num + name")
     async def sendIly(self, ctx):
-        allowed_ids = [323457305855262721, 579036541238640731]  # [DRAF, NISSY]
+        allowed_ids = [323457305855262721, 579036541238640731]
         AUTHOR = ctx.author.clientId
         if allowed_ids.__contains__(AUTHOR):
             randomint = "1" + "0" * random.randint(10, 100)
@@ -88,12 +88,7 @@ class personal(commands.Cog):
                     'desc': 'Pings people to vc (On a list, ask to be removed or added)',
                     'color': private_embed_color
                 },
-                # '': {
-                #     'aliases': '',
-                #     'syntax': f'',
-                #     'desc': 'REQUIRED',
-                #     'color': private_color
-                # },
+
             }
             case = switch_case.get(cmd, None)
             if case:
@@ -111,4 +106,4 @@ class personal(commands.Cog):
                 await ctx.send('Not a valid command', delete_after=6)
 
 def setup(bot):
-    bot.add_cog(personal(bot))
+    bot.add_cog(Personal(bot))

@@ -7,7 +7,7 @@ from discord.ext import commands, tasks
 from build.generalPurpose import Dumbot
 
 clientId: str = os.environ.get("clientId")
-restrictedChannels: List = ["database"]
+restrictedChannels: List = ["Database"]
 intents: Intents = discord.Intents.default()
 intents.members: bool = True
 intents.voice_states: bool = True
@@ -110,7 +110,7 @@ async def on_ready() -> None:
 async def change_description() -> None:
     """ Changes Description every 5 hours """
 
-    # Todo Migrate this to database
+    # Todo Migrate this to Database
     descriptions = ["Serving", "aWYgeW91IGRlY29kZWQgdGhpcyB5b3UncmUgYSBuZXJk",
                     "ctx.send(f'fuck you {member.mention}')",
                     "Running on biodiesel",
@@ -149,8 +149,8 @@ if __name__ == "__main__":
     bot.load_extension("cogs.fun")
     bot.load_extension("cogs.systemcommands")
     bot.load_extension("cogs.help")
-    bot.load_extension("cogs.moderation")
+    bot.load_extension("cogs.Moderation")
     bot.load_extension("cogs.games")
-    bot.load_extension("cogs.personal")
-    bot.load_extension("cogs.database")
+    bot.load_extension("cogs.Personal")
+    bot.load_extension("cogs.Database")
     bot.run(clientId)

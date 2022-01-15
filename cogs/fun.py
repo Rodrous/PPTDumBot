@@ -8,8 +8,8 @@ from build.urbanDict import searchitem
 import re as reg
 import wikipedia
 
-#sends images and quotes
-class webmaster(commands.Cog):
+
+class Webmaster(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
 
@@ -17,16 +17,18 @@ class webmaster(commands.Cog):
         name='cat',
         brief='Sends an image of a cute (*most of the times*) cat ꓷ:',
         help='Sends a cat image.')
-    async def sendCat(self,ctx):
+    async def send_cat(self, ctx):
         await ctx.send("Command Disabled Until Further Update")
 
     @commands.command(
         name='dog',
         brief='Sends an image of a heckin good doggo ꓷ:',
         help='Fucking furry.')
-    async def sendDog(self,ctx):
-        data = await get_data_from_link(url="https://dog.ceo/api/breeds/image/random", json=True, jsonType='message', returnFile=True, fileName='Dog.png')
-        if data == None:
+    async def send_dog(self, ctx):
+        data = await get_data_from_link(url="https://dog.ceo/api/breeds/image/random",
+                                        json=True, jsonType='message', returnFile=True,
+                                        fileName='Dog.png')
+        if data is None:
             return await ctx.send("Couldnt Retrieve image from server.")
         await ctx.send(content= "From PPT with \U0001F49A", file=data)
 
@@ -34,8 +36,10 @@ class webmaster(commands.Cog):
         name='wallpaper',
         brief='Sends a wallpaper.',
         help='Sends a wallpaper with size of 1920x1080')
-    async def sendWallpaper(self,ctx):
-        data = await get_data_from_link(url="https://picsum.photos/1920/1080", returnFile=True, fileName='Why are you looking at this.png')
+    async def send_wallpaper(self, ctx):
+        data = await get_data_from_link(url="https://picsum.photos/1920/1080",
+                                        returnFile=True,
+                                        fileName='Why are you looking at this.png')
         if data == None:
             return await ctx.send("Couldnt Retrieve image from server.")
         await ctx.send(file=data)
@@ -44,7 +48,7 @@ class webmaster(commands.Cog):
         name="quote",
         brief="Sends a quote from a movie/anime.",
         help="Sends a random quote")
-    async def sendQuote(self,ctx):
+    async def send_quote(self, ctx):
         loading = await loadingFunnyMessages()
         msg = await ctx.send(loading)
         url = requests.get('https://animechan.vercel.app/api/random').json()
@@ -53,9 +57,9 @@ class webmaster(commands.Cog):
     @commands.command(
         aliases=['re', 'ree', 'reee', 'reeee'],
         brief='It just \'***REEEEEE***\'s lmao',
-        help='***REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE***')
-    async def sendRee(self,ctx):
-        num = random.randint(10,100)
+        help='***REEEEEEEEEEEEEEEEEEEEEE***')
+    async def send_ree(self, ctx):
+        num: int = random.randint(10,100)
         await ctx.send("*R" + "E" * num + "*")
 
     @commands.command(
@@ -63,7 +67,7 @@ class webmaster(commands.Cog):
         aliases = ["speak"],
         brief="repeats your shit",
         help="repeat")
-    async def sendRepeat(self,ctx,*,args):
+    async def send_repeat(self, ctx, *, args):
         if reg.search(pattern='@everyone|@here', string=args, flags=reg.I):
             await ctx.send('Fuck you, you cant loophoel dis')
         else:
@@ -75,7 +79,7 @@ class webmaster(commands.Cog):
         aliases= ["yeeyee", "yeyee","yeeye"],
         brief="issi asked me to do it",
         help="yeeeyeeeee")
-    async def sendYeye(self,ctx):
+    async def send_yeye(self, ctx):
         await ctx.send("*Y" + "E" * random.randint(10,50) + "Y" + "E" * random.randint(10,50) + "*")
 
     @commands.command(
@@ -83,7 +87,7 @@ class webmaster(commands.Cog):
         aliases=["getjoke","jk"],
         brief="It send a random joke",
         help="a random joke, can be explicit or offensive so beware")
-    async def sendJoke(self,ctx, *, args = 'null'):
+    async def send_jokes(self, ctx, *, args ='null'):
         # https://sv443.net/jokeapi/v2/
         loading = await loadingFunnyMessages()
         msg = await ctx.send(loading)
@@ -100,7 +104,7 @@ class webmaster(commands.Cog):
         name="dadjoke",
         brief='i hate my life',
         help='you hate me')
-    async def sendDadjoke(self,ctx):
+    async def send_dad_joke(self, ctx):
         loading = await loadingFunnyMessages()
         msg = await ctx.send(loading)
         url = requests.get("https://icanhazdadjoke.com/", headers={"accept" : "application/json"}).json()
@@ -111,7 +115,7 @@ class webmaster(commands.Cog):
         aliases=['yourmom', 'yomom'],
         brief='we like mom jokes',
         help='sends a random yomomma joke')
-    async def sendMomjoke(self,ctx):
+    async def send_mom_joke(self, ctx):
         loading = await loadingFunnyMessages()
         msg = await ctx.send(loading)
         url = requests.get('https://api.yomomma.info/').json()
@@ -143,17 +147,8 @@ class webmaster(commands.Cog):
         search = searchitem(arg)
         await ctx.send(search)
 
-    @commands.Cog.listener()
-    async def on_message(self, msg):
-        if reg.search(pattern=r'\bours?\b', string=msg.content, flags=reg.I) and not msg.author.bot:
-            seq = ["<:doggo:863639575666098186>", "<:pepCom:863639491533340682>", "<:BlackCom:863642798070431744>",
-                   "<:Star:863642810879443004>", "<a:Communist:863640421628641320>", "<:comthumb:863646009334169651>",
-                   "<:usrBall:863646049028276234>", "<:yeye:863647634361942018>", '<:russianpepe:863647634001887273>']
-            rand = random.choice(seq)
-            await msg.add_reaction(rand)
-
     @commands.command(name='MovieQuotes', aliases=['mq'])
-    async def movieQuote(self,ctx,*,arg="None") -> None:
+    async def movie_quote(self, ctx, *, arg="None") -> None:
         explicit:bool = False
         nsfw:bool = False
 
@@ -195,4 +190,4 @@ class webmaster(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(webmaster(bot))
+    bot.add_cog(Webmaster(bot))

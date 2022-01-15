@@ -1,6 +1,6 @@
 import asyncio
 from build.connection import createdb, connection
-from typing import Dict, List, Optional, Union, Coroutine, Any
+from typing import Dict, List, Optional, Union
 
 
 async def addVal(guildId, UserId, muteStatus=False) -> None:
