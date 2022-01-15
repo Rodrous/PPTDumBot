@@ -1,193 +1,27 @@
 from discord.ext import commands
 import discord
 import re as reg
+import asyncio
 from typing import List
+
 from build.generalPurpose import dumbot
 from helpMenu.helpMenuEntry import HelpMenuEntry
 from helpMenu.commands import CommandCategory
+from helpMenu.entry import *
 
 bot_avatar = dumbot.avatar()
 
 
-async def CreateCommands():
-    """
-    Entry For Commands
-    HelpMenuEntry:
-        :Param Category: Category of type CommandCategory
-        :Param Name: Name of the command
-        :Param Brief: A brief desc about the command
-        :Param Desc: A detailed description of the command
-        :Param Aliases: Optional list of aliases
-        :Param Syntax: Optional Syntax details, will only need the flags at the end example [User: Id, Name] [Number] [Message -> Optional]
-    """
-
-    """  FUN COMMANDS  """
-    HelpMenuEntry(
-        Category=CommandCategory.Fun,
-        Name="Ree",
-        Brief="Ree's out of frustration",
-        Desc="A command that will send *REEEE* with a random amount of E's",
-        Aliases=['re', 'reee', 'reeee']
-    )
-    HelpMenuEntry(
-        Category=CommandCategory.Fun,
-        Name="Yeye",
-        Brief="Issi asked for it so yeah, it does the same as ree but yeye",
-        Desc="Sends *YEEYEE* with random amount of E's as REE",
-        Aliases=["yeeyee", "yeyee", "yeeye"]
-    )
-    HelpMenuEntry(
-        Category=CommandCategory.Fun,
-        Name="Wallpaper",
-        Brief="Sends a Random image from internet [1920x1080]",
-        Desc="Will send a random HD image that can be used as a wallpaper"
-    )
-    HelpMenuEntry(
-        Category=CommandCategory.Fun,
-        Name="Cat",
-        Brief="Get Cat Pic",
-        Desc="Sends a random cat pic from the internet"
-    )
-    HelpMenuEntry(
-        Category=CommandCategory.Fun,
-        Name="Dog",
-        Brief="Get Dog Pic",
-        Desc="Sends a random dog pic from the internet"
-    )
-    HelpMenuEntry(
-        Category=CommandCategory.Fun,
-        Name="Quote",
-        Brief="Sends anime quote",
-        Desc="Sends a random anime quote from the internet"
-    )
-    HelpMenuEntry(
-        Category=CommandCategory.Fun,
-        Name="Say",
-        Brief="Will repeat after you",
-        Desc="Repeats anything you say",
-        Aliases=["speak"],
-        Syntax="[Message]"
-    )
-    HelpMenuEntry(
-        Category=CommandCategory.Fun,
-        Name="Joke",
-        Brief="Tells a joke",
-        Desc="Sends a random joke\n\n**Flags:**\n`-ex` sends any jokes, even explicit and dark jokes",
-        Aliases=["getjoke", "jk"],
-        Syntax="[Flags]"
-    )
-    HelpMenuEntry(
-        Category=CommandCategory.Fun,
-        Name="DadJoke",
-        Brief="Gives you a random dadjoke",
-        Desc="Will get a random dadjoke, enjoy :)"
-    )
-    HelpMenuEntry(
-        Category=CommandCategory.Fun,
-        Name="YoMomma",
-        Brief="Yomomma so dumb she didnt realize this will output random mom jokes",
-        Desc="Will send out random Yomomma jokes"
-    )
-    HelpMenuEntry(
-        Category=CommandCategory.Fun,
-        Name="Wikipedia",
-        Brief="Searches for a wikipedia query",
-        Desc="Will search up a wikipedia page for what you entered",
-        Aliases=["wiki"],
-        Syntax="[Search]"
-    )
-    HelpMenuEntry(
-        Category=CommandCategory.Fun,
-        Name="UrbanDict",
-        Brief="Searches definition for a word",
-        Desc="Will search [UrbanDictionary](https://www.urbandictionary.com/) for a word",
-        Aliases=["dict", 'urban', 'define'],
-        Syntax="[Word/Phrase]"
-    )
-    HelpMenuEntry(
-        Category=CommandCategory.Fun,
-        Name="MovieQuotes",
-        Brief="Sends a random moviequote",
-        Desc="Will search our database for a random moviequote",
-        Aliases=['mq', 'moviequote'],
-        Syntax="[Explicit][Nsfw]"
-    )
-
-    """  Game Commands  """
-    HelpMenuEntry(
-        Category=CommandCategory.Game,
-        Name="Minesweeper",
-        Brief="Generates Minesweeper game",
-        Desc="Will randomly generate a Minesweeper game to play with spoiler tags",
-        Aliases=['ms','mines'],
-        Syntax="[Rows] [Columns] [Mines]"
-    )
-
-    """  Utility Commands  """
-    HelpMenuEntry(
-        Category=CommandCategory.Utility,
-        Name="Feedback",
-        Brief="Sends us Feedback",
-        Desc="Will send us Feedback, please do not abuse this or it will result in a ban from the command",
-        Aliases=["fb"],
-        Syntax="[Message]"
-    )
-    HelpMenuEntry(
-        Category=CommandCategory.Utility,
-        Name="BugReport",
-        Brief="Sends us a BugReport",
-        Desc="Will send us a BugReport, please do not abuse this or it will result in a ban from the command",
-        Aliases=["bugs", "bugrep", "bug-report", "bug-rep"],
-        Syntax="[Message]"
-    )
-    HelpMenuEntry(
-        Category=CommandCategory.Utility,
-        Name="Steal",
-        Brief="Steals an emote",
-        Desc="Will steal an emote from another server via the emote itself or via link",
-        Syntax="[Emote/Link] [Name->Optional]"
-    )
-    HelpMenuEntry(
-        Category=CommandCategory.Utility,
-        Name="Ping",
-        Brief="Pong! Checks ping",
-        Desc="Will check the current ping of the bot"
-    )
-
-    """  Moderation Commands  """
-    HelpMenuEntry(
-        Category=CommandCategory.Moderation,
-        Name="Clear",
-        Brief="Will clear the chat",
-        Desc="Removed specified amount of messages from current chat",
-        Aliases=['purge'],
-        Syntax="[Amount]"
-    )
-    HelpMenuEntry(
-        Category=CommandCategory.Moderation,
-        Name="Mute",
-        Brief="Will mute a person from speaking, reacting etc",
-        Desc="Gives person mute role for a specified amount of time so they cant speak or react",
-        Syntax="[User: Name, Id] [Time]"
-    )
-    HelpMenuEntry(
-        Category=CommandCategory.Moderation,
-        Name="UnMute",
-        Brief="Will unmute a person",
-        Desc="Removes the muted role so they can speak again",
-        Syntax="[User: Name, ID]"
+async def InitializeCommands():
+    await asyncio.gather(
+        fun.Init(),
+        games.Init(),
+        moderation.Init(),
+        utility.Init()
     )
 
 
-async def CreateDescription(Prefix: str, Category: CommandCategory) -> str:
-    desc = ''
-    commands: List[HelpMenuEntry] = HelpMenuEntry.GetCategory(Category, AsList=True)
-    for cmd in commands:
-        desc += f"`{Prefix}{cmd.Name.lower()}` {cmd.Brief}\n"
-    return desc
-
-
-async def introMenu(prefix):
+async def IntroMenu(prefix):
     embed = discord.Embed(
         title="Help Menu",
         description=
@@ -204,9 +38,15 @@ async def introMenu(prefix):
     return embed, reactions
 
 
-# ------------------------------------------------------------------------------
+async def CreateDescription(Prefix: str, Category: CommandCategory) -> str:
+    desc = ''
+    cmds: List[HelpMenuEntry] = HelpMenuEntry.GetCategory(Category, AsList=True)
+    for cmd in cmds:
+        desc += f"`{Prefix}{cmd.Name.lower()}` {cmd.Brief}\n"
+    return desc
 
-async def funHelp(Prefix):
+
+async def FunHelp(Prefix):
     description = await CreateDescription(Prefix, CommandCategory.Fun)
     embed = discord.Embed(
         title='Fun Commands',
@@ -220,9 +60,7 @@ async def funHelp(Prefix):
     return embed, reactions
 
 
-# ------------------------------------------------------------------------------
-
-async def gamesHelp(Prefix):
+async def GamesHelp(Prefix):
     description = await CreateDescription(Prefix, CommandCategory.Game)
     embed = discord.Embed(
         title="Games",
@@ -236,7 +74,7 @@ async def gamesHelp(Prefix):
     return embed, reactions
 
 
-async def utilityHelp(Prefix):
+async def UtilityHelp(Prefix):
     description = await CreateDescription(Prefix, CommandCategory.Utility)
     embed = discord.Embed(
         title="Utility Commands",
@@ -252,7 +90,7 @@ async def utilityHelp(Prefix):
     return embed, reactions
 
 
-async def moderationHelp(Prefix):
+async def ModerationHelp(Prefix):
     description = await CreateDescription(Prefix, CommandCategory.Moderation)
     embed = discord.Embed(
         title="Moderation Commands",
@@ -268,7 +106,6 @@ async def moderationHelp(Prefix):
 
 class getHelp(commands.Cog):
 
-
     def __init__(self, bot):
         self.bot = bot
 
@@ -278,12 +115,12 @@ class getHelp(commands.Cog):
         brief='This is like help, but better.',
         help='What else do you need to know bro, just run the command')
     async def sendHelp(self, ctx, *, args=''):
-        await CreateCommands()
+        await InitializeCommands()
         args = args.split()
         pf = await dumbot.getPrefix(ctx, self.bot)
         prefix = pf[2]
         if not args:
-            intro, reactions = await introMenu(prefix)
+            intro, reactions = await IntroMenu(prefix)
             embed = await ctx.send(embed=intro)
             for react in reactions:
                 await embed.add_reaction(emoji=react)
@@ -311,29 +148,28 @@ class getHelp(commands.Cog):
             )
             await ctx.send(embed=embed)
 
-
     @commands.Cog.listener()
     async def on_reaction_add(self, react, un):
         # fixme reaction bug, need event handler to get latest event on message
-        await CreateCommands()
         ctx = react.message
         emote = str(react.emoji)
         if ctx.embeds:
             embed = ctx.embeds[0]
             embedAuthorField = embed.author.name
             if not un.bot and ctx.author.id == 852977382016024646 and reg.search(pattern=r'\AServer Index', string=embedAuthorField):
+                await InitializeCommands()
                 pf = await dumbot.getPrefix(ctx, self.bot)
                 prefix = pf[2]
                 if emote == "<:return:867101369814745099>":  # return
-                    embed, reactions = await introMenu(prefix)
+                    embed, reactions = await IntroMenu(prefix)
                 elif emote == '<:PepeLmao:865712134439436328>':  # fun
-                    embed, reactions = await funHelp(prefix)
+                    embed, reactions = await FunHelp(prefix)
                 elif emote == '<:PepoGamer:865712213141356565>':  # games
-                    embed, reactions = await gamesHelp(prefix)
+                    embed, reactions = await GamesHelp(prefix)
                 elif emote == '<a:pepeAnimeCaught:865712704315850782>':  # utility
-                    embed, reactions = await utilityHelp(prefix)
+                    embed, reactions = await UtilityHelp(prefix)
                 elif emote == '<a:pepeban:865714938667991091>':  # moderation
-                    embed, reactions = await moderationHelp(prefix)
+                    embed, reactions = await ModerationHelp(prefix)
                 else:
                     embed, reactions = None, None
                 if embed and reactions:
