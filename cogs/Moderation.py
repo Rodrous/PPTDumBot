@@ -16,7 +16,7 @@ class Moderation(commands.Cog):
         brief='Please dont use this.',
         help='This bot is just pain with extra steps')
     async def sendInvite(self, ctx):
-        if str(ctx.message.guild.clientId) in allowedguilds:
+        if str(ctx.message.guild.id) in allowedguilds:
             await ctx.send(
                 "This was a mistake\n<https://discordapp.com/oauth2/authorize?client_id=852977382016024646&scope=bot&permissions=0>")
         else:
@@ -41,7 +41,7 @@ class Moderation(commands.Cog):
     @commands.has_permissions(administrator=True)
     async def mute(self, ctx, user: discord.Member, time=10, reason="being a biotch"):
         getRole = discord.utils.get(ctx.guild.roles, name="Muted")
-        await mute(ctx.guild.clientId, user.id)
+        await mute(ctx.guild.id, user.id)
 
         if not getRole:
             try:
@@ -67,7 +67,7 @@ class Moderation(commands.Cog):
     )
 
     async def unmute(self, ctx, user: discord.Member):
-        await unmute(ctx.guild.clientId, user.id)
+        await unmute(ctx.guild.id, user.id)
         getRole = discord.utils.get(ctx.guild.roles, name="Muted")
         await user.remove_roles(getRole)
         await ctx.send("Done!")

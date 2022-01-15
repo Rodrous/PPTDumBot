@@ -302,7 +302,7 @@ class gethelp(commands.Cog):
         if ctx.embeds:
             embed = ctx.embeds[0]
             embedAuthorField = embed.author.name
-            if not un.bot and ctx.author.clientId == 852977382016024646 and reg.search(pattern=r'\AServer Index', string=embedAuthorField):
+            if not un.bot and ctx.author.id == 852977382016024646 and reg.search(pattern=r'\AServer Index', string=embedAuthorField):
                 pf = await Dumbot.get_prefix(ctx, self.bot)
                 prefix = pf[2]
                 if emote == "<:return:867101369814745099>":  # return

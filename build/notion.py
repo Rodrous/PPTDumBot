@@ -4,7 +4,7 @@ async def feedback_n_bugs_json(ctx, args: str, selectName: str):
     NOTION_KEY = os.environ.get("notionKey")
     NOTION_ID = os.environ.get("notionDbID")
     AUTHOR = str(ctx.author)
-    AUTHOR_ID = int(ctx.author.clientId)
+    AUTHOR_ID = int(ctx.author.id)
     MSG = args
     header = {"Authorization": NOTION_KEY, "Notion-Version": "2021-05-13"}
     data = {

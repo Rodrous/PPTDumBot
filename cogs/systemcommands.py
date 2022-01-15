@@ -126,7 +126,7 @@ class syscom(commands.Cog):
             fetchedAuthor = fetchedMessage.author
             messageAuthor = msg.author
             pfp = fetchedAuthor.avatar
-            sameGuild = msg.guild.clientId == fetchedMessage.guild.id
+            sameGuild = msg.guild.id == fetchedMessage.guild.id
             if len(args) <= 1 and sameGuild:
                 await ctx.purge(limit=1)
             if fetchedMessage.embeds and sameGuild:

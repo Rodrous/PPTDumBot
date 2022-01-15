@@ -19,7 +19,7 @@ class Personal(commands.Cog):
         help="ily * num + name")
     async def sendIly(self, ctx):
         allowed_ids = [323457305855262721, 579036541238640731]
-        AUTHOR = ctx.author.clientId
+        AUTHOR = ctx.author.id
         if allowed_ids.__contains__(AUTHOR):
             randomint = "1" + "0" * random.randint(10, 100)
             num = random.randint(10, int(randomint))
@@ -43,7 +43,7 @@ class Personal(commands.Cog):
             "Gabo": 480170339335143426
         }
         pinged_people_list = set(pinged_people.values())
-        AUTHOR = ctx.author.clientId
+        AUTHOR = ctx.author.id
         if pinged_people_list.__contains__(AUTHOR):
             pinged_people_list.remove(AUTHOR)
             string = f"**{ctx.author.name}:** Wanna vc?\n\n"
