@@ -22,15 +22,19 @@ class CommandTracker:
         self.Commands[Command.Category][Command.Name.lower()] = Command
 
     def GetCategory(self, Category: CommandCategory, AsList: bool = False):
+        if not self.Commands.get(Category, None):
+            return {}
         if not AsList:
             return self.Commands[Category]
         return list(self.Commands[Category].values())
 
-    def GetInstance(self, Name: str):
-        Name = Name.lower()
-        for category in self.Commands:
-            if self.Commands[category].get(Name, None):
-                return self.Commands[category][Name]
+    def GetCommand(self, Alias: str):
+        Alias = Alias.lower()
+        commands = self.GetAll()
+        for cmd in commands:
+            if Alias not in cmd:
+                continue
+            return cmd
 
     def GetAll(self) -> list:
         allCommands = []

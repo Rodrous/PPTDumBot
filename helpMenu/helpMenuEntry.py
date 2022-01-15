@@ -30,8 +30,8 @@ class HelpMenuEntry:
         return cls._Instances.GetCategory(Category, AsList)
 
     @classmethod
-    def GetCommand(cls, Name: str) -> 'HelpMenuEntry':
-        return cls._Instances.GetInstance(Name)
+    def GetCommand(cls, Alias: str) -> 'HelpMenuEntry':
+        return cls._Instances.GetCommand(Alias)
 
     @classmethod
     def GetAll(cls) -> list:

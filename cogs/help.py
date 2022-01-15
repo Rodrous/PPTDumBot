@@ -289,12 +289,7 @@ class getHelp(commands.Cog):
                 await embed.add_reaction(emoji=react)
         else:
             requestedCommand = args[0]
-            foundCommand: HelpMenuEntry = None
-            commands = HelpMenuEntry.GetAll()
-            for cmd in commands:
-                if requestedCommand in cmd:
-                    foundCommand = cmd
-                    break
+            foundCommand: HelpMenuEntry = HelpMenuEntry.GetCommand(requestedCommand)
             if not foundCommand:
                 embed = discord.Embed(
                     title="404: Not Found",
