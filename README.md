@@ -5,7 +5,7 @@
 
 ### Code Styling
 
-- Use `[PEP-8](https://www.python.org/dev/peps/pep-0008/)` coding format.
+- Use [PEP-8](https://www.python.org/dev/peps/pep-0008/) coding format.
 - Use [typehinting](https://docs.python.org/3/library/typing.html) wherever possible.
 - Use pylinter and keep code score above 7
     
