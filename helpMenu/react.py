@@ -2,7 +2,7 @@ import re as reg
 import discord
 import asyncio
 
-from helpMenu.menus import Fun, Games, Utility, Moderation
+from helpMenu import menus
 from helpMenu.reactions import Reaction
 from helpMenu.eventHandler import ReactionEvent
 from helpMenu.initialize import InitializeCommands
@@ -39,13 +39,15 @@ async def React(ctx: discord.Message, Emote: discord.Reaction, User: discord.Use
 async def EmbedFactory(Emote: Reaction, Prefix: str):
     match Emote:
         case Reaction.Fun:
-            return await Fun(Prefix)
+            return await menus.Fun(Prefix)
         case Reaction.Games:
-            return await Games(Prefix)
+            return await menus.Games(Prefix)
         case Reaction.Utility:
-            return await Utility(Prefix)
+            return await menus.Utility(Prefix)
         case Reaction.Moderation:
-            return await Moderation(Prefix)
+            return await menus.Moderation(Prefix)
+        case Reaction.Return:
+            return await menus.Intro(Prefix)
         case _:
             return None, None
 
