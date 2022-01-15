@@ -4,7 +4,7 @@ import discord
 from build.generalPurpose import dumbot
 from helpMenu.helpMenuEntry import HelpMenuEntry
 from helpMenu import menus
-from helpMenu.react import React
+from helpMenu.react import React, startupLoop
 from helpMenu.initialize import InitializeCommands
 
 
@@ -25,9 +25,11 @@ class getHelp(commands.Cog):
         prefix = pf[2]
         if not args:
             intro, reactions = await menus.Intro(prefix)
-            embed = await ctx.send(embed=intro)
+            embed: discord.Message = await ctx.send(embed=intro)
+            startupLoop[embed.id] = True
             for react in reactions:
                 await embed.add_reaction(emoji=react)
+            del startupLoop[embed.id]
         else:
             requestedCommand = args[0]
             foundCommand: HelpMenuEntry = HelpMenuEntry.GetCommand(requestedCommand)

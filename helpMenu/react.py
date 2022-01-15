@@ -8,10 +8,13 @@ from helpMenu.eventHandler import ReactionEvent
 from helpMenu.initialize import InitializeCommands
 
 
+startupLoop = {}
+
+
 async def React(ctx: discord.Message, Emote: discord.Reaction, User: discord.User, Prefix: str):
     emote = Reaction(str(Emote.emoji))
     event = await EventFactory(ctx, emote, User, Prefix)
-    if event.Loop:
+    if event.Loop or startupLoop.get(ctx.id, None):
         await asyncio.sleep(2)
         await React(ctx, Emote, User, Prefix)
         return

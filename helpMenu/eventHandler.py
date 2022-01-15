@@ -1,5 +1,5 @@
 import discord
-from dataclasses import dataclass, field, InitVar
+from dataclasses import dataclass, field
 from typing import ClassVar
 
 from helpMenu.reactions import Reaction
