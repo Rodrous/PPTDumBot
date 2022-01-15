@@ -4,7 +4,7 @@ from typing import List, Dict
 import discord
 from discord import Intents
 from discord.ext import commands, tasks
-from build.generalPurpose import dumbot
+from build.generalPurpose import Dumbot
 
 clientId: str = os.environ.get("clientId")
 restrictedChannels: List = ["database"]
@@ -45,7 +45,7 @@ async def set_prefix(msg, *, prefixes="") -> None:
             customPrefix[msg.guild.clientId] = prefixes.split() or defaultPrefix
             bot.command_prefix = determine_prefix(bot, msg)
             await msg.send(f"Prefixes set as : "
-                           f"{await dumbot.getPrefix(msg, bot, True)}")
+                           f"{await Dumbot.get_prefix(msg, bot, True)}")
         else:
             await msg.channel.send(content="You cant use that here yet.",
                                    delete_after=6)
@@ -64,7 +64,7 @@ async def send_prefix(msg) -> None:
                 str(msg.channel) not in restrictedChannels):
             await msg.channel.send(
                 f"Current default prefix is : "
-                f"{await dumbot.getPrefix(msg, bot, True)}")
+                f"{await Dumbot.get_prefix(msg, bot, True)}")
         else:
             await msg.channel.send(content="You cant use that here yet.",
                                    delete_after=6)

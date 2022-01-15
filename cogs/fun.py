@@ -2,8 +2,8 @@ import asyncio
 import discord
 from discord.ext import commands
 import requests,random
-from build.generalPurpose import dumbot, getDataFromLink
-from build.library import loadingFunnyMessages, moviequotes
+from build.generalPurpose import Dumbot, get_data_from_link
+from build.library import loadingFunnyMessages, MovieQuotes
 from build.urbanDict import searchitem
 import re as reg
 import wikipedia
@@ -25,7 +25,7 @@ class webmaster(commands.Cog):
         brief='Sends an image of a heckin good doggo ꓷ:',
         help='Fucking furry.')
     async def sendDog(self,ctx):
-        data = await getDataFromLink(url="https://dog.ceo/api/breeds/image/random", json=True, jsonType='message', returnFile=True, fileName='Dog.png')
+        data = await get_data_from_link(url="https://dog.ceo/api/breeds/image/random", json=True, jsonType='message', returnFile=True, fileName='Dog.png')
         if data == None:
             return await ctx.send("Couldnt Retrieve image from server.")
         await ctx.send(content= "From PPT with \U0001F49A", file=data)
@@ -35,7 +35,7 @@ class webmaster(commands.Cog):
         brief='Sends a wallpaper.',
         help='Sends a wallpaper with size of 1920x1080')
     async def sendWallpaper(self,ctx):
-        data = await getDataFromLink(url="https://picsum.photos/1920/1080", returnFile=True, fileName='Why are you looking at this.png')
+        data = await get_data_from_link(url="https://picsum.photos/1920/1080", returnFile=True, fileName='Why are you looking at this.png')
         if data == None:
             return await ctx.send("Couldnt Retrieve image from server.")
         await ctx.send(file=data)
@@ -132,7 +132,7 @@ class webmaster(commands.Cog):
                 "The Search is highly vauge, it gave multiple outputs which *I* cannot send. Try Something on-point")
         except Exception as e:
             await ctx.send("Idk what the fuck happened, ping PPT/Finix/Draf")
-            await dumbot.sendErrorToChannel(self, ctx,"Wikipedia", e)
+            await Dumbot.send_error_to_channel(self, ctx, "Wikipedia", e)
 
 
     @commands.command(
@@ -152,7 +152,7 @@ class webmaster(commands.Cog):
             rand = random.choice(seq)
             await msg.add_reaction(rand)
 
-    @commands.command(name='moviequotes', aliases=['mq'])
+    @commands.command(name='MovieQuotes', aliases=['mq'])
     async def movieQuote(self,ctx,*,arg="None") -> None:
         explicit:bool = False
         nsfw:bool = False
@@ -176,10 +176,10 @@ class webmaster(commands.Cog):
 
         loading = await loadingFunnyMessages()
         msg = await ctx.send(loading)
-        quoteObj = moviequotes(explicit,nsfw)
+        quoteObj = MovieQuotes(explicit, nsfw)
 
         try:
-            await asyncio.wait_for(quoteObj.getMovieQuote(),timeout=10)
+            await asyncio.wait_for(quoteObj.get_movie_quote(), timeout=10)
             embed = discord.Embed(
                 title=quoteObj.movieName,
                 description=f"{quoteObj.quote}" ,

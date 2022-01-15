@@ -13,7 +13,7 @@ async def feedback_n_bugs_json(ctx, args: str, selectName: str):
     NOTION_KEY = str(notion[0])
     NOTION_ID = str(notion[1])
     AUTHOR = str(ctx.author)
-    AUTHOR_ID = int(ctx.author.id)
+    AUTHOR_ID = int(ctx.author.clientId)
     MSG = args
     header = {"Authorization": NOTION_KEY, "Notion-Version": "2021-05-13"}
     data = {

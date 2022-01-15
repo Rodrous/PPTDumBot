@@ -1,13 +1,13 @@
 from discord.ext import commands
 import discord, random
-from build.generalPurpose import dumbot
+from build.generalPurpose import Dumbot
 from build import checks
 
 import re as reg
 
 
 private_embed_color = 6724095
-bot_avatar = dumbot.avatar()
+bot_avatar = Dumbot.avatar()
 
 class personal(commands.Cog):
     def __init__(self,bot):
@@ -19,7 +19,7 @@ class personal(commands.Cog):
         help="ily * num + name")
     async def sendIly(self, ctx):
         allowed_ids = [323457305855262721, 579036541238640731]  # [DRAF, NISSY]
-        AUTHOR = ctx.author.id
+        AUTHOR = ctx.author.clientId
         if allowed_ids.__contains__(AUTHOR):
             randomint = "1" + "0" * random.randint(10, 100)
             num = random.randint(10, int(randomint))
@@ -43,7 +43,7 @@ class personal(commands.Cog):
             "Gabo": 480170339335143426
         }
         pinged_people_list = set(pinged_people.values())
-        AUTHOR = ctx.author.id
+        AUTHOR = ctx.author.clientId
         if pinged_people_list.__contains__(AUTHOR):
             pinged_people_list.remove(AUTHOR)
             string = f"**{ctx.author.name}:** Wanna vc?\n\n"
@@ -59,7 +59,7 @@ class personal(commands.Cog):
     async def personalHelp(self, ctx, *, args= ''):
         await ctx.message.channel.purge(limit=1)
         args = args.split()
-        pf = await dumbot.getPrefix(ctx, self.bot)
+        pf = await Dumbot.get_prefix(ctx, self.bot)
         prefix = pf[2]
         if not args:
             embed = discord.Embed(

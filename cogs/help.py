@@ -1,13 +1,13 @@
 from discord.ext import commands
 import discord
 import re as reg
-from build.generalPurpose import dumbot
+from build.generalPurpose import Dumbot
 
 fun_color = 52382
 utility_color = 16375162
 moderation_color = 13524060
 games_color = 6724095
-bot_avatar = dumbot.avatar()
+bot_avatar = Dumbot.avatar()
 
 async def introMenu(prefix):
     embed = discord.Embed(
@@ -44,7 +44,7 @@ async def funHelp(prefix):
         f"`{prefix}yomomma`: Yomomma so dumb she didnt realize this will output random mom jokes\n"
         f"`{prefix}wikipedia`: Searches for a wikipedia query\n"
         f"`{prefix}urbandict`: Searches definition for a word\n"
-        f"`{prefix}moviequotes`: Sends a random moviequote\n"
+        f"`{prefix}MovieQuotes`: Sends a random moviequote\n"
         # f"`{prefix}`:\n"
         , color=fun_color)
     embed.set_author(name="Server Index -> Fun Commands",
@@ -122,7 +122,7 @@ class gethelp(commands.Cog):
                 help = 'What else do you need to know bro, just run the command')
     async def sendHelp(self, ctx, *, args = ''):
         args = args.split()
-        pf = await dumbot.getPrefix(ctx, self.bot)
+        pf = await Dumbot.get_prefix(ctx, self.bot)
         prefix = pf[2]
         if not args:
             intro, reactions = await introMenu(prefix)
@@ -140,7 +140,7 @@ class gethelp(commands.Cog):
                 reg.compile(pattern=r'm(ine)?s(weeper)?') : 'minesweeper',
                 reg.compile(pattern=r'say|speak') : 'say',
                 reg.compile(pattern=r'wiki(pedia)?') : 'wikipedia',
-                reg.compile(pattern=r'm(ovie)?q(uotes?)?') : 'moviequotes',
+                reg.compile(pattern=r'm(ovie)?q(uotes?)?') : 'MovieQuotes',
                 reg.compile(pattern=r'f(eed)?b(ack)?'): 'feedback',
                 reg.compile(pattern=r'bug-?rep(ort)?|bugs'): 'bugreport',
                 reg.compile(pattern=r'(urban)?dict|urban|define'): 'dict'
@@ -203,9 +203,9 @@ class gethelp(commands.Cog):
                     'desc': 'Searches for something on wikipedia',
                     'color': fun_color
                 },
-                'moviequotes': {
+                'MovieQuotes': {
                     'aliases': 'moviequote|mq',
-                    'syntax': f'{prefix}moviequotes [type: OPTIONAL]',
+                    'syntax': f'{prefix}MovieQuotes [type: OPTIONAL]',
                     'desc': 'Displays a random moviequote by default\n\n'
                             '**Types:**\n'
                             '`random`: Displays a random quote `[default]`\n'
@@ -213,7 +213,7 @@ class gethelp(commands.Cog):
                             '`per [type: Movie|Character] [search]`: Gives a random quote based on type'
                             '\n\n__**This will be added later and explicit is not shown by default**__\n'
                             '**Blacklist:**\n'
-                            f'By doing: `{prefix}moviequotes [blacklist|bl] [flag: Explicit|NSFW]`\n'
+                            f'By doing: `{prefix}MovieQuotes [blacklist|bl] [flag: Explicit|NSFW]`\n'
                             'You can blacklist certain tags in the server:\n'
                             '`Explicit [Off by default]`: This toggles slurs\n'
                             '`NSFW [On by default]`: This toggles NSFW quotes',
@@ -302,8 +302,8 @@ class gethelp(commands.Cog):
         if ctx.embeds:
             embed = ctx.embeds[0]
             embedAuthorField = embed.author.name
-            if not un.bot and ctx.author.id == 852977382016024646 and reg.search(pattern=r'\AServer Index', string=embedAuthorField):
-                pf = await dumbot.getPrefix(ctx, self.bot)
+            if not un.bot and ctx.author.clientId == 852977382016024646 and reg.search(pattern=r'\AServer Index', string=embedAuthorField):
+                pf = await Dumbot.get_prefix(ctx, self.bot)
                 prefix = pf[2]
                 if emote == "<:return:867101369814745099>":  # return
                     embed, reactions = await introMenu(prefix)

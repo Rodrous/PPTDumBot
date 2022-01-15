@@ -1,33 +1,30 @@
-import requests,random
+import requests, random
 from bs4 import BeautifulSoup
 
 
-def searchitem(item):
-    url = f"https://www.urbandictionary.com/define.php?term={item}"
+def searchitem(item) -> str:
+    url: str = f"https://www.urbandictionary.com/define.php?term={item}"
     request = requests.get(url).content
-    soupObj = BeautifulSoup(request, features='html.parser')
+    soupObj: BeautifulSoup = BeautifulSoup(request, features='html.parser')
     try:
-        meaning = soupObj.find('div',class_="meaning").text
-
+        meaning = soupObj.find('div', class_="meaning").text
         return meaning
-
-    except Exception:
+    
+    except Exception as e:
         return "This word doesn't exist in database"
 
 
-def randomword():
-    number = random.randint(1,1000)
-    url = f"https://www.urbandictionary.com/define.php?term={number}"
+def randomword() -> str:
+    number: int = random.randint(1, 1000)
+    url: str = f"https://www.urbandictionary.com/define.php?term={number}"
     request = requests.get(url).content
-    soupObj = BeautifulSoup(request, features='html.parser')
+    soupObj: BeautifulSoup = BeautifulSoup(request, features='html.parser')
     try:
-        word = soupObj.find('a',class_ = "word").text
-        meaning = soupObj.find('div', class_="meaning").text
-
+        word: str = soupObj.find('a', class_="word").text
+        meaning: str = soupObj.find('div', class_="meaning").text
+        
         return f"{word}:{meaning}"
-
-
-    except Exception:
+    
+    
+    except Exception as e:
         return "Something Happened"
-
-

@@ -1,6 +1,6 @@
 import asyncio
 from build.connection import createdb, connection
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional, Union, Coroutine, Any
 
 
 async def addVal(guildId, UserId, muteStatus=False) -> None:
@@ -44,14 +44,13 @@ async def messageDecrement(guildId, UserId) -> None:
 """All of the Connection Code for Quotes are below this line"""
 
 
-async def updateQuoteImage(movie: str,imageUrl: str)-> None:
+async def updateQuoteImage(movie: str, imageUrl: str) -> None:
     await quoteCol.update_one({
         "movie": movie
     },
         {
             "$set": {"imageUrl": imageUrl}
         })
-
 
 
 async def addQuote(movie: str, character: str,
@@ -96,7 +95,7 @@ async def addQuote(movie: str, character: str,
         )
 
 
-async def getRandomQuote(noOfDocuments: int = 1) -> None:
+async def getRandomQuote(noOfDocuments: int = 1) -> Dict:
     async for i in quoteCol.aggregate([{"$sample": {"size": noOfDocuments}}]):
         return i
 

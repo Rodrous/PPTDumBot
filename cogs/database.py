@@ -1,7 +1,7 @@
 from discord.ext import commands
 from build.backEnd import *
 import discord
-from build.generalPurpose import dumbot
+from build.generalPurpose import Dumbot
 class database(commands.Cog):
 
     def __init__(self, bot):
@@ -11,13 +11,13 @@ class database(commands.Cog):
     async def populate(self, ctx):
         memebers = await ctx.guild.fetch_members().flatten()
         for member in memebers:
-            await checkExist(ctx.guild.id, member.id)
+            await checkExist(ctx.guild.clientId, member.clientId)
 
     @commands.Cog.listener()
     @commands.has_permissions(administrator=True)
     async def on_member_join(self,member):
-        await checkExist(member.guild.id,member.id)
-        if await checkMuted(member.guild.id, member.id):
+        await checkExist(member.guild.clientId, member.clientId)
+        if await checkMuted(member.guild.clientId, member.clientId):
             getRole = discord.utils.get(member.guild.roles, name="Muted")
             if not getRole:
                 try:
@@ -36,11 +36,11 @@ class database(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self,ctx):
-        await messageIncrement(ctx.guild.id,ctx.author.id)
+        await messageIncrement(ctx.guild.clientId, ctx.author.clientId)
 
     @commands.Cog.listener()
     async def on_message_delete(self,ctx):
-        await messageDecrement(ctx.guild.id,ctx.author.id)
+        await messageDecrement(ctx.guild.clientId, ctx.author.clientId)
 
 def setup(bot):
     bot.add_cog(database(bot))
