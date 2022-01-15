@@ -7,7 +7,7 @@ import os
 allowedguilds = [os.environ.get('allowedGuild')]
 
 
-class Moderation(commands.Cog):
+class moderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -73,4 +73,4 @@ class Moderation(commands.Cog):
         await ctx.send("Done!")
 
 def setup(bot):
-    bot.add_cog(Moderation(bot))
+    bot.add_cog(moderation(bot))

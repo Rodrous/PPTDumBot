@@ -22,7 +22,7 @@ async def introMenu(prefix):
         , color=11187115)
     embed.set_author(name='Server Index',
                      icon_url=bot_avatar)
-    reactions = ['<:PepeLmao:865712134439436328>', '<:PepoGamer:865712213141356565>', '<a:pepeAnimeCaught:865712704315850782>', '<a:pepeban:865714938667991091>'] #fun, games, utility, Moderation
+    reactions = ['<:PepeLmao:865712134439436328>', '<:PepoGamer:865712213141356565>', '<a:pepeAnimeCaught:865712704315850782>', '<a:pepeban:865714938667991091>'] #fun, games, utility, moderation
     return embed, reactions
 
 # ------------------------------------------------------------------------------
@@ -313,7 +313,7 @@ class gethelp(commands.Cog):
                     embed, reactions = await gamesHelp(prefix)
                 elif emote == '<a:pepeAnimeCaught:865712704315850782>':  # utility
                     embed, reactions = await utilityHelp(prefix)
-                elif emote == '<a:pepeban:865714938667991091>':  # Moderation
+                elif emote == '<a:pepeban:865714938667991091>':  # moderation
                     embed, reactions = await moderationHelp(prefix)
                 else:
                     embed, reactions = None, None

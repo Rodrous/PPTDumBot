@@ -1,8 +1,17 @@
-import os
+import base64
 
 async def feedback_n_bugs_json(ctx, args: str, selectName: str):
-    NOTION_KEY = os.environ.get("notionKey")
-    NOTION_ID = os.environ.get("notionDbID")
+    with open("config/notion.txt") as file:
+        f = file.readlines()
+    notion = []
+    for item in f:
+        n = item.partition("#")[0]
+        n = n.rstrip()
+        n = base64.b64decode(n).decode("utf-8")
+        notion.append(n)
+
+    NOTION_KEY = str(notion[0])
+    NOTION_ID = str(notion[1])
     AUTHOR = str(ctx.author)
     AUTHOR_ID = int(ctx.author.id)
     MSG = args

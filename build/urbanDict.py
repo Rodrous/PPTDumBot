@@ -11,7 +11,7 @@ def searchitem(item) -> str:
         return meaning
     
     except Exception as e:
-        return "This word doesn't exist in Database"
+        return "This word doesn't exist in database"
 
 
 def randomword() -> str:

@@ -9,7 +9,7 @@ import re as reg
 private_embed_color = 6724095
 bot_avatar = Dumbot.avatar()
 
-class Personal(commands.Cog):
+class personal(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
 
@@ -18,8 +18,8 @@ class Personal(commands.Cog):
         brief="Draf is tooo lazy to type it",
         help="ily * num + name")
     async def sendIly(self, ctx):
-        allowed_ids = [323457305855262721, 579036541238640731]
-        AUTHOR = ctx.author.id
+        allowed_ids = [323457305855262721, 579036541238640731]  # [DRAF, NISSY]
+        AUTHOR = ctx.author.clientId
         if allowed_ids.__contains__(AUTHOR):
             randomint = "1" + "0" * random.randint(10, 100)
             num = random.randint(10, int(randomint))
@@ -43,7 +43,7 @@ class Personal(commands.Cog):
             "Gabo": 480170339335143426
         }
         pinged_people_list = set(pinged_people.values())
-        AUTHOR = ctx.author.id
+        AUTHOR = ctx.author.clientId
         if pinged_people_list.__contains__(AUTHOR):
             pinged_people_list.remove(AUTHOR)
             string = f"**{ctx.author.name}:** Wanna vc?\n\n"
@@ -88,7 +88,12 @@ class Personal(commands.Cog):
                     'desc': 'Pings people to vc (On a list, ask to be removed or added)',
                     'color': private_embed_color
                 },
-
+                # '': {
+                #     'aliases': '',
+                #     'syntax': f'',
+                #     'desc': 'REQUIRED',
+                #     'color': private_color
+                # },
             }
             case = switch_case.get(cmd, None)
             if case:
@@ -106,4 +111,4 @@ class Personal(commands.Cog):
                 await ctx.send('Not a valid command', delete_after=6)
 
 def setup(bot):
-    bot.add_cog(Personal(bot))
+    bot.add_cog(personal(bot))
