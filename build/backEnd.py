@@ -1,5 +1,5 @@
 import asyncio
-from build.connection import createDb, connection
+from build.connection import createdb, connection
 from typing import Dict, List, Optional, Union
 
 
@@ -115,6 +115,6 @@ async def getRandomLoadingMessage(noOfDocuments: int = 1) -> str:
 if __name__ == "build.backEnd":
     loop = asyncio.get_event_loop()
     conn = loop.run_until_complete(connection())
-    col = createDb(conn, "DiscordBot", "UserInfo")
-    quoteCol = createDb(conn, "DiscordBot", "Quotes")
-    LoadingMessage = createDb(conn, "DiscordBot", "LoadingMessage")
+    col = createdb(conn, "DiscordBot", "UserInfo")
+    quoteCol = createdb(conn, "DiscordBot", "Quotes")
+    LoadingMessage = createdb(conn, "DiscordBot", "LoadingMessage")
