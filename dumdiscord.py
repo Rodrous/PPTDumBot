@@ -6,7 +6,7 @@ from discord import Intents
 from discord.ext import commands, tasks
 from build.generalPurpose import Dumbot
 
-clientId: str = os.environ.get("clientId")
+id: str = os.environ.get("clientId")
 restrictedChannels: List = ["database"]
 intents: Intents = discord.Intents.default()
 intents.members: bool = True
@@ -22,7 +22,7 @@ def determine_prefix(bot, msg) -> list[str]:
     guild = msg.guild
     if guild:
         return commands.when_mentioned_or(
-            str(customPrefix.get(guild.clientId, defaultPrefix)[0])
+            str(customPrefix.get(guild.id, defaultPrefix)[0])
         )(bot, msg)
     else:
         return commands.when_mentioned_or(defaultPrefix)(bot, msg)
@@ -40,9 +40,9 @@ bot = commands.Bot(command_prefix=determine_prefix,
     help="Use this to set your own custom Prefixes for the Bot to listen to.")
 async def set_prefix(msg, *, prefixes="") -> None:
     if msg.channel.type is not discord.ChannelType.private:
-        if msg.guild.clientId == 826148528870129675 and \
+        if msg.guild.id == 826148528870129675 and \
                 (str(msg.channel) not in restrictedChannels):
-            customPrefix[msg.guild.clientId] = prefixes.split() or defaultPrefix
+            customPrefix[msg.guild.id] = prefixes.split() or defaultPrefix
             bot.command_prefix = determine_prefix(bot, msg)
             await msg.send(f"Prefixes set as : "
                            f"{await Dumbot.get_prefix(msg, bot, True)}")
@@ -60,7 +60,7 @@ async def set_prefix(msg, *, prefixes="") -> None:
 async def send_prefix(msg) -> None:
     """Sends prefix of the bot for specific guild"""
     if msg.channel.type is not discord.ChannelType.private:
-        if msg.guild.clientId == 826148528870129675 and (
+        if msg.guild.id == 826148528870129675 and (
                 str(msg.channel) not in restrictedChannels):
             await msg.channel.send(
                 f"Current default prefix is : "
@@ -80,7 +80,7 @@ async def send_prefix(msg) -> None:
 async def reset_prefix(msg) -> None:
     """ Reset bot prefix """
     if bot.get_guild(msg.guild.clientId):
-        if msg.guild.clientId == 826148528870129675 and \
+        if msg.guild.id == 826148528870129675 and \
                 (str(msg.channel) not in restrictedChannels):
             await set_prefix(msg, prefixes=defaultPrefix)
             await msg.channel.send(f"Reset the prefix to : {defaultPrefix}")
@@ -149,8 +149,8 @@ if __name__ == "__main__":
     bot.load_extension("cogs.fun")
     bot.load_extension("cogs.systemcommands")
     bot.load_extension("cogs.help")
-    bot.load_extension("cogs.moderation")
+    bot.load_extension("cogs.Moderation")
     bot.load_extension("cogs.games")
-    bot.load_extension("cogs.personal")
-    bot.load_extension("cogs.database")
-    bot.run(clientId)
+    bot.load_extension("cogs.Personal")
+    bot.load_extension("cogs.Database")
+    bot.run(id)
