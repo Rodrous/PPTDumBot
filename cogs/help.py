@@ -1,13 +1,191 @@
 from discord.ext import commands
 import discord
 import re as reg
+from typing import List
 from build.generalPurpose import dumbot
+from helpMenu.helpMenuEntry import HelpMenuEntry
+from helpMenu.commands import CommandCategory
 
-fun_color = 52382
-utility_color = 16375162
-moderation_color = 13524060
-games_color = 6724095
 bot_avatar = dumbot.avatar()
+
+
+async def CreateCommands():
+    """
+    Entry For Commands
+    HelpMenuEntry:
+        :Param Category: Category of type CommandCategory
+        :Param Name: Name of the command
+        :Param Brief: A brief desc about the command
+        :Param Desc: A detailed description of the command
+        :Param Aliases: Optional list of aliases
+        :Param Syntax: Optional Syntax details, will only need the flags at the end example [User: Id, Name] [Number] [Message -> Optional]
+    """
+
+    """  FUN COMMANDS  """
+    HelpMenuEntry(
+        Category=CommandCategory.Fun,
+        Name="Ree",
+        Brief="Ree's out of frustration",
+        Desc="A command that will send *REEEE* with a random amount of E's",
+        Aliases=['re', 'reee', 'reeee']
+    )
+    HelpMenuEntry(
+        Category=CommandCategory.Fun,
+        Name="Yeye",
+        Brief="Issi asked for it so yeah, it does the same as ree but yeye",
+        Desc="Sends *YEEYEE* with random amount of E's as REE",
+        Aliases=["yeeyee", "yeyee", "yeeye"]
+    )
+    HelpMenuEntry(
+        Category=CommandCategory.Fun,
+        Name="Wallpaper",
+        Brief="Sends a Random image from internet [1920x1080]",
+        Desc="Will send a random HD image that can be used as a wallpaper"
+    )
+    HelpMenuEntry(
+        Category=CommandCategory.Fun,
+        Name="Cat",
+        Brief="Get Cat Pic",
+        Desc="Sends a random cat pic from the internet"
+    )
+    HelpMenuEntry(
+        Category=CommandCategory.Fun,
+        Name="Dog",
+        Brief="Get Dog Pic",
+        Desc="Sends a random dog pic from the internet"
+    )
+    HelpMenuEntry(
+        Category=CommandCategory.Fun,
+        Name="Quote",
+        Brief="Sends anime quote",
+        Desc="Sends a random anime quote from the internet"
+    )
+    HelpMenuEntry(
+        Category=CommandCategory.Fun,
+        Name="Say",
+        Brief="Will repeat after you",
+        Desc="Repeats anything you say",
+        Aliases=["speak"],
+        Syntax="[Message]"
+    )
+    HelpMenuEntry(
+        Category=CommandCategory.Fun,
+        Name="Joke",
+        Brief="Tells a joke",
+        Desc="Sends a random joke\n\n**Flags:**\n`-ex` sends any jokes, even explicit and dark jokes",
+        Aliases=["getjoke", "jk"],
+        Syntax="[Flags]"
+    )
+    HelpMenuEntry(
+        Category=CommandCategory.Fun,
+        Name="DadJoke",
+        Brief="Gives you a random dadjoke",
+        Desc="Will get a random dadjoke, enjoy :)"
+    )
+    HelpMenuEntry(
+        Category=CommandCategory.Fun,
+        Name="YoMomma",
+        Brief="Yomomma so dumb she didnt realize this will output random mom jokes",
+        Desc="Will send out random Yomomma jokes"
+    )
+    HelpMenuEntry(
+        Category=CommandCategory.Fun,
+        Name="Wikipedia",
+        Brief="Searches for a wikipedia query",
+        Desc="Will search up a wikipedia page for what you entered",
+        Aliases=["wiki"],
+        Syntax="[Search]"
+    )
+    HelpMenuEntry(
+        Category=CommandCategory.Fun,
+        Name="UrbanDict",
+        Brief="Searches definition for a word",
+        Desc="Will search [UrbanDictionary](https://www.urbandictionary.com/) for a word",
+        Aliases=["dict", 'urban', 'define'],
+        Syntax="[Word/Phrase]"
+    )
+    HelpMenuEntry(
+        Category=CommandCategory.Fun,
+        Name="MovieQuotes",
+        Brief="Sends a random moviequote",
+        Desc="Will search our database for a random moviequote",
+        Aliases=['mq', 'moviequote'],
+        Syntax="[Explicit][Nsfw]"
+    )
+
+    """  Game Commands  """
+    HelpMenuEntry(
+        Category=CommandCategory.Game,
+        Name="Minesweeper",
+        Brief="Generates Minesweeper game",
+        Desc="Will randomly generate a Minesweeper game to play with spoiler tags",
+        Aliases=['ms','mines'],
+        Syntax="[Rows] [Columns] [Mines]"
+    )
+
+    """  Utility Commands  """
+    HelpMenuEntry(
+        Category=CommandCategory.Utility,
+        Name="Feedback",
+        Brief="Sends us Feedback",
+        Desc="Will send us Feedback, please do not abuse this or it will result in a ban from the command",
+        Aliases=["fb"],
+        Syntax="[Message]"
+    )
+    HelpMenuEntry(
+        Category=CommandCategory.Utility,
+        Name="BugReport",
+        Brief="Sends us a BugReport",
+        Desc="Will send us a BugReport, please do not abuse this or it will result in a ban from the command",
+        Aliases=["bugs", "bugrep", "bug-report", "bug-rep"],
+        Syntax="[Message]"
+    )
+    HelpMenuEntry(
+        Category=CommandCategory.Utility,
+        Name="Steal",
+        Brief="Steals an emote",
+        Desc="Will steal an emote from another server via the emote itself or via link",
+        Syntax="[Emote/Link] [Name->Optional]"
+    )
+    HelpMenuEntry(
+        Category=CommandCategory.Utility,
+        Name="Ping",
+        Brief="Pong! Checks ping",
+        Desc="Will check the current ping of the bot"
+    )
+
+    """  Moderation Commands  """
+    HelpMenuEntry(
+        Category=CommandCategory.Moderation,
+        Name="Clear",
+        Brief="Will clear the chat",
+        Desc="Removed specified amount of messages from current chat",
+        Aliases=['purge'],
+        Syntax="[Amount]"
+    )
+    HelpMenuEntry(
+        Category=CommandCategory.Moderation,
+        Name="Mute",
+        Brief="Will mute a person from speaking, reacting etc",
+        Desc="Gives person mute role for a specified amount of time so they cant speak or react",
+        Syntax="[User: Name, Id] [Time]"
+    )
+    HelpMenuEntry(
+        Category=CommandCategory.Moderation,
+        Name="UnMute",
+        Brief="Will unmute a person",
+        Desc="Removes the muted role so they can speak again",
+        Syntax="[User: Name, ID]"
+    )
+
+
+async def CreateDescription(Prefix: str, Category: CommandCategory) -> str:
+    desc = ''
+    commands: List[HelpMenuEntry] = HelpMenuEntry.GetCategory(Category, AsList=True)
+    for cmd in commands:
+        desc += f"`{Prefix}{cmd.Name.lower()}` {cmd.Brief}\n"
+    return desc
+
 
 async def introMenu(prefix):
     embed = discord.Embed(
@@ -22,105 +200,85 @@ async def introMenu(prefix):
         , color=11187115)
     embed.set_author(name='Server Index',
                      icon_url=bot_avatar)
-    reactions = ['<:PepeLmao:865712134439436328>', '<:PepoGamer:865712213141356565>', '<a:pepeAnimeCaught:865712704315850782>', '<a:pepeban:865714938667991091>'] #fun, games, utility, moderation
+    reactions = ['<:PepeLmao:865712134439436328>', '<:PepoGamer:865712213141356565>', '<a:pepeAnimeCaught:865712704315850782>', '<a:pepeban:865714938667991091>']  # fun, games, utility, moderation
     return embed, reactions
+
 
 # ------------------------------------------------------------------------------
 
-async def funHelp(prefix):
+async def funHelp(Prefix):
+    description = await CreateDescription(Prefix, CommandCategory.Fun)
     embed = discord.Embed(
         title='Fun Commands',
         description=
-        f"**For more info on each commands do** `{prefix}help [command]`\n*There you will also find Syntax, Aliases and Flags for commands*\n\n"
-        f"`{prefix}ree`: Ree's out of frustration\n"
-        f"`{prefix}yeye`: Issi asked for it so yeah, it does the same as ree but yeye\n"
-        f"`{prefix}wallpaper`: Sends a Random image from internet [1920x1080]\n"
-        f"`{prefix}cat`: Sends a Cat pic \U0001F408\n"
-        f"`{prefix}dog`: Get a Dog pic \U0001F436\n"
-        f"`{prefix}quote`: Sends a random anime quote\n"
-        f"`{prefix}say`: Repeats what you say\n"
-        f"`{prefix}joke`: Gives you random jokes\n"
-        f"`{prefix}dadjoke`: Gives you a random dadjoke, enjoy :)\n"
-        f"`{prefix}yomomma`: Yomomma so dumb she didnt realize this will output random mom jokes\n"
-        f"`{prefix}wikipedia`: Searches for a wikipedia query\n"
-        f"`{prefix}urbandict`: Searches definition for a word\n"
-        f"`{prefix}moviequotes`: Sends a random moviequote\n"
-        # f"`{prefix}`:\n"
-        , color=fun_color)
+        f"**For more info on each commands do** `{Prefix}help [command]`\n*There you will also find Syntax, Aliases and Flags for commands*\n\n{description}"
+        , color=CommandCategory.Fun.value)
     embed.set_author(name="Server Index -> Fun Commands",
-                     icon_url= bot_avatar)
+                     icon_url=bot_avatar)
     embed.set_footer(text="\U00002193 React to return")
     reactions = ['<:return:867101369814745099>']
     return embed, reactions
 
+
 # ------------------------------------------------------------------------------
 
-async def gamesHelp(prefix):
+async def gamesHelp(Prefix):
+    description = await CreateDescription(Prefix, CommandCategory.Game)
     embed = discord.Embed(
-        title= "Games",
+        title="Games",
         description=
-        f"**For more info on each commands do** `{prefix}help [command]`\n*There you will also find Syntax, Aliases and Flags for commands*\n\n"
-        f"`{prefix}minesweeper`: Generates a game of minesweeper\n"
-        # f"`{prefix}`:\n"
-    , color=games_color)
+        f"**For more info on each commands do** `{Prefix}help [command]`\n*There you will also find Syntax, Aliases and Flags for commands*\n\n{description}"
+        , color=CommandCategory.Game.value)
     embed.set_author(name="Server Index -> Games",
                      icon_url=bot_avatar)
     embed.set_footer(text="\U00002193 React to return")
     reactions = ['<:return:867101369814745099>']
     return embed, reactions
 
-# ------------------------------------------------------------------------------
 
-async def utilityHelp(prefix):
+async def utilityHelp(Prefix):
+    description = await CreateDescription(Prefix, CommandCategory.Utility)
     embed = discord.Embed(
-        title= "Utility Commands",
+        title="Utility Commands",
         description=
-        f"**For more info on each commands do** `{prefix}help [command]`\n*There you will also find Syntax, Aliases and Flags for commands*\n\n"
-        f"`{prefix}feedback [message]`: Send us feedback!\n"
-        f"`{prefix}bugs [message]`: Report bugs you find\n"
-        f"`{prefix}steal`: Grabs emoji's and puts it in your server\n"
-        f"`{prefix}ping`: Pings the bot\n"
-        # f"`{prefix}`:\n"
+        f"**For more info on each commands do** `{Prefix}help [command]`\n*There you will also find Syntax, Aliases and Flags for commands*\n\n{description}\n"
         "If you send a message link in this server you can show the message Cross Channels"
 
-    , color=utility_color)
+        , color=CommandCategory.Utility.value)
     embed.set_author(name="Server Index -> Utility Commands",
                      icon_url=bot_avatar)
     embed.set_footer(text="\U00002193 React to return")
     reactions = ['<:return:867101369814745099>']
     return embed, reactions
 
-# ------------------------------------------------------------------------------
 
-async def moderationHelp(prefix):
+async def moderationHelp(Prefix):
+    description = await CreateDescription(Prefix, CommandCategory.Moderation)
     embed = discord.Embed(
-        title= "Moderation Commands",
+        title="Moderation Commands",
         description=
-        f"**For more info on each commands do** `{prefix}help [command]`\n*There you will also find Syntax, Aliases and Flags for commands*\n\n"
-        f"`{prefix}clear`: Purges chat\n"
-        f"`{prefix}mute`: Mutes a bitch\n"
-        f"`{prefix}unmute`: Unmutes a bitch\n"
-        # f"`{prefix}`:\n"
-    , color=moderation_color)
+        f"**For more info on each commands do** `{Prefix}help [command]`\n*There you will also find Syntax, Aliases and Flags for commands*\n\n{description}"
+        , color=CommandCategory.Moderation.value)
     embed.set_footer(text="\U00002193 React to return")
     embed.set_author(name="Server Index -> Moderation Commands",
                      icon_url=bot_avatar)
     reactions = ['<:return:867101369814745099>']
     return embed, reactions
 
-# ------------------------------------------------------------------------------
 
-class gethelp(commands.Cog):
+class getHelp(commands.Cog):
 
-    def __init__(self,bot):
+
+    def __init__(self, bot):
         self.bot = bot
 
     @commands.command(
-                name = 'help',
-                aliases = ['helpme'],
-                brief = 'This is like help, but better.',
-                help = 'What else do you need to know bro, just run the command')
-    async def sendHelp(self, ctx, *, args = ''):
+        name='help',
+        aliases=['helpme'],
+        brief='This is like help, but better.',
+        help='What else do you need to know bro, just run the command')
+    async def sendHelp(self, ctx, *, args=''):
+        await CreateCommands()
         args = args.split()
         pf = await dumbot.getPrefix(ctx, self.bot)
         prefix = pf[2]
@@ -130,173 +288,39 @@ class gethelp(commands.Cog):
             for react in reactions:
                 await embed.add_reaction(emoji=react)
         else:
-            cmd = args[0].lower()
-            aliased_commands = {
-                reg.compile(pattern=r're+') : 'ree',
-                reg.compile(pattern=r'ye+ye+') : 'yeye',
-                reg.compile(pattern=r'(get)?joke|jk') : 'joke',
-                reg.compile(pattern=r'yomom|yourmom') : 'yomomma',
-                reg.compile(pattern=r'clear|purge') : 'clear',
-                reg.compile(pattern=r'm(ine)?s(weeper)?') : 'minesweeper',
-                reg.compile(pattern=r'say|speak') : 'say',
-                reg.compile(pattern=r'wiki(pedia)?') : 'wikipedia',
-                reg.compile(pattern=r'm(ovie)?q(uotes?)?') : 'moviequotes',
-                reg.compile(pattern=r'f(eed)?b(ack)?'): 'feedback',
-                reg.compile(pattern=r'bug-?rep(ort)?|bugs'): 'bugreport',
-                reg.compile(pattern=r'(urban)?dict|urban|define'): 'dict'
-            }
-            for val in aliased_commands:
-                if reg.match(val, string=cmd):
-                    cmd = aliased_commands.get(val)
-
-            switch_case = {
-                #FUN HERE
-                'ree': {
-                    'aliases': 're|reee|reeee',
-                    'desc': 'The bot will *REEEEEEEE* out of frustration',
-                    'color': fun_color
-                },
-                'yeye': {
-                    'aliases': 'yeeye|yeeyee|yeyee',
-                    'desc': 'Same as ree but *YEEEEEEYEEEEEE*',
-                    'color': fun_color
-                },
-                'wallpaper': {
-                    'desc': 'Sends a random wallpaper in the size of `1920x1080`',
-                    'color': fun_color
-                },
-                'cat': {
-                    'desc': 'Sends a random catpic so you can apprieciate all the ADORBS',
-                    'color': fun_color
-                },
-                'quote': {
-                    'desc': 'Sends a random quote from an anime character',
-                    'color': fun_color
-                },
-                'dog': {
-                    'desc': 'Sends a random dogpic so you can apprieciate all the ADORBS',
-                    'color': fun_color
-                },
-                'say': {
-                    'aliases': 'speak',
-                    'syntax': f'{prefix}say [message]',
-                    'desc': 'Repeats everything you say, you cannot use this to bypass `@everyone|@here`',
-                    'color': fun_color
-                },
-                'joke': {
-                    'aliases': 'getjoke|jk',
-                    'desc': 'Sends a random joke\n\n**Flags:**\n`-ex` sends any jokes, even explicit and dark jokes',
-                    'color': fun_color
-                },
-                'dadjoke': {
-                    'desc': 'I hate my life, also sends a dadjoke',
-                    'color': fun_color
-                },
-                'yomomma': {
-                    'aliases': 'yourmom|yomom',
-                    'desc': 'Sends a random yomomma joke',
-                    'color': fun_color
-                },
-                'wikipedia': {
-                    'aliases': 'wiki',
-                    'syntax': f'{prefix}wikipedia [query]',
-                    'desc': 'Searches for something on wikipedia',
-                    'color': fun_color
-                },
-                'moviequotes': {
-                    'aliases': 'moviequote|mq',
-                    'syntax': f'{prefix}moviequotes [type: OPTIONAL]',
-                    'desc': 'Displays a random moviequote by default\n\n'
-                            '**Types:**\n'
-                            '`random`: Displays a random quote `[default]`\n'
-                            '`get [ID]`: Searches for a quote based on its ID\n'
-                            '`per [type: Movie|Character] [search]`: Gives a random quote based on type'
-                            '\n\n__**This will be added later and explicit is not shown by default**__\n'
-                            '**Blacklist:**\n'
-                            f'By doing: `{prefix}moviequotes [blacklist|bl] [flag: Explicit|NSFW]`\n'
-                            'You can blacklist certain tags in the server:\n'
-                            '`Explicit [Off by default]`: This toggles slurs\n'
-                            '`NSFW [On by default]`: This toggles NSFW quotes',
-                    'color': fun_color
-                },
-                'dict': {
-                    'aliases': 'urban|urbandict|define',
-                    'syntax': f'{prefix}dict [words]',
-                    'desc': 'Will give you the urban dictionary definition of something',
-                    'color': fun_color
-                },
-                #GAMES HERE
-                'minesweeper': {
-                    'aliases': 'ms',
-                    'syntax': f'{prefix}minesweeper [rows] [columns] [mines]',
-                    'desc': 'Generates a random game of Minesweeper\n'
-                            'Max rows is 11, max columns is 9 and minumum bombs is 3, and no weird numbers',
-                    'color': games_color
-                },
-                #UTILITY HERE
-                'steal': {
-                    'syntax': f'{prefix}steal [emoji]|steal [emojilink]',
-                    'desc': 'Steals an emoji and adds it to your server',
-                    'color': utility_color
-                },
-                'ping': {
-                    'desc': 'Pong! sends the latency of the bot',
-                    'color': utility_color
-                },
-                'feedback': {
-                    'aliases': 'fb',
-                    'syntax': f'{prefix}feedback [message]',
-                    'desc': 'This allows you to send us feedback, if you wish to add a command or whatever you feel you want to tell us devs!',
-                    'color': utility_color
-                },
-                'bugreport': {
-                    'aliases': 'bugrep|bug-rep|bug-report|bugs',
-                    'syntax': f'{prefix}bugreport [message]',
-                    'desc': 'Here you can report bugs to us',
-                    'color': utility_color
-                },
-                #MODERATION HERE
-                'clear': {
-                    'aliases': 'purge',
-                    'syntax': f'{prefix}clear [num]',
-                    'desc': 'Clears the chat\nwill be bettered in the feature, will add more flags and make it more advanced',
-                    'color': moderation_color
-                },
-                'mute': {
-                    'syntax': f'{prefix}mute [@user] [minutes]',
-                    'desc': 'Mutes a bitch, default is 10 minutes',
-                    'color': moderation_color
-                },
-                'unmute': {
-                    'syntax': f'{prefix}unmute [@user]',
-                    'desc': 'Unmutes a bitch',
-                    'color': moderation_color
-                },
-                # '': {
-                #     'aliases': '{prefix}',
-                #     'syntax': f'',
-                #     'desc': 'REQUIRED',
-                #     'color': REQUIRED
-                # },
-            }
-            case = switch_case.get(cmd, None)
-            if case:
-                desc_final = f"**Prefix:** `{prefix}`\n**Name:** `{cmd.capitalize()}`"
-                if case.get('aliases', None):
-                    desc_final = desc_final + f"\n**Aliases:** `{case['aliases']}`"
-                if case.get('syntax', None):
-                    desc_final = desc_final + f"\n**Syntax:** `{case['syntax']}`"
-
-                desc_final = desc_final + f"\n\n{case['desc']}"
-                embed = discord.Embed(title="Command Help", description=desc_final, color=case['color'])
+            requestedCommand = args[0]
+            foundCommand: HelpMenuEntry = None
+            commands = HelpMenuEntry.GetAll()
+            for cmd in commands:
+                if requestedCommand in cmd:
+                    foundCommand = cmd
+                    break
+            if not foundCommand:
+                embed = discord.Embed(
+                    title="404: Not Found",
+                    description=f"Command {requestedCommand} not found",
+                    color=discord.Colour.red()
+                )
                 await ctx.send(embed=embed)
-            else:
-                await ctx.send('Not a valid command')
+                return
+            desc = f"**Category:** {foundCommand.Category.name}\n" \
+                   f"**Brief:** {foundCommand.Brief}"
+            if foundCommand.Aliases:
+                desc += f"\n**Aliases:** {', '.join(foundCommand.Aliases)}"
+            if foundCommand.Syntax:
+                desc += "\n**Syntax:** `" + foundCommand.Syntax.format(Prefix=prefix) + "`"
+            embed = discord.Embed(
+                title=foundCommand.Name,
+                description=desc + f"\n\n{foundCommand.Desc}",
+                color=foundCommand.Category.value
+            )
+            await ctx.send(embed=embed)
 
-    # ------------------------------------------------------------------------------
-    
+
     @commands.Cog.listener()
     async def on_reaction_add(self, react, un):
+        # fixme reaction bug, need event handler to get latest event on message
+        await CreateCommands()
         ctx = react.message
         emote = str(react.emoji)
         if ctx.embeds:
@@ -325,4 +349,4 @@ class gethelp(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(gethelp(bot))
+    bot.add_cog(getHelp(bot))
