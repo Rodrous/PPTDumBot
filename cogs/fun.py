@@ -1,89 +1,92 @@
 import asyncio
 import discord
 from discord.ext import commands
-import requests,random
+import requests, random
 from build.generalPurpose import Dumbot, get_data_from_link
 from build.library import loadingFunnyMessages, MovieQuotes
 from build.urbanDict import searchitem
 import re as reg
 import wikipedia
 
-#sends images and quotes
-class webmaster(commands.Cog):
-    def __init__(self,bot):
-        self.bot = bot
 
+# sends images and quotes
+class webmaster(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+    
     @commands.command(
         name='cat',
         brief='Sends an image of a cute (*most of the times*) cat ꓷ:',
         help='Sends a cat image.')
-    async def sendCat(self,ctx):
+    async def sendCat(self, ctx):
         await ctx.send("Command Disabled Until Further Update")
-
+    
     @commands.command(
         name='dog',
         brief='Sends an image of a heckin good doggo ꓷ:',
         help='Fucking furry.')
-    async def sendDog(self,ctx):
-        data = await get_data_from_link(url="https://dog.ceo/api/breeds/image/random", json=True, jsonType='message', returnFile=True, fileName='Dog.png')
+    async def sendDog(self, ctx):
+        data = await get_data_from_link(link="https://dog.ceo/api/breeds/image/random", json=True, jsonType='message',
+                                        returnFile=True, fileName='Dog.png')
         if data == None:
             return await ctx.send("Couldnt Retrieve image from server.")
-        await ctx.send(content= "From PPT with \U0001F49A", file=data)
-
+        await ctx.send(content="From PPT with \U0001F49A", file=data)
+    
     @commands.command(
         name='wallpaper',
         brief='Sends a wallpaper.',
         help='Sends a wallpaper with size of 1920x1080')
-    async def sendWallpaper(self,ctx):
-        data = await get_data_from_link(url="https://picsum.photos/1920/1080", returnFile=True, fileName='Why are you looking at this.png')
+    async def sendWallpaper(self, ctx):
+        data = await get_data_from_link(link="https://picsum.photos/1920/1080", returnFile=True,
+                                        fileName='Why are you looking at this.png')
         if data == None:
             return await ctx.send("Couldnt Retrieve image from server.")
         await ctx.send(file=data)
-
+    
     @commands.command(
         name="quote",
         brief="Sends a quote from a movie/anime.",
         help="Sends a random quote")
-    async def sendQuote(self,ctx):
+    async def sendQuote(self, ctx):
         loading = await loadingFunnyMessages()
         msg = await ctx.send(loading)
         url = requests.get('https://animechan.vercel.app/api/random').json()
         await msg.edit(content=f"A quote from {url['character']} : {url['quote']}")
-
+    
     @commands.command(
         aliases=['re', 'ree', 'reee', 'reeee'],
         brief='It just \'***REEEEEE***\'s lmao',
         help='***REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE***')
-    async def sendRee(self,ctx):
-        num = random.randint(10,100)
+    async def sendRee(self, ctx):
+        num = random.randint(10, 100)
         await ctx.send("*R" + "E" * num + "*")
-
+    
     @commands.command(
         name="say",
-        aliases = ["speak"],
+        aliases=["speak"],
         brief="repeats your shit",
         help="repeat")
-    async def sendRepeat(self,ctx,*,args):
+    async def sendRepeat(self, ctx, *, args):
         if reg.search(pattern='@everyone|@here', string=args, flags=reg.I):
             await ctx.send('Fuck you, you cant loophoel dis')
         else:
             await ctx.message.channel.purge(limit=1)
             await ctx.send(args)
-
+    
     @commands.command(
         name="yeye",
-        aliases= ["yeeyee", "yeyee","yeeye"],
+        aliases=["yeeyee", "yeyee", "yeeye"],
         brief="issi asked me to do it",
         help="yeeeyeeeee")
-    async def sendYeye(self,ctx):
-        await ctx.send("*Y" + "E" * random.randint(10,50) + "Y" + "E" * random.randint(10,50) + "*")
-
+    async def sendYeye(self, ctx):
+        await ctx.send("*Y" + "E" * random.randint(10, 50) + "Y" + "E" * random.randint(10, 50) + "*")
+    
     @commands.command(
         name="joke",
-        aliases=["getjoke","jk"],
+        aliases=["getjoke", "jk"],
         brief="It send a random joke",
         help="a random joke, can be explicit or offensive so beware")
-    async def sendJoke(self,ctx, *, args = 'null'):
+    async def sendJoke(self, ctx, *, args='null'):
         # https://sv443.net/jokeapi/v2/
         loading = await loadingFunnyMessages()
         msg = await ctx.send(loading)
@@ -95,29 +98,28 @@ class webmaster(commands.Cog):
             await msg.edit(content=url['joke'])
         elif url['type'] == 'twopart':
             await msg.edit(content=f"{url['setup']}\n{url['delivery']}")
-
+    
     @commands.command(
         name="dadjoke",
         brief='i hate my life',
         help='you hate me')
-    async def sendDadjoke(self,ctx):
+    async def sendDadjoke(self, ctx):
         loading = await loadingFunnyMessages()
         msg = await ctx.send(loading)
-        url = requests.get("https://icanhazdadjoke.com/", headers={"accept" : "application/json"}).json()
+        url = requests.get("https://icanhazdadjoke.com/", headers={"accept": "application/json"}).json()
         await msg.edit(content=url['joke'])
-
+    
     @commands.command(
         name='yomomma',
         aliases=['yourmom', 'yomom'],
         brief='we like mom jokes',
         help='sends a random yomomma joke')
-    async def sendMomjoke(self,ctx):
+    async def sendMomjoke(self, ctx):
         loading = await loadingFunnyMessages()
         msg = await ctx.send(loading)
         url = requests.get('https://api.yomomma.info/').json()
         await msg.edit(content=url['joke'])
-
-
+    
     @commands.command(
         name='wikipedia',
         aliases=['wiki']
@@ -133,8 +135,7 @@ class webmaster(commands.Cog):
         except Exception as e:
             await ctx.send("Idk what the fuck happened, ping PPT/Finix/Draf")
             await Dumbot.send_error_to_channel(self, ctx, "Wikipedia", e)
-
-
+    
     @commands.command(
         name="dict",
         aliases=['urban', 'urbandict', 'define']
@@ -142,21 +143,12 @@ class webmaster(commands.Cog):
     async def urban(self, ctx, *, arg):
         search = searchitem(arg)
         await ctx.send(search)
-
-    @commands.Cog.listener()
-    async def on_message(self, msg):
-        if reg.search(pattern=r'\bours?\b', string=msg.content, flags=reg.I) and not msg.author.bot:
-            seq = ["<:doggo:863639575666098186>", "<:pepCom:863639491533340682>", "<:BlackCom:863642798070431744>",
-                   "<:Star:863642810879443004>", "<a:Communist:863640421628641320>", "<:comthumb:863646009334169651>",
-                   "<:usrBall:863646049028276234>", "<:yeye:863647634361942018>", '<:russianpepe:863647634001887273>']
-            rand = random.choice(seq)
-            await msg.add_reaction(rand)
-
+    
     @commands.command(name='MovieQuotes', aliases=['mq'])
-    async def movieQuote(self,ctx,*,arg="None") -> None:
-        explicit:bool = False
-        nsfw:bool = False
-
+    async def movieQuote(self, ctx, *, arg="None") -> None:
+        explicit: bool = False
+        nsfw: bool = False
+        
         try:
             args = arg.lower().split()
             match args[0]:
@@ -164,7 +156,7 @@ class webmaster(commands.Cog):
                     explicit = True
                 case "nsfw":
                     nsfw = True
-
+            
             if len(args) >= 2:
                 match args[1]:
                     case "nsfw":
@@ -173,25 +165,23 @@ class webmaster(commands.Cog):
                         explicit = True
         except Exception:
             pass
-
+        
         loading = await loadingFunnyMessages()
         msg = await ctx.send(loading)
         quoteObj = MovieQuotes(explicit, nsfw)
-
+        
         try:
             await asyncio.wait_for(quoteObj.get_movie_quote(), timeout=10)
             embed = discord.Embed(
                 title=quoteObj.movieName,
-                description=f"{quoteObj.quote}" ,
+                description=f"{quoteObj.quote}",
                 color=discord.Color.random()
             )
             embed.set_footer(text=f"{quoteObj.character} \nType: {quoteObj.type}")
             embed.set_thumbnail(url=quoteObj.imageUrl)
-            await msg.edit(content="",embed=embed)
+            await msg.edit(content="", embed=embed)
         except asyncio.TimeoutError:
             await msg.edit(content=f"Whoops I couldn't find it.")
-
-
 
 
 def setup(bot):

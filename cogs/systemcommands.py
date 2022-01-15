@@ -45,7 +45,7 @@ class syscom(commands.Cog):
         try:
             msg = args.split()
             if reg.match(pattern='https://cdn.discordapp.com/emojis/', string=msg[0]):
-                data = await get_data_from_link(url=str(msg[0]), fileName='WhyAreYouLookingAtThis')
+                data = await get_data_from_link(link=str(msg[0]), fileName='WhyAreYouLookingAtThis')
                 name = '_'.join(msg[1:]) or 'RandomName'
                 newEm = await ctx.guild.create_custom_emoji(name=name, image=data.getvalue(), reason=f'{ctx.author.mention} triggered the command : $steal')
                 return await ctx.send(f'Added the emoji {newEm} to the server with the name : "{name}"')
@@ -64,7 +64,7 @@ class syscom(commands.Cog):
                     turl += str(eid) + '.png'
                     #url = f"https://cdn.discordapp.com/emojis/853662523843674112.png"
 
-                data = await get_data_from_link(url=turl, fileName="WhyAreYouLookingAtThis")
+                data = await get_data_from_link(link=turl, fileName="WhyAreYouLookingAtThis")
 
                 newEm = await ctx.guild.create_custom_emoji(name=name, image=data.getvalue(), reason=f'{ctx.author.mention} triggered the command : $steal')
                 return await ctx.send(f'Added the emoji {newEm} to the server with the name : "{name}"')
