@@ -14,7 +14,6 @@ async def Init():
         :Param Syntax: Optional Syntax details, will only need the flags at the end example [User: Id, Name] [Number] [Message -> Optional]
     """
 
-    """  FUN COMMANDS  """
     HelpMenuEntry(
         Category=CommandCategory.Fun,
         Name="Ree",
