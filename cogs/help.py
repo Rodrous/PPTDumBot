@@ -2,7 +2,7 @@ from discord.ext import commands
 import discord
 
 from build.checks import private
-from build.generalPurpose import dumbot
+from build.generalPurpose import Dumbot
 from helpMenu.commands import RestrictedCategory
 from helpMenu.helpMenuEntry import HelpMenuEntry
 from helpMenu import menus, initialize
@@ -40,7 +40,7 @@ class getHelp(commands.Cog):
     async def sendHelp(self, ctx, *, args=''):
         await initialize.PublicCommands()
         args = args.split()
-        pf = await dumbot.getPrefix(ctx, self.bot)
+        pf = await Dumbot.getPrefix(ctx, self.bot)
         prefix = pf[2]
         if not args:
             intro, reactions = await menus.Intro(prefix)
@@ -62,7 +62,7 @@ class getHelp(commands.Cog):
         await initialize.PrivateCommands()
         await ctx.message.channel.purge(limit=1)
         args = args.split()
-        pf = await dumbot.getPrefix(ctx, self.bot)
+        pf = await Dumbot.getPrefix(ctx, self.bot)
         prefix = pf[2]
         if not args:
             embed = await menus.Private(prefix)
@@ -76,7 +76,7 @@ class getHelp(commands.Cog):
     async def on_reaction_add(self, react, un):
         # fixme reaction bug, need event handler to get latest event on message
         ctx = react.message
-        pf = await dumbot.getPrefix(ctx, self.bot)
+        pf = await Dumbot.getPrefix(ctx, self.bot)
         prefix = pf[2]
         await React(ctx, react, un, prefix)
 
