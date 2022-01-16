@@ -6,10 +6,7 @@ from build.checks import feedback_n_bug_blacklist
 from build import notion
 from build.library import loadingFunnyMessages
 
-with open("config/allowedguildIds.txt") as file:
-    f = file.readlines()
-
-allowedguilds = [base64.b64decode(i).decode('utf-8')  for i in f]
+allowedguilds = [os.environ.get('allowedGuild')]
 
 restrictedChannels = ["database"]
 

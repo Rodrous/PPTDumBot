@@ -1,15 +1,15 @@
 from discord.ext import commands
-import discord,base64,typing,asyncio
-from build.generalPurpose import dumbot
+import discord, base64, typing, asyncio
+from build.generalPurpose import Dumbot
 from build.backEnd import mute,unmute
-with open("config/allowedguildIds.txt") as file:
-    f = file.readlines()
+import os
 
-allowedguilds = [base64.b64decode(i).decode('utf-8')  for i in f]
+allowedguilds = [os.environ.get('allowedGuild')]
+
 
 class moderation(commands.Cog):
-    def __init__(self,bot):
-        self.bot=bot
+    def __init__(self, bot):
+        self.bot = bot
 
     @commands.command(
         name='invite',
@@ -21,7 +21,7 @@ class moderation(commands.Cog):
                 "This was a mistake\n<https://discordapp.com/oauth2/authorize?client_id=852977382016024646&scope=bot&permissions=0>")
         else:
             await ctx.send(content='You cant use that here yet.', delete_after=6)
-    
+
     # ------------------------------------------------------------------------------
 
     @commands.command(
@@ -32,16 +32,17 @@ class moderation(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def clearChat(self, ctx, amount: typing.Optional[int] = 1):
         await ctx.message.channel.purge(limit=int(amount))
-    
+
     # ------------------------------------------------------------------------------
 
     @commands.command(
-        help = "Mutes a person, Format:- <user> <time in minutes (Default=10)> <reason> (Default= Being a Biotch)"
+        help="Mutes a person, Format:- <user> <time in minutes (Default=10)> <reason> (Default= Being a Biotch)"
     )
     @commands.has_permissions(administrator=True)
-    async def mute(self,ctx,user: discord.Member,time = 10,reason="being a biotch"):
+    async def mute(self, ctx, user: discord.Member, time=10, reason="being a biotch"):
         getRole = discord.utils.get(ctx.guild.roles, name="Muted")
-        mute(ctx.guild.id,user.id)
+        await mute(ctx.guild.id, user.id)
+
         if not getRole:
             try:
                 muted = await ctx.guild.create_role(name="Muted", reason="Because People do be bitch")
@@ -52,7 +53,7 @@ class moderation(commands.Cog):
                                             add_reactions=False)
             except Exception as e:
                 print(f"Fuck you!:- {e}")
-                await dumbot.sendErrorToChannel(self, ctx, e)
+                await Dumbot.send_error_to_channel(self, ctx, e)
             await user.add_roles(getRole)
         else:
             await user.add_roles(getRole)
@@ -61,13 +62,12 @@ class moderation(commands.Cog):
         await asyncio.sleep(int(time) * 60)
         await user.remove_roles(getRole)
 
-    # ------------------------------------------------------------------------------
-
     @commands.command(
         help="Unmutes a person"
     )
-    async def unmute(self,ctx,user: discord.Member):
-        unmute(ctx.guild.id,user.id)
+
+    async def unmute(self, ctx, user: discord.Member):
+        await unmute(ctx.guild.id, user.id)
         getRole = discord.utils.get(ctx.guild.roles, name="Muted")
         await user.remove_roles(getRole)
         await ctx.send("Done!")
