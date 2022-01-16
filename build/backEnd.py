@@ -1,6 +1,6 @@
 import asyncio
 from build.connection import createdb, connection
-from typing import Dict, List, Optional, Union, Coroutine, Any
+from typing import Dict, List, Optional, Union
 
 
 async def addVal(guildId, UserId, muteStatus=False) -> None:
@@ -57,12 +57,11 @@ async def addQuote(movie: str, character: str,
                    quote: List[List[Union[str, Optional[Dict[str, bool]]]]],
                    type: str,
                    imageUrl: Optional[str] = None) -> None:
-    checkExisting = await quoteCol.count_documents({
-        "$and": [
-            {"movie": movie},
-            {"character": character},
-        
-        ]
+    checkExisting = await quoteCol.count_documents({"$and": [
+        {"movie": movie},
+        {"character": character},
+        {"quote":{"$elemMatch": {"$elemMatch": {"$eq":quote}}}}
+    ]
     }
     )
     
@@ -111,9 +110,24 @@ async def getRandomLoadingMessage(noOfDocuments: int = 1) -> str:
         return i["message"]
 
 
+async def addDescriptions(description: str) -> None:
+    await description_cursor.update_one({
+        "description": description
+    },
+        {"$setOnInsert": {"description": description}},
+        upsert=True
+    )
+
+
+async def getRandomDescription(noOfDescription: int = 1) -> str:
+    async for i in description_cursor.aggregate([{"$sample": {"size": noOfDescription}}]):
+        return i["description"]
+
+
 if __name__ == "build.backEnd":
     loop = asyncio.get_event_loop()
     conn = loop.run_until_complete(connection())
     col = createdb(conn, "DiscordBot", "UserInfo")
     quoteCol = createdb(conn, "DiscordBot", "Quotes")
     LoadingMessage = createdb(conn, "DiscordBot", "LoadingMessage")
+    description_cursor = createdb(conn, "DiscordBot", "Description")
