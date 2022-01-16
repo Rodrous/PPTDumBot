@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from typing import Optional, ClassVar, Union
 
-from helpMenu.commands import CommandTracker, CommandCategory
+from helpMenu.commands import CommandTracker, CommandCategory, RestrictedCategory
 
 
 @dataclass(frozen=True, slots=True)
@@ -30,12 +30,22 @@ class HelpMenuEntry:
         return cls._Instances.GetCategory(Category, AsList)
 
     @classmethod
-    def GetCommand(cls, Alias: str) -> 'HelpMenuEntry':
-        return cls._Instances.GetCommand(Alias)
+    def PublicSearch(cls, Alias: str) -> 'HelpMenuEntry':
+        return cls._Instances.PublicSearch(Alias)
 
     @classmethod
-    def GetAll(cls) -> list:
-        return cls._Instances.GetAll()
+    def PrivateSearch(cls, Alias: str, Category: RestrictedCategory) -> 'HelpMenuEntry':
+        return cls._Instances.PrivateSearch(Alias, Category)
+
+    def __str__(self):
+        string = f"**Category:** {self.Category.name}\n" \
+                 f"**Brief:** {self.Brief}"
+        if self.Aliases:
+            string += f"\n**Aliases:** {', '.join(self.Aliases)}"
+        if self.Syntax:
+            string += f"\n**Syntax:** `{self.Syntax}`"
+        string += f"\n\n{self.Desc}"
+        return string
 
     def __contains__(self, item):
         """
@@ -45,3 +55,16 @@ class HelpMenuEntry:
         allAliases = self.Aliases.copy()
         allAliases.append(name)
         return item in allAliases
+
+
+@dataclass(frozen=True, slots=True)
+class EntryFactory:
+    Category: CommandCategory
+
+    def Create(self,
+               Name: str,
+               Brief: str,
+               Desc: str,
+               Aliases: Optional[list[str]] = [],
+               Syntax: Optional[str] = ''):
+        HelpMenuEntry(self.Category, Name, Brief, Desc, Aliases, Syntax)

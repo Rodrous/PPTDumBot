@@ -1,15 +1,27 @@
-from enum import Enum
+from enum import Enum, unique
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING
+
 if TYPE_CHECKING:
     from helpMenu.helpMenuEntry import HelpMenuEntry
 
 
 class CommandCategory(Enum):
+    ...
+
+
+@unique
+class PublicCategory(CommandCategory):
     Fun = 52382
     Game = 6724095
     Utility = 16375162
     Moderation = 13524060
+
+
+@unique
+class RestrictedCategory(CommandCategory):
+    Private = 1764824
+    DevOnly = 13273297
 
 
 @dataclass(frozen=True, slots=True)
@@ -28,17 +40,32 @@ class CommandTracker:
             return self.Commands[Category]
         return list(self.Commands[Category].values())
 
-    def GetCommand(self, Alias: str):
-        Alias = Alias.lower()
-        commands = self.GetAll()
-        for cmd in commands:
+    def PublicSearch(self, Alias: str):
+        alias = Alias.lower()
+        commands = self.PublicGetAll()
+        return self._Search(alias, commands)
+
+    def PrivateSearch(self, Alias: str, Category: RestrictedCategory):
+        alias = Alias.lower()
+        commands = self.GetCategory(Category, AsList=True)
+        return self._Search(alias, commands)
+
+    def PublicGetAll(self) -> list:
+        return self._GetAll(PublicCategory)
+
+    def PrivateGetAll(self) -> list:
+        return self._GetAll(RestrictedCategory)
+
+    @staticmethod
+    def _Search(Alias: str,  Commands: list):
+        for cmd in Commands:
             if Alias not in cmd:
                 continue
             return cmd
 
-    def GetAll(self) -> list:
+    def _GetAll(self, Categories: CommandCategory) -> list:
         allCommands = []
-        for category in CommandCategory:
+        for category in Categories:
             commands = self.GetCategory(category, AsList=True)
             allCommands.extend(commands)
         return allCommands

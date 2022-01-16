@@ -2,10 +2,9 @@ import re as reg
 import discord
 import asyncio
 
-from helpMenu import menus
+from helpMenu import menus, initialize
 from helpMenu.reactions import Reaction
 from helpMenu.eventHandler import ReactionEvent
-from helpMenu.initialize import InitializeCommands
 
 
 startupLoop = {}
@@ -24,7 +23,7 @@ async def React(ctx: discord.Message, Emote: discord.Reaction, User: discord.Use
     embedAuthorField = embed.author.name
     if not ValidateHelpMenuEmbed(ctx, User, embedAuthorField):
         return
-    await InitializeCommands()
+    await initialize.PublicCommands()
     embed, reaction = await EmbedFactory(emote, Prefix)
     if not embed or not reaction:
         return

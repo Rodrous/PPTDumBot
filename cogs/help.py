@@ -3,9 +3,8 @@ import discord
 
 from build.generalPurpose import dumbot
 from helpMenu.helpMenuEntry import HelpMenuEntry
-from helpMenu import menus
+from helpMenu import menus, initialize
 from helpMenu.react import React, startupLoop
-from helpMenu.initialize import InitializeCommands
 
 
 class getHelp(commands.Cog):
@@ -19,7 +18,7 @@ class getHelp(commands.Cog):
         brief='This is like help, but better.',
         help='What else do you need to know bro, just run the command')
     async def sendHelp(self, ctx, *, args=''):
-        await InitializeCommands()
+        await initialize.PublicCommands()
         args = args.split()
         pf = await dumbot.getPrefix(ctx, self.bot)
         prefix = pf[2]
@@ -32,7 +31,7 @@ class getHelp(commands.Cog):
             del startupLoop[embed.id]
         else:
             requestedCommand = args[0]
-            foundCommand: HelpMenuEntry = HelpMenuEntry.GetCommand(requestedCommand)
+            foundCommand: HelpMenuEntry = HelpMenuEntry.PublicSearch(requestedCommand)
             if not foundCommand:
                 embed = discord.Embed(
                     title="404: Not Found",
@@ -41,15 +40,10 @@ class getHelp(commands.Cog):
                 )
                 await ctx.send(embed=embed)
                 return
-            desc = f"**Category:** {foundCommand.Category.name}\n" \
-                   f"**Brief:** {foundCommand.Brief}"
-            if foundCommand.Aliases:
-                desc += f"\n**Aliases:** {', '.join(foundCommand.Aliases)}"
-            if foundCommand.Syntax:
-                desc += "\n**Syntax:** `" + foundCommand.Syntax.format(Prefix=prefix) + "`"
+            desc = str(foundCommand).format(Prefix=prefix)
             embed = discord.Embed(
                 title=foundCommand.Name,
-                description=desc + f"\n\n{foundCommand.Desc}",
+                description=desc,
                 color=foundCommand.Category.value
             )
             await ctx.send(embed=embed)
