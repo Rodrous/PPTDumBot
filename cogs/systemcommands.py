@@ -1,14 +1,15 @@
 from discord.ext import commands
-import discord,os, requests
+import discord,base64,typing, requests
 import re as reg
-from build.generalPurpose import Dumbot, get_data_from_link
-from build import checks
+from build.generalPurpose import dumbot, getDataFromLink
+from build.checks import feedback_n_bug_blacklist
 from build import notion
 from build.library import loadingFunnyMessages
 
 allowedguilds = [os.environ.get('allowedGuild')]
 
 restrictedChannels = ["database"]
+
 
 class syscom(commands.Cog):
     def __init__(self,bot):
@@ -45,7 +46,7 @@ class syscom(commands.Cog):
         try:
             msg = args.split()
             if reg.match(pattern='https://cdn.discordapp.com/emojis/', string=msg[0]):
-                data = await get_data_from_link(link=str(msg[0]), fileName='WhyAreYouLookingAtThis')
+                data = await getDataFromLink(url=str(msg[0]), fileName='WhyAreYouLookingAtThis')
                 name = '_'.join(msg[1:]) or 'RandomName'
                 newEm = await ctx.guild.create_custom_emoji(name=name, image=data.getvalue(), reason=f'{ctx.author.mention} triggered the command : $steal')
                 return await ctx.send(f'Added the emoji {newEm} to the server with the name : "{name}"')
@@ -64,19 +65,19 @@ class syscom(commands.Cog):
                     turl += str(eid) + '.png'
                     #url = f"https://cdn.discordapp.com/emojis/853662523843674112.png"
 
-                data = await get_data_from_link(link=turl, fileName="WhyAreYouLookingAtThis")
+                data = await getDataFromLink(url=turl, fileName="WhyAreYouLookingAtThis")
 
                 newEm = await ctx.guild.create_custom_emoji(name=name, image=data.getvalue(), reason=f'{ctx.author.mention} triggered the command : $steal')
                 return await ctx.send(f'Added the emoji {newEm} to the server with the name : "{name}"')
 
         except Exception as e:
                 print(f"There is some Error Here, error is defined by: {e}")
-                await Dumbot.send_error_to_channel(self, ctx, "Steal", e)
+                await dumbot.sendErrorToChannel(self, ctx,"Steal", e)
                 await ctx.send("Some error occured, please try again or ping the devs **):**")
     
     # ------------------------------------------------------------------------------
 
-    @checks.feedback_n_bug_blacklist()
+    @feedback_n_bug_blacklist
     @commands.command(
         name="feedback",
         aliases= ["fb"])
@@ -93,7 +94,7 @@ class syscom(commands.Cog):
 
     # ------------------------------------------------------------------------------
 
-    @checks.feedback_n_bug_blacklist()
+    @feedback_n_bug_blacklist
     @commands.command(
         name="bugreport",
         aliases=["bugs", "bugrep", "bug-report", "bug-rep"])
