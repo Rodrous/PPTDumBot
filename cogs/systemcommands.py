@@ -2,7 +2,7 @@ from discord.ext import commands
 import discord,base64,typing, requests
 import re as reg
 from build.generalPurpose import dumbot, getDataFromLink
-from build.customDecorators import Feedback_n_bug_blacklist
+from build.checks import feedback_n_bug_blacklist
 from build import notion
 from build.library import loadingFunnyMessages
 
@@ -13,7 +13,6 @@ allowedguilds = [base64.b64decode(i).decode('utf-8')  for i in f]
 
 restrictedChannels = ["database"]
 
-feedbackNbugsBlacklist = commands.check(Feedback_n_bug_blacklist)
 
 class syscom(commands.Cog):
     def __init__(self,bot):
@@ -81,7 +80,7 @@ class syscom(commands.Cog):
     
     # ------------------------------------------------------------------------------
 
-    @feedbackNbugsBlacklist
+    @feedback_n_bug_blacklist
     @commands.command(
         name="feedback",
         aliases= ["fb"])
@@ -98,7 +97,7 @@ class syscom(commands.Cog):
 
     # ------------------------------------------------------------------------------
 
-    @feedbackNbugsBlacklist
+    @feedback_n_bug_blacklist
     @commands.command(
         name="bugreport",
         aliases=["bugs", "bugrep", "bug-report", "bug-rep"])

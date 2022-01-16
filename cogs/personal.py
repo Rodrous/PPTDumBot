@@ -1,15 +1,9 @@
 from discord.ext import commands
 import discord, random
-import re as reg
-from build.generalPurpose import dumbot
-from build.customDecorators import private, devsOnly
-from helpMenu import initialize, menus
-from helpMenu.commands import RestrictedCategory
-from helpMenu.helpMenuEntry import HelpMenuEntry
 
-devsonly = commands.check(devsOnly)
-private = commands.check(private)
-private_embed_color = 6724095
+from build.generalPurpose import dumbot
+from build.checks import private
+
 bot_avatar = dumbot.avatar()
 
 
@@ -56,39 +50,6 @@ class personal(commands.Cog):
             for person in pinged_people_list:
                 string += f"<@{str(person)}> "
             await ctx.send(string)
-
-    """    HELP MENU    """
-    @private
-    @commands.command(
-        name="personalhelp",
-        aliases=["phelp", "pershelp", "privhelp", "privatehelp"])
-    async def personalHelp(self, ctx, *, args= ''):
-        await initialize.PrivateCommands()
-        await ctx.message.channel.purge(limit=1)
-        args = args.split()
-        pf = await dumbot.getPrefix(ctx, self.bot)
-        prefix = pf[2]
-        if not args:
-            embed = await menus.Private(prefix)
-            await ctx.send(embed=embed, delete_after=60)
-        else:
-            requestedCommand = args[0]
-            foundCommand: HelpMenuEntry = HelpMenuEntry.PrivateSearch(requestedCommand, RestrictedCategory.Private)
-            if not foundCommand:
-                embed = discord.Embed(
-                    title="404: Not Found",
-                    description=f"Command {requestedCommand} not found",
-                    color=discord.Colour.red()
-                )
-                await ctx.send(embed=embed)
-                return
-            desc = str(foundCommand).format(Prefix=prefix)
-            embed = discord.Embed(
-                title=foundCommand.Name,
-                description=desc,
-                color=foundCommand.Category.value
-            )
-            await ctx.send(embed=embed)
 
 
 def setup(bot):
