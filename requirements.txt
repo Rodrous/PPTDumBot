@@ -1,7 +1,10 @@
-git+https://github.com/Rapptz/discord.py
-aiohttp
-requests
-wikipedia
-bs4
-motor
+aiohttp>=3.7.4.post0
+requests>=2.27.1
+wikipedia>=1.4.0
+bs4>=0.0.1
+motor>=2.5.1
 pymongo[srv]
+discord.py
+discord.py[voice]
+beautifulsoup4>=4.10.0
+python-dotenv>=0.19.2

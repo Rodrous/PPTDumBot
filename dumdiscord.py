@@ -1,18 +1,22 @@
 import os
-import random
 from typing import List, Dict
+
 import discord
 from discord import Intents
 from discord.ext import commands, tasks
+from dotenv import load_dotenv
+
+from build.backEnd import getRandomDescription
 from build.generalPurpose import Dumbot
 
+load_dotenv()
 id: str = os.environ.get("clientId")
 restrictedChannels: List = ["database"]
 intents: Intents = discord.Intents.default()
 intents.members: bool = True
 intents.voice_states: bool = True
 customPrefix: Dict = {}
-defaultPrefix: str = "$"
+defaultPrefix: str = "-"
 
 
 def determine_prefix(bot, msg) -> list[str]:
@@ -109,40 +113,9 @@ async def on_ready() -> None:
 @tasks.loop(hours=5)
 async def change_description() -> None:
     """ Changes Description every 5 hours """
-
-    # Todo Migrate this to database
-    descriptions = ["Serving", "aWYgeW91IGRlY29kZWQgdGhpcyB5b3UncmUgYSBuZXJk",
-                    "ctx.send(f'fuck you {member.mention}')",
-                    "Running on biodiesel",
-                    "I'm one hell of a butler", "Why do i exist, father?",
-                    "Waiting for Hot Topic to sell 'Distressed iPhones'",
-                    "What is love? Baby dont hurt me",
-                    "Blackfinix codes this bot too",
-                    "Never make the same mistake twice; there are so many new ones to make",
-                    "Life is beautiful… from Friday to Sunday",
-                    "Time is precious. Waste it wisely",
-                    "Ill be back before you can pronounce actillimandataquerin altosapaoyabayadoondib",
-                    "I’m right 90% of the time, so why worry about the other 3%?",
-                    "I’d grill your cheese! ~Me when flirting",
-                    "When life gives you lemonade, make lemons.",
-                    ]
-    
-    members_list: List = []
-    
-    for guild in bot.guilds:
-        iterable_obj: list = await guild.fetch_members().flatten()
-        for members in iterable_obj:
-            members_list.append(members)
-    
-    total_members: int = len(set(members_list))
-    
-    serving: str = f"Serving {total_members} members " \
-                   f"in {len(bot.guilds)} servers."
-    descriptions.__setitem__(0, serving)
-    
-    rand_choice: str = str(random.choice(descriptions))
+    description = await getRandomDescription()
     await bot.change_presence(activity=discord.Game(
-        name=f"{rand_choice}"))
+        name=f"{description}"))
 
 
 if __name__ == "__main__":

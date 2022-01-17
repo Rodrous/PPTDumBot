@@ -10,3 +10,4 @@ profile_default/
 ipython_config.py
 .pytype/
 *.pyc
+.env
