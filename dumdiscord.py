@@ -16,7 +16,7 @@ intents: Intents = discord.Intents.default()
 intents.members: bool = True
 intents.voice_states: bool = True
 customPrefix: Dict = {}
-defaultPrefix: str = "-"
+defaultPrefix: str = "$"
 
 
 def determine_prefix(bot, msg) -> list[str]:
