@@ -4,12 +4,10 @@ from typing import List, Dict
 import discord
 from discord import Intents
 from discord.ext import commands, tasks
-from dotenv import load_dotenv
 
 from build.backEnd import getRandomDescription
 from build.generalPurpose import Dumbot
 
-load_dotenv()
 id: str = os.environ.get("clientId")
 restrictedChannels: List = ["database"]
 intents: Intents = discord.Intents.default()

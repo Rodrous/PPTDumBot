@@ -2,9 +2,7 @@ import os
 from typing import Coroutine
 
 import motor.motor_asyncio
-from dotenv import load_dotenv
 
-load_dotenv()
 
 async def connection() -> Coroutine:
     client: str = os.environ.get("mongoDb")
