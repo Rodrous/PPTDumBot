@@ -2,9 +2,7 @@ from typing import Dict, Set
 
 from discord.ext import commands
 
-
-def devlist() -> Dict[str, int]:
-    return {
+devList: Dict[str, int] = {
         # Devs
         "Giraffe": 323457305855262721,
         "Ppt": 311919809895858177,
@@ -16,16 +14,14 @@ def devlist() -> Dict[str, int]:
 
 def devsOnly(*args):
     def predicate(ctx) -> bool:
-        devs: Dict[str, int] = devlist()
-        devs: Set = set(devs.values())
-        return devs.__contains__(ctx.author.id)
+        devs: Set = set(devList.values())
+        return ctx.author.id in devs
     
     return commands.check(predicate)
 
 
 def private(*args):
     def predicate(ctx) -> bool:
-        devs: Dict[str, int] = devlist()
         whitelist: Dict[str, int] = {
             # Friends
             "Karma": 564921559836393481,
@@ -37,9 +33,9 @@ def private(*args):
             # Friend Alts
             "Karma | EllaJD": 845876972222808065
         }
-        whitelist.update(devs)
+        whitelist.update(devList)
         whitelist: Set = set(whitelist.values())
-        return whitelist.__contains__(ctx.author.id)
+        return ctx.author.id in whitelist
     
     return commands.check(predicate)
 
