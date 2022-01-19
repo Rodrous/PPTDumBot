@@ -61,7 +61,7 @@ class HelpMenuEntry:
 class EntryFactory:
     Category: CommandCategory
 
-    def Create(self,
+    async def Create(self,
                Name: str,
                Brief: str,
                Desc: str,

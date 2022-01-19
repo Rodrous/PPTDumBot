@@ -1,3 +1,5 @@
+import asyncio
+
 from helpMenu.commands import RestrictedCategory
 from helpMenu.helpMenuEntry import EntryFactory
 
@@ -14,13 +16,15 @@ async def Init():
         :Param Syntax: Optional Syntax details, will only need the flags at the end example [User: Id, Name] [Number] [Message -> Optional]
     """
     entry = EntryFactory(RestrictedCategory.Private)
-    entry.Create(
-        Name="Ily",
-        Brief="Sends ily cause Draf do be lazy",
-        Desc="Sends ily + random int + ping"
-    )
-    entry.Create(
-        Name="vc",
-        Brief="Pings People to vc",
-        Desc="Pings everyone whos on the list to vc, please let us know if you wanna be added or removed"
+    await asyncio.gather(
+        entry.Create(
+            Name="Ily",
+            Brief="Sends ily cause Draf do be lazy",
+            Desc="Sends ily + random int + ping"
+        ),
+        entry.Create(
+            Name="vc",
+            Brief="Pings People to vc",
+            Desc="Pings everyone whos on the list to vc, please let us know if you wanna be added or removed"
+        )
     )

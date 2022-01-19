@@ -7,7 +7,7 @@ from helpMenu import menus, initialize
 from helpMenu.commands import RestrictedCategory
 from helpMenu.eventHandler import EventHandler
 from helpMenu.helpMenuEntry import HelpMenuEntry
-from helpMenu.react import React, MenuFactory
+from helpMenu.react import React, MenuFactory, AddReactions
 
 context = discord.ext.commands.Context
 
@@ -30,10 +30,7 @@ class getHelp(commands.Cog):
             intro, reactions = await menus.Intro(prefix)
             msg = await ctx.send(embed=intro)
             event = EventHandler.GetEvent(msg)
-            event.Loop = True
-            for reaction in reactions:
-                await msg.add_reaction(reaction.value)
-            event.Loop = False
+            await AddReactions(msg, event, reactions)
         else:
             await initialize.PublicCommands()
             requestedCommand = args[0].lower()
@@ -75,7 +72,11 @@ class getHelp(commands.Cog):
         pf = await Dumbot.get_prefix(ctx, self.bot)
         prefix = pf[2]
         event = EventHandler.GetEvent(ctx)
-        embed, reactions = await MenuFactory(react.emoji, prefix)
+        try:
+            embed, reactions = await MenuFactory(react.emoji, prefix)
+        except ValueError as e:
+            print(e)
+            return
         await React(event, embed, reactions)
 
 

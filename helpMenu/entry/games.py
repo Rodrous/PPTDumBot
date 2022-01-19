@@ -1,3 +1,5 @@
+import asyncio
+
 from helpMenu.commands import PublicCategory
 from helpMenu.helpMenuEntry import EntryFactory
 
@@ -13,10 +15,12 @@ async def Init():
         :Param Syntax: Optional Syntax details, will only need the flags at the end example [User: Id, Name] [Number] [Message -> Optional]
     """
     entry = EntryFactory(PublicCategory.Game)
-    entry.Create(
-        Name="Minesweeper",
-        Brief="Generates Minesweeper game",
-        Desc="Will randomly generate a Minesweeper game to play with spoiler tags",
-        Aliases=['ms', 'mines'],
-        Syntax="[Rows] [Columns] [Mines]"
+    await asyncio.gather(
+        entry.Create(
+            Name="Minesweeper",
+            Brief="Generates Minesweeper game",
+            Desc="Will randomly generate a Minesweeper game to play with spoiler tags",
+            Aliases=['ms', 'mines'],
+            Syntax="[Rows] [Columns] [Mines]"
+        )
     )

@@ -4,7 +4,7 @@ from typing import Union
 
 import discord
 
-from helpMenu import menus, initialize
+from helpMenu import menus
 from helpMenu.eventHandler import EventHandler
 from helpMenu.reactions import Reaction
 
@@ -34,18 +34,14 @@ async def React(
 
 async def _Execute(Event: EventHandler, Embed, Reactions: list[Reaction]):
     """  Executing Event  """
-    await initialize.PublicCommands()
-    Event.Loop = True
     await asyncio.gather(
         Event.Message.clear_reactions(),
         Event.Message.edit(embed=Embed)
     )
-    for react in Reactions:
-        await Event.Message.add_reaction(react.value)
-    Event.Loop = False
+    await AddReactions(Event.Message, Event, Reactions)
 
 
-async def MenuFactory(Emote: Union[Reaction, discord.Emoji, str], Prefix: str):
+async def MenuFactory(Emote: Union[Reaction, discord.Emoji, str], Prefix: str) -> (discord.Embed, list[Reaction]):
     """  Finds the correct Menu  """
     # Convert to correct type
     match Emote:
@@ -65,8 +61,12 @@ async def MenuFactory(Emote: Union[Reaction, discord.Emoji, str], Prefix: str):
             return await menus.Moderation(Prefix)
         case Reaction.Return:
             return await menus.Intro(Prefix)
-        case _:
-            return None, None
+
+
+async def AddReactions(Message: discord.Message, Event: EventHandler, Reactions: list[Reaction]):
+    with Event:
+        for reaction in Reactions:
+            await Message.add_reaction(reaction.value)
 
 
 def _ValidateHelpMenuEmbed(ctx: discord.Message, AuthorField: str) -> bool:

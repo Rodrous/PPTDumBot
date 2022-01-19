@@ -30,6 +30,12 @@ class EventHandler:
             case False:
                 del self._Events[self.MessageID]
 
+    def __enter__(self):
+        self.Loop = True
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.Loop = False
+
     @classmethod
     def GetEvent(cls, Message: discord.Message) -> 'EventHandler':
         event = cls._Events.get(Message.id, None)
