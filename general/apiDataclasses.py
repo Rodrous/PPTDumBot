@@ -10,7 +10,7 @@ class JokeApiType(Enum):
     TwoPart = "twopart"
 
 
-@dataclass
+@dataclass(frozen=True, slots=True)
 class JokeApiFlags:
     nsfw: bool
     religious: bool
@@ -20,7 +20,7 @@ class JokeApiFlags:
     explicit: bool
 
 
-@dataclass
+@dataclass(frozen=True, slots=True)
 class JokeApi:
     """
     API: https://v2.jokeapi.dev/
@@ -52,7 +52,7 @@ class JokeApi:
                 return f"{self.setup}{separator}{self.delivery}"
 
     @classmethod
-    async def FromDict(cls, dictionary: dict):
+    async def FromJson(cls, dictionary: dict):
         if dictionary["error"]:
             raise ApiError("An error with the api has occurred")
         category = dictionary["category"]

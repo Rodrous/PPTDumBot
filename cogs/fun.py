@@ -89,15 +89,14 @@ class webmaster(commands.Cog):
         brief="It send a random joke",
         help="a random joke, can be explicit or offensive so beware")
     async def SendJoke(self, ctx: commands.Context, *, args: str = ""):
-        # loading: str = await loadingFunnyMessages()
-        loading = "temp"
+        loading: str = await loadingFunnyMessages()
         msg: discord.Message = await ctx.send(loading)
         if str(args).count("-ex") >= 1:
             url = requests.get("https://v2.jokeapi.dev/joke/Any").json()
         else:
             url = requests.get("https://v2.jokeapi.dev/joke/Any?safe-mode").json()
         try:
-            joke = await JokeApi.FromDict(url)
+            joke = await JokeApi.FromJson(url)
         except ApiError as e:
             await msg.edit(content=f"An error occurred:\n{e}")
             return
