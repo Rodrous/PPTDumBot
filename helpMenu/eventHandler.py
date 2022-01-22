@@ -1,44 +1,67 @@
 from dataclasses import dataclass, field
-from typing import ClassVar
+from typing import ClassVar, Union
 
 import discord
+
+from general.returnCodes import ReturnCode
+from helpMenu.reactions import Reaction
 
 
 @dataclass(slots=True)
 class EventHandler:
-    Message: discord.Message
-    MessageID: int = field(init=False)
-    _Loop: bool = field(init=False)
-    _Events: ClassVar[dict] = field(init=False, default={})
+    message: discord.Message
+    message_id: int = field(init=False)
+    _reaction: discord.Emoji = field(init=False)
+    _loop: bool = field(init=False)
+    _events: ClassVar[dict] = field(init=False, default={})
 
     def __post_init__(self):
-        self.MessageID = self.Message.id
-        self._Events[self.MessageID] = self
-        self._Loop = False
+        self.message_id = self.message.id
+        self._reaction = None
+        self._loop = False
+        self._events[self.message_id] = self
 
     @property
-    def Loop(self):
-        return self._Loop
+    def loop(self):
+        return self._loop
 
-    @Loop.setter
-    def Loop(self, value: bool):
+    @loop.setter
+    def loop(self, value: bool):
         if not isinstance(value, bool):
             return
         match value:
             case True:
-                self._Loop = value
+                self._loop = value
             case False:
-                del self._Events[self.MessageID]
+                del self._events[self.message_id]
+
+    @property
+    def reaction(self):
+        return self._reaction
+
+    async def SetReaction(self, reaction: Union[discord.Emoji, Reaction, str]) -> ReturnCode:
+        if self._reaction:
+            return ReturnCode.Unchanged
+        try:
+            match reaction:
+                case discord.Emoji():
+                    reaction = await Reaction.FromEmoji(reaction)
+                case str():
+                    reaction = Reaction(reaction)
+        except ValueError:
+            return ReturnCode.Unchanged
+        self._reaction = reaction
+        return ReturnCode.Success
 
     def __enter__(self):
-        self.Loop = True
+        self.loop = True
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.Loop = False
+        self.loop = False
 
     @classmethod
-    def GetEvent(cls, Message: discord.Message) -> 'EventHandler':
-        event = cls._Events.get(Message.id, None)
+    def GetEvent(cls, message: discord.Message) -> 'EventHandler':
+        event = cls._events.get(message.id, None)
         if event:
             return event
-        return cls(Message)
+        return cls(message)

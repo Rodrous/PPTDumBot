@@ -10,68 +10,68 @@ from helpMenu.reactions import Reaction
 
 
 async def React(
-        Event: EventHandler,
-        Embed: discord.Embed,
-        Reactions: list[Reaction], *,
-        RecursionMax: int = 5, RecursionSpeed: float = 1, _RecursionDepth: int = 0):
+        event: EventHandler,
+        embed: discord.Embed,
+        reactions: list[Reaction], *,
+        recursion_max: int = 10, recursion_speed: float = 1, _recursion_depth: int = 0):
     """  Running Checks  """
-    if _RecursionDepth >= RecursionMax:
+    if _recursion_depth >= recursion_max:
         return
-    if Event.Loop:
-        await asyncio.sleep(RecursionSpeed)
+    if event.loop:
+        await asyncio.sleep(recursion_speed)
         await React(
-            Event, Embed, Reactions,
-            RecursionMax=RecursionMax, RecursionSpeed=RecursionSpeed, _RecursionDepth=_RecursionDepth + 1)
+            event, embed, reactions,
+            recursion_max=recursion_max, recursion_speed=recursion_speed, _recursion_depth=_recursion_depth + 1)
         return
-    if not Event.Message.embeds:
+    if not event.message.embeds:
         return
-    botEmbed = Event.Message.embeds[0]
-    authorField = botEmbed.author.name
-    if not _ValidateHelpMenuEmbed(Event.Message, authorField):
+    bot_embed = event.message.embeds[0]
+    author_field = bot_embed.author.name
+    if not _ValidateHelpMenuEmbed(event.message, author_field):
         return
-    await _Execute(Event, Embed, Reactions)
+    await _Execute(event, embed, reactions)
 
 
-async def _Execute(Event: EventHandler, Embed, Reactions: list[Reaction]):
+async def _Execute(event: EventHandler, embed, reactions: list[Reaction]):
     """  Executing Event  """
     await asyncio.gather(
-        Event.Message.clear_reactions(),
-        Event.Message.edit(embed=Embed)
+        event.message.clear_reactions(),
+        event.message.edit(embed=embed)
     )
-    await AddReactions(Event.Message, Event, Reactions)
+    await AddReactions(event.message, event, reactions)
 
 
-async def MenuFactory(Emote: Union[Reaction, discord.Emoji, str], Prefix: str) -> (discord.Embed, list[Reaction]):
+async def MenuFactory(emote: Union[Reaction, discord.Emoji, str], prefix: str) -> (discord.Embed, list[Reaction]):
     """  Finds the correct Menu  """
     # Convert to correct type
-    match Emote:
+    match emote:
         case discord.Emoji():
-            Emote = await Reaction.FromEmoji(Emote)
+            emote = await Reaction.FromEmoji(emote)
         case str():
-            Emote = Reaction(Emote)
+            emote = Reaction(emote)
     # Match Emote to Menu
-    match Emote:
+    match emote:
         case Reaction.Fun:
-            return await menus.Fun(Prefix)
+            return await menus.Fun(prefix)
         case Reaction.Games:
-            return await menus.Games(Prefix)
+            return await menus.Games(prefix)
         case Reaction.Utility:
-            return await menus.Utility(Prefix)
+            return await menus.Utility(prefix)
         case Reaction.Moderation:
-            return await menus.Moderation(Prefix)
+            return await menus.Moderation(prefix)
         case Reaction.Return:
-            return await menus.Intro(Prefix)
+            return await menus.Intro(prefix)
 
 
-async def AddReactions(Message: discord.Message, Event: EventHandler, Reactions: list[Reaction]):
-    with Event:
-        for reaction in Reactions:
-            await Message.add_reaction(reaction.value)
+async def AddReactions(message: discord.Message, event: EventHandler, reactions: list[Reaction]):
+    with event:
+        for reaction in reactions:
+            await message.add_reaction(reaction.value)
 
 
-def _ValidateHelpMenuEmbed(ctx: discord.Message, AuthorField: str) -> bool:
+def _ValidateHelpMenuEmbed(ctx: discord.Message, author_field: str) -> bool:
     if not ctx.author.id == 852977382016024646:
         return False
-    if not reg.search(pattern=r'\AServer Index', string=AuthorField):
+    if not reg.search(pattern=r'\AServer Index', string=author_field):
         return False
     return True

@@ -18,13 +18,13 @@ async def Init():
     entry = EntryFactory(RestrictedCategory.Private)
     await asyncio.gather(
         entry.Create(
-            Name="Ily",
-            Brief="Sends ily cause Draf do be lazy",
-            Desc="Sends ily + random int + ping"
+            name="Ily",
+            brief="Sends ily cause Draf do be lazy",
+            desc="Sends ily + random int + ping"
         ),
         entry.Create(
-            Name="vc",
-            Brief="Pings People to vc",
-            Desc="Pings everyone whos on the list to vc, please let us know if you wanna be added or removed"
+            name="vc",
+            brief="Pings People to vc",
+            desc="Pings everyone whos on the list to vc, please let us know if you wanna be added or removed"
         )
     )

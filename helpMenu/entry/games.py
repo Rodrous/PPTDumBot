@@ -17,10 +17,10 @@ async def Init():
     entry = EntryFactory(PublicCategory.Game)
     await asyncio.gather(
         entry.Create(
-            Name="Minesweeper",
-            Brief="Generates Minesweeper game",
-            Desc="Will randomly generate a Minesweeper game to play with spoiler tags",
-            Aliases=['ms', 'mines'],
-            Syntax="[Rows] [Columns] [Mines]"
+            name="Minesweeper",
+            brief="Generates Minesweeper game",
+            desc="Will randomly generate a Minesweeper game to play with spoiler tags",
+            aliases=['ms', 'mines'],
+            syntax="[Rows] [Columns] [Mines]"
         )
     )

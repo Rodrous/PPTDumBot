@@ -1,8 +1,11 @@
+import asyncio
+
 import discord
 from discord.ext import commands
 
-from build import checks
-from build.generalPurpose import Dumbot
+from general import checks
+from general.generalPurpose import Dumbot
+from general.returnCodes import ReturnCode
 from helpMenu import menus, initialize
 from helpMenu.commands import RestrictedCategory
 from helpMenu.eventHandler import EventHandler
@@ -12,9 +15,9 @@ from helpMenu.react import React, MenuFactory, AddReactions
 context = discord.ext.commands.Context
 
 
-class getHelp(commands.Cog):
+class HelpMenu(commands.Cog):
 
-    def __init__(self,bot):
+    def __init__(self, bot):
         self.bot = bot
 
     @commands.command(
@@ -22,7 +25,7 @@ class getHelp(commands.Cog):
                 aliases = ['helpme'],
                 brief = 'This is like help, but better.',
                 help = 'What else do you need to know bro, just run the command')
-    async def sendHelp(self, ctx: context, *, args=""):
+    async def SendHelp(self, ctx: context, *, args=""):
         args = args.split()
         pf = await Dumbot.get_prefix(ctx, self.bot)
         prefix = pf[2]
@@ -33,9 +36,9 @@ class getHelp(commands.Cog):
             await AddReactions(msg, event, reactions)
         else:
             await initialize.PublicCommands()
-            requestedCommand = args[0].lower()
-            foundCommand = await HelpMenuEntry.PublicSearch(requestedCommand)
-            embed = await _BuildEmbed(foundCommand, requestedCommand)
+            requested_command = args[0].lower()
+            found_command = await HelpMenuEntry.PublicSearch(requested_command)
+            embed = await _BuildEmbed(found_command, requested_command, prefix)
             await ctx.send(embed=embed)
 
     @checks.private()
@@ -43,18 +46,21 @@ class getHelp(commands.Cog):
         name="personalhelp",
         aliases=["phelp", "pershelp", "privhelp", "privatehelp"])
     async def personalHelp(self, ctx, *, args=""):
-        await ctx.message.channel.purge(limit=1)
         await initialize.PrivateCommands()
+        tasks = await asyncio.gather(
+            Dumbot.get_prefix(ctx, self.bot),
+            ctx.message.channel.purge(limit=1),
+            initialize.PrivateCommands()
+        )
         args = args.split()
-        pf = await Dumbot.get_prefix(ctx, self.bot)
-        prefix = pf[2]
+        prefix = tasks[0][2]
         if not args:
             embed = await menus.Private(prefix)
             await ctx.send(embed=embed)
         else:
-            requestedCommand = args[0].lower()
-            foundCommand = await HelpMenuEntry.PrivateSearch(requestedCommand, RestrictedCategory.Private)
-            embed = await _BuildEmbed(foundCommand, requestedCommand)
+            requested_command = args[0].lower()
+            found_command = await HelpMenuEntry.PrivateSearch(requested_command, RestrictedCategory.Private)
+            embed = await _BuildEmbed(found_command, requested_command, prefix)
             await ctx.send(embed=embed)
 
     @checks.devsOnly()
@@ -69,33 +75,41 @@ class getHelp(commands.Cog):
         if user.bot:
             return
         ctx = react.message
-        pf = await Dumbot.get_prefix(ctx, self.bot)
-        prefix = pf[2]
         event = EventHandler.GetEvent(ctx)
+        if event.reaction:
+            return
+        tasks = await asyncio.gather(
+            event.SetReaction(react.emoji),
+            Dumbot.get_prefix(ctx, self.bot),
+            initialize.PublicCommands()
+        )
+        return_code = tasks[0]
+        prefix = tasks[1][2]
+        if return_code is ReturnCode.Unchanged:
+            return
         try:
             embed, reactions = await MenuFactory(react.emoji, prefix)
         except ValueError as e:
             print(e)
             return
-        await initialize.PublicCommands()
         await React(event, embed, reactions)
 
 
-async def _BuildEmbed(FoundCommand: HelpMenuEntry, RequestedCommand: str) -> discord.Embed:
-    if FoundCommand:
+async def _BuildEmbed(found_command: HelpMenuEntry, requested_command: str, prefix: str) -> discord.Embed:
+    if found_command:
         embed = discord.Embed(
-            title=FoundCommand.Name,
-            description=FoundCommand.BuildDesc(),
-            color=FoundCommand.Category.value
+            title=found_command.name,
+            description=found_command.BuildDesc().format(prefix=prefix),
+            color=found_command.category.value
         )
     else:
         embed = discord.Embed(
             title="404: Not Found",
-            description=f"Command {RequestedCommand} was not found",
+            description=f"Command {requested_command} was not found",
             color=discord.Color.red()
         )
     return embed
 
 
 def setup(bot):
-    bot.add_cog(getHelp(bot))
+    bot.add_cog(HelpMenu(bot))

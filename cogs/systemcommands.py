@@ -1,10 +1,10 @@
 from discord.ext import commands
 import discord,os, requests
 import re as reg
-from build.generalPurpose import Dumbot, get_data_from_link
-from build import checks
-from build import notion
-from build.library import loadingFunnyMessages
+from general.generalPurpose import Dumbot, get_data_from_link
+from general import checks
+from general import notion
+from general.library import loadingFunnyMessages
 
 allowedguilds = [os.environ.get('allowedGuild')]
 

@@ -2,9 +2,9 @@ import asyncio
 import discord
 from discord.ext import commands
 import requests, random
-from build.generalPurpose import Dumbot, get_data_from_link
-from build.library import loadingFunnyMessages, MovieQuotes
-from build.urbanDict import searchitem
+from general.generalPurpose import Dumbot, get_data_from_link
+from general.library import loadingFunnyMessages, MovieQuotes
+from general.urbanDict import searchitem
 import re as reg
 import wikipedia
 

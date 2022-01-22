@@ -17,22 +17,22 @@ async def Init():
     entry = EntryFactory(PublicCategory.Moderation)
     await asyncio.gather(
         entry.Create(
-            Name="Clear",
-            Brief="Will clear the chat",
-            Desc="Removed specified amount of messages from current chat",
-            Aliases=['purge'],
-            Syntax="[Amount]"
+            name="Clear",
+            brief="Will clear the chat",
+            desc="Removed specified amount of messages from current chat",
+            aliases=['purge'],
+            syntax="[Amount]"
         ),
         entry.Create(
-            Name="Mute",
-            Brief="Will mute a person from speaking, reacting etc",
-            Desc="Gives person mute role for a specified amount of time so they cant speak or react",
-            Syntax="[User: Name, Id] [Time]"
+            name="Mute",
+            brief="Will mute a person from speaking, reacting etc",
+            desc="Gives person mute role for a specified amount of time so they cant speak or react",
+            syntax="[User: Name, Id] [Time]"
         ),
         entry.Create(
-            Name="UnMute",
-            Brief="Will unmute a person",
-            Desc="Removes the muted role so they can speak again",
-            Syntax="[User: Name, ID]"
+            name="UnMute",
+            brief="Will unmute a person",
+            desc="Removes the muted role so they can speak again",
+            syntax="[User: Name, ID]"
         )
     )

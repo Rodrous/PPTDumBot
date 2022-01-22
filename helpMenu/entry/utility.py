@@ -17,28 +17,28 @@ async def Init():
     entry = EntryFactory(PublicCategory.Utility)
     await asyncio.gather(
         entry.Create(
-            Name="Feedback",
-            Brief="Sends us Feedback",
-            Desc="Will send us Feedback, please do not abuse this or it will result in a ban from the command",
-            Aliases=["fb"],
-            Syntax="[Message]"
+            name="Feedback",
+            brief="Sends us Feedback",
+            desc="Will send us Feedback, please do not abuse this or it will result in a ban from the command",
+            aliases=["fb"],
+            syntax="[Message]"
         ),
         entry.Create(
-            Name="BugReport",
-            Brief="Sends us a BugReport",
-            Desc="Will send us a BugReport, please do not abuse this or it will result in a ban from the command",
-            Aliases=["bugs", "bugrep", "bug-report", "bug-rep"],
-            Syntax="[Message]"
+            name="BugReport",
+            brief="Sends us a BugReport",
+            desc="Will send us a BugReport, please do not abuse this or it will result in a ban from the command",
+            aliases=["bugs", "bugrep", "bug-report", "bug-rep"],
+            syntax="[Message]"
         ),
         entry.Create(
-            Name="Steal",
-            Brief="Steals an emote",
-            Desc="Will steal an emote from another server via the emote itself or via link",
-            Syntax="[Emote/Link] [Name->Optional]"
+            name="Steal",
+            brief="Steals an emote",
+            desc="Will steal an emote from another server via the emote itself or via link",
+            syntax="[Emote/Link] [Name->Optional]"
         ),
         entry.Create(
-            Name="Ping",
-            Brief="Pong! Checks ping",
-            Desc="Will check the current ping of the bot"
+            name="Ping",
+            brief="Pong! Checks ping",
+            desc="Will check the current ping of the bot"
         )
     )

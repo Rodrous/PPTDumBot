@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from build.backEnd import getRandomLoadingMessage,getRandomQuote
+from general.backEnd import getRandomLoadingMessage,getRandomQuote
 
 async def loadingFunnyMessages(StartMsg: str = "Please wait,") -> str:
     loading_message_end = await getRandomLoadingMessage()

@@ -1,7 +1,7 @@
 from discord.ext import commands
-from build.backEnd import *
+from general.backEnd import *
 import discord
-from build.generalPurpose import Dumbot
+from general.generalPurpose import Dumbot
 class database(commands.Cog):
 
     def __init__(self, bot):

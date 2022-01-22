@@ -1,7 +1,7 @@
 from discord.ext import commands
 import discord, base64, typing, asyncio
-from build.generalPurpose import Dumbot
-from build.backEnd import mute,unmute
+from general.generalPurpose import Dumbot
+from general.backEnd import mute,unmute
 import os
 
 allowedguilds = [os.environ.get('allowedGuild')]

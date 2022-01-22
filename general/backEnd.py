@@ -1,5 +1,5 @@
 import asyncio
-from build.connection import createdb, connection
+from general.connection import createdb, connection
 from typing import Dict, List, Optional, Union
 
 
@@ -124,7 +124,7 @@ async def getRandomDescription(noOfDescription: int = 1) -> str:
         return i["description"]
 
 
-if __name__ == "build.backEnd":
+if __name__ == "general.backEnd":
     loop = asyncio.get_event_loop()
     conn = loop.run_until_complete(connection())
     col = createdb(conn, "DiscordBot", "UserInfo")

@@ -26,27 +26,27 @@ class RestrictedCategory(CommandCategory):
 
 @dataclass(frozen=True, slots=True)
 class CommandTracker:
-    Commands: dict = field(default_factory=dict)
+    commands: dict = field(default_factory=dict)
 
-    def Add(self, Command: 'HelpMenuEntry'):
-        if not self.Commands.get(Command.Category, None):
-            self.Commands[Command.Category] = {}
-        self.Commands[Command.Category][Command.Name.lower()] = Command
+    def Add(self, command: 'HelpMenuEntry'):
+        if not self.commands.get(command.category, None):
+            self.commands[command.category] = {}
+        self.commands[command.category][command.name.lower()] = command
 
-    def GetCategory(self, Category: CommandCategory, AsList: bool = False):
-        if not self.Commands.get(Category, None):
+    def GetCategory(self, category: CommandCategory, *, AsList: bool = False):
+        if not self.commands.get(category, None):
             return {}
         if not AsList:
-            return self.Commands[Category]
-        return list(self.Commands[Category].values())
+            return self.commands[category]
+        return list(self.commands[category].values())
 
-    def PublicSearch(self, Alias: str):
-        alias = Alias.lower()
+    def PublicSearch(self, alias: str):
+        alias = alias.lower()
         commands = self.PublicGetAll()
         return self._Search(alias, commands)
 
-    def PrivateSearch(self, Alias: str, Category: RestrictedCategory):
-        alias = Alias.lower()
+    def PrivateSearch(self, alias: str, Category: RestrictedCategory):
+        alias = alias.lower()
         commands = self.GetCategory(Category, AsList=True)
         return self._Search(alias, commands)
 
@@ -57,15 +57,15 @@ class CommandTracker:
         return self._GetAll(RestrictedCategory)
 
     @staticmethod
-    def _Search(Alias: str,  Commands: list):
-        for cmd in Commands:
-            if Alias not in cmd:
+    def _Search(alias: str, commands: list):
+        for cmd in commands:
+            if alias not in cmd:
                 continue
             return cmd
 
-    def _GetAll(self, Categories: CommandCategory) -> list:
-        allCommands = []
-        for category in Categories:
+    def _GetAll(self, categories: CommandCategory) -> list:
+        all_commands = []
+        for category in categories:
             commands = self.GetCategory(category, AsList=True)
-            allCommands.extend(commands)
-        return allCommands
+            all_commands.extend(commands)
+        return all_commands
