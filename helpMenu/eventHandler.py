@@ -11,7 +11,7 @@ from helpMenu.reactions import Reaction
 class EventHandler:
     message: discord.Message
     message_id: int = field(init=False)
-    _reaction: discord.Emoji = field(init=False)
+    _reaction: Reaction = field(init=False)
     _loop: bool = field(init=False)
     _events: ClassVar[dict] = field(init=False, default={})
 
