@@ -44,11 +44,11 @@ class getHelp(commands.Cog):
         aliases=["phelp", "pershelp", "privhelp", "privatehelp"])
     async def personalHelp(self, ctx, *, args=""):
         await ctx.message.channel.purge(limit=1)
+        await initialize.PrivateCommands()
         args = args.split()
         pf = await Dumbot.get_prefix(ctx, self.bot)
         prefix = pf[2]
         if not args:
-            await initialize.PrivateCommands()
             embed = await menus.Private(prefix)
             await ctx.send(embed=embed)
         else:
@@ -77,6 +77,7 @@ class getHelp(commands.Cog):
         except ValueError as e:
             print(e)
             return
+        await initialize.PublicCommands()
         await React(event, embed, reactions)
 
 
