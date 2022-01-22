@@ -7,14 +7,16 @@ from discord.ext import commands, tasks
 
 from general.backEnd import getRandomDescription
 from general.generalPurpose import Dumbot
+from dotenv import load_dotenv
+load_dotenv()
 
-id: str = os.environ.get("clientId")
+bot_id: str = os.environ.get("clientId")
 restrictedChannels: List = ["database"]
 intents: Intents = discord.Intents.default()
 intents.members: bool = True
 intents.voice_states: bool = True
 customPrefix: Dict = {}
-defaultPrefix: str = "$"
+defaultPrefix: str = "!"
 
 
 def determine_prefix(bot, msg) -> list[str]:
@@ -102,9 +104,9 @@ async def on_message(msg) -> None:
 @bot.event
 async def on_ready() -> None:
     await bot.wait_until_ready()
-    embed = discord.Embed(title="Bot Restarted Successfully!",
-                          color=52382)
-    await commands.Bot.get_channel(bot, 934244768651833344).send(embed=embed)
+    # embed = discord.Embed(title="Bot Restarted Successfully!",
+    #                       color=52382)
+    # await commands.Bot.get_channel(bot, 934244768651833344).send(embed=embed)
     change_description.start()
 
 
@@ -118,10 +120,10 @@ async def change_description() -> None:
 
 if __name__ == "__main__":
     bot.load_extension("cogs.fun")
-    bot.load_extension("cogs.systemcommands")
+    bot.load_extension("cogs.utility")
     bot.load_extension("cogs.help")
-    bot.load_extension("cogs.Moderation")
+    bot.load_extension("cogs.moderation")
     bot.load_extension("cogs.games")
-    bot.load_extension("cogs.Personal")
-    bot.load_extension("cogs.Database")
-    bot.run(id)
+    bot.load_extension("cogs.private")
+    bot.load_extension("cogs.database")
+    bot.run(bot_id)

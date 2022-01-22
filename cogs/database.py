@@ -1,21 +1,24 @@
 from discord.ext import commands
 from general.backEnd import *
 import discord
+from discord.ext import commands
 from general.generalPurpose import Dumbot
-class database(commands.Cog):
+
+
+class DataBase(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
 
     @commands.command("populate")
-    async def populate(self, ctx):
-        memebers = await ctx.guild.fetch_members().flatten()
-        for member in memebers:
+    async def Populate(self, ctx: commands.Context):
+        members = await ctx.guild.fetch_members().flatten()
+        for member in members:
             await checkExist(ctx.guild.id, member.id)
 
     @commands.Cog.listener()
     @commands.has_permissions(administrator=True)
-    async def on_member_join(self,member):
+    async def on_member_join(self, member: discord.Member):
         await checkExist(member.guild.id, member.id)
         if await checkMuted(member.guild.id, member.id):
             getRole = discord.utils.get(member.guild.roles, name="Muted")
@@ -29,18 +32,19 @@ class database(commands.Cog):
                                                 add_reactions=False)
                 except Exception as e:
                     print(f"Fuck you!:- {e}")
-                    
+
                 await member.add_roles(getRole)
             else:
                 await member.add_roles(getRole)
 
     @commands.Cog.listener()
-    async def on_message(self,ctx):
+    async def on_message(self, ctx: commands.Context):
         await messageIncrement(ctx.guild.id, ctx.author.id)
 
     @commands.Cog.listener()
-    async def on_message_delete(self,ctx):
+    async def on_message_delete(self, ctx: commands.Context):
         await messageDecrement(ctx.guild.id, ctx.author.id)
 
+
 def setup(bot):
-    bot.add_cog(database(bot))
+    bot.add_cog(DataBase(bot))
