@@ -5,8 +5,8 @@ import discord
 from discord import Intents
 from discord.ext import commands, tasks
 
-from build.backEnd import getRandomDescription
-from build.generalPurpose import Dumbot
+from general.backEnd import getRandomDescription
+from general.generalPurpose import Dumbot
 
 id: str = os.environ.get("clientId")
 restrictedChannels: List = ["database"]
