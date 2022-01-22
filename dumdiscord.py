@@ -104,7 +104,7 @@ async def on_ready() -> None:
     await bot.wait_until_ready()
     embed = discord.Embed(title="Bot Restarted Successfully!",
                           color=52382)
-    await commands.Bot.get_channel(bot, 879773094561083492).send(embed=embed)
+    await commands.Bot.get_channel(bot, 934244768651833344).send(embed=embed)
     change_description.start()
 
 
