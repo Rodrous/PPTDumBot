@@ -17,7 +17,7 @@ class Database(commands.Cog):
 
     @commands.Cog.listener()
     @commands.has_permissions(administrator=True)
-    async def onMemberJoin(self, member):
+    async def on_member_join(self, member):
         await checkExist(member.guild.id, member.id)
         if await checkMuted(member.guild.id, member.id):
             getRole = discord.utils.get(member.guild.roles, name="Muted")
