@@ -1,13 +1,17 @@
-from discord.ext import commands
-import discord, base64, typing, asyncio
-from general.generalPurpose import Dumbot
-from general.backEnd import mute,unmute
 import os
+
+import asyncio
+import discord
+import typing
+from discord.ext import commands
+
+from general.backEnd import mute, unmute
+from general.generalPurpose import Dumbot
 
 allowedguilds = [os.environ.get('allowedGuild')]
 
 
-class moderation(commands.Cog):
+class Moderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -73,4 +77,4 @@ class moderation(commands.Cog):
         await ctx.send("Done!")
 
 def setup(bot):
-    bot.add_cog(moderation(bot))
+    bot.add_cog(Moderation(bot))

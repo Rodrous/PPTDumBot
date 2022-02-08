@@ -1,19 +1,22 @@
 import asyncio
+import re as reg
+
 import discord
+import random
+import requests
+import wikipedia
 from discord.ext import commands
-import requests, random
+
 from general.generalPurpose import Dumbot, get_data_from_link
 from general.library import loadingFunnyMessages, MovieQuotes
 from general.urbanDict import searchitem
-import re as reg
-import wikipedia
 
 
 # sends images and quotes
-class webmaster(commands.Cog):
+class Webmaster(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-    
+
     @commands.command(
         name='cat',
         brief='Sends an image of a cute (*most of the times*) cat ꓷ:',
@@ -185,4 +188,4 @@ class webmaster(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(webmaster(bot))
+    bot.add_cog(Webmaster(bot))

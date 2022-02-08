@@ -89,7 +89,7 @@ async def Init():
         entry.Create(
             name="MovieQuotes",
             brief="Sends a random moviequote",
-            desc="Will search our database for a random moviequote",
+            desc="Will search our Database for a random moviequote",
             aliases=['mq', 'moviequote'],
             syntax="[Explicit][Nsfw]"
         )

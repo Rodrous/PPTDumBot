@@ -3,8 +3,8 @@ import random
 from discord.ext import commands
 
 
-class personal(commands.Cog):
-    def __init__(self,bot):
+class Personal(commands.Cog):
+    def __init__(self, bot):
         self.bot = bot
 
     @commands.command(
@@ -47,4 +47,4 @@ class personal(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(personal(bot))
+    bot.add_cog(Personal(bot))
