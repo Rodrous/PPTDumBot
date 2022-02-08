@@ -1,25 +1,31 @@
-from discord.ext import commands
-import discord,os, requests
 import re as reg
-from general.generalPurpose import Dumbot, get_data_from_link
+
+import discord
+import os
+import requests
+from discord.ext import commands
+
 from general import checks
 from general import notion
+from general.generalPurpose import Dumbot, get_data_from_link
 from general.library import loadingFunnyMessages
 
 allowedguilds = [os.environ.get('allowedGuild')]
 
-restrictedChannels = ["database"]
+restrictedChannels = ["Database"]
 
-class syscom(commands.Cog):
-    def __init__(self,bot):
+
+class SysCom(commands.Cog):
+    def __init__(self, bot):
         self.bot = bot
-    #YOOOOOO
+
+    # YOOOOOO
 
     @commands.command(
         name='ping',
         brief='Pong',
         help='Returns the delay of the bot')
-    async def ping(self,msg):
+    async def ping(self, msg):
         embed = discord.Embed()
         embed.add_field(name="Pong", value=f"{round(self.bot.latency * 1000)}ms")
         await msg.send(embed=embed)
@@ -144,4 +150,4 @@ class syscom(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(syscom(bot))
+    bot.add_cog(SysCom(bot))

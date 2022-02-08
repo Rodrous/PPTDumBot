@@ -9,12 +9,12 @@ from general.backEnd import getRandomDescription
 from general.generalPurpose import Dumbot
 
 id: str = os.environ.get("clientId")
-restrictedChannels: List = ["database"]
+restrictedChannels: List = ["Database"]
 intents: Intents = discord.Intents.default()
 intents.members: bool = True
 intents.voice_states: bool = True
 customPrefix: Dict = {}
-defaultPrefix: str = "$"
+defaultPrefix: str = "-"
 
 
 def determine_prefix(bot, msg) -> list[str]:
