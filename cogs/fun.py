@@ -3,7 +3,7 @@ import discord
 from discord.ext import commands
 import requests, random
 from general.generalPurpose import Dumbot, get_data_from_link
-from general.apiDataclasses import JokeApi
+from api.jokeApi import JokeApi, BuildRequestUrl, Config, FlagBlacklist
 from general.errors import ApiError
 from general.library import loadingFunnyMessages, MovieQuotes
 from general.urbanDict import searchitem
@@ -89,17 +89,25 @@ class webmaster(commands.Cog):
         brief="It send a random joke",
         help="a random joke, can be explicit or offensive so beware")
     async def SendJoke(self, ctx: commands.Context, *, args: str = ""):
-        loading: str = await loadingFunnyMessages()
+        # loading: str = await loadingFunnyMessages()
+        loading = "temp"
         msg: discord.Message = await ctx.send(loading)
+        # Default Values
+        safe_mode = False
         if str(args).count("-ex") >= 1:
-            url = requests.get("https://v2.jokeapi.dev/joke/Any").json()
+            flags = FlagBlacklist()
         else:
-            url = requests.get("https://v2.jokeapi.dev/joke/Any?safe-mode").json()
+            flags = FlagBlacklist.All()
+            safe_mode = True
+        config = Config(flags, safe_mode=safe_mode)
+        url = await BuildRequestUrl(config)
+        data = requests.get(url).json()
         try:
-            joke = await JokeApi.FromJson(url)
+            joke = await JokeApi.FromJson(data)
         except ApiError as e:
             await msg.edit(content=f"An error occurred:\n{e}")
             return
+        print(joke)
         await msg.edit(content=await joke.BuildJoke())
     # fixme Refactor stopped here, cogs only + added files
 
