@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from enum import Enum, unique
-from typing import TYPE_CHECKING, ClassVar
+from typing import ClassVar, Optional, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from helpMenu.helpMenuEntry import HelpMenuEntry
@@ -76,11 +76,12 @@ class CommandFlags:
     """  Stores a command flag, you can use {name} in your string to format your description  """
     name: str
     desc: str
+    syntax: Optional[str] = ""
     _flag_prefix: ClassVar[str] = "-"
 
     def __str__(self):
         desc = self.desc.format(name=self.name)
-        return f"`{self._flag_prefix}{self.name}` {desc}"
+        return f"`{self._flag_prefix}{self.name}{self.syntax}` {desc}"
 
     @classmethod
     async def SetFlagPrefix(cls, prefix: str):
