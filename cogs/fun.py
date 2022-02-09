@@ -3,7 +3,9 @@ import discord
 from discord.ext import commands
 import requests, random
 from general.generalPurpose import Dumbot, get_data_from_link
-from api.jokeApi import JokeApi, BuildRequestUrl, Config, FlagBlacklist
+from api.jokeApi.jokeApi import JokeApi, Config
+from api.jokeApi.url import BuildRequestUrl
+from api.jokeApi.argsHandler import ArgsHandler
 from general.errors import ApiError
 from general.library import loadingFunnyMessages, MovieQuotes
 from general.urbanDict import searchitem
@@ -94,12 +96,14 @@ class webmaster(commands.Cog):
         msg: discord.Message = await ctx.send(loading)
         # Default Values
         safe_mode = False
-        if str(args).count("-ex") >= 1:
-            flags = FlagBlacklist()
-        else:
-            flags = FlagBlacklist.All()
-            safe_mode = True
-        config = Config(flags, safe_mode=safe_mode)
+        args_handler = ArgsHandler(args)
+        tasks = await asyncio.gather(
+            args_handler.GetFlags(inverse=True),
+            args_handler.GetCategories()
+        )
+        flags = tasks[0]
+        categories = tasks[1]
+        config = Config(flags, categories, safe_mode=safe_mode)
         url = await BuildRequestUrl(config)
         data = requests.get(url).json()
         try:

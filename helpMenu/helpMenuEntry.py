@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from typing import Optional, ClassVar, Union
 
-from helpMenu.commands import CommandTracker, CommandCategory, RestrictedCategory
+from helpMenu.commands import CommandTracker, CommandCategory, RestrictedCategory, CommandFlags
 
 
 @dataclass(frozen=True, slots=True)
@@ -10,6 +10,7 @@ class HelpMenuEntry:
     name: str
     brief: str
     desc: str
+    flags: Optional[list[CommandFlags]] = field(default_factory=list)
     aliases: Optional[list[str]] = field(default_factory=list)
     syntax: Optional[str] = ''
     _instances: ClassVar = CommandTracker()
@@ -65,6 +66,11 @@ class EntryFactory:
                      name: str,
                      brief: str,
                      desc: str,
-                     aliases: Optional[list[str]] = [],
+                     flags: Optional[list[CommandFlags]] = None,
+                     aliases: Optional[list[str]] = None,
                      syntax: Optional[str] = ''):
-        HelpMenuEntry(self.category, name, brief, desc, aliases, syntax)
+        if not flags:
+            flags = []
+        if not aliases:
+            aliases = []
+        HelpMenuEntry(self.category, name, brief, desc, flags, aliases, syntax)
