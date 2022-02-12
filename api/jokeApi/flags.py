@@ -102,11 +102,3 @@ class FlagBlacklist:
             sexist=sexist,
             explicit=explicit
         )
-
-    async def _SetHasFlag(self):
-        data = self.GetFlagData()
-        for flag, boolean in data:
-            if not boolean:
-                continue
-            object.__setattr__(self, "_has_flag", True)
-            break
