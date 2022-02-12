@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from config import FLAG_PREFIX
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)
@@ -19,6 +20,30 @@ class FlagBlacklist:
             ("sexist", self.sexist),
             ("explicit", self.explicit)
         ]
+
+    async def BuildString(self, separator: str = ", "):
+        data = await self.GetFlagData()
+        current_flags: list = []
+        for flag, boolean in data:
+            if not boolean:
+                continue
+            current_flags.append(flag.capitalize())
+        return separator.join(current_flags)
+
+    def __bool__(self):
+        if self.nsfw:
+            return True
+        if self.religious:
+            return True
+        if self.political:
+            return True
+        if self.racist:
+            return True
+        if self.sexist:
+            return True
+        if self.explicit:
+            return True
+        return False
 
     @classmethod
     def Inverse(cls, *,
@@ -51,13 +76,13 @@ class FlagBlacklist:
     @classmethod
     async def FromArgs(cls, args: str, *,
                        inverse: bool = False,
-                       any_flag: str = "-any",
-                       nsfw_flag: str = "-nsfw",
-                       religious_flag: str = "-religious",
-                       political_flag: str = "-political",
-                       racist_flag: str = "-racist",
-                       sexist_flag: str = "-sexist",
-                       explicit_flag: str = "-explicit"):
+                       any_flag: str = f"{FLAG_PREFIX}any",
+                       nsfw_flag: str = f"{FLAG_PREFIX}nsfw",
+                       religious_flag: str = f"{FLAG_PREFIX}religious",
+                       political_flag: str = f"{FLAG_PREFIX}political",
+                       racist_flag: str = f"{FLAG_PREFIX}racist",
+                       sexist_flag: str = f"{FLAG_PREFIX}sexist",
+                       explicit_flag: str = f"{FLAG_PREFIX}explicit"):
         class_creation = cls
         if any_flag in args:
             return class_creation()
@@ -77,3 +102,11 @@ class FlagBlacklist:
             sexist=sexist,
             explicit=explicit
         )
+
+    async def _SetHasFlag(self):
+        data = self.GetFlagData()
+        for flag, boolean in data:
+            if not boolean:
+                continue
+            object.__setattr__(self, "_has_flag", True)
+            break

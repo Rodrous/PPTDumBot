@@ -1,4 +1,5 @@
 from enum import Enum, auto
+from config import FLAG_PREFIX
 
 
 class Category(Enum):
@@ -11,12 +12,12 @@ class Category(Enum):
 
     @classmethod
     async def FromArgs(cls, args: str, *,
-                       misc_flag="-misc",
-                       programming_flag="-programming",
-                       dark_flag="-dark",
-                       pun_flag="-pun",
-                       spooky_flag="-spooky",
-                       christmas_flag="-christmas") -> list['Category']:
+                       misc_flag=f"{FLAG_PREFIX}misc",
+                       programming_flag=f"{FLAG_PREFIX}programming",
+                       dark_flag=f"{FLAG_PREFIX}dark",
+                       pun_flag=f"{FLAG_PREFIX}pun",
+                       spooky_flag=f"{FLAG_PREFIX}spooky",
+                       christmas_flag=f"{FLAG_PREFIX}christmas") -> list['Category']:
         """  Creates a list of Categories based on arguments provided  """
         categories = []
         if misc_flag in args:

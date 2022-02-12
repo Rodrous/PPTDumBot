@@ -1,6 +1,8 @@
 from dataclasses import dataclass, field
 from enum import Enum, unique
+from general import colors
 from typing import ClassVar, Optional, TYPE_CHECKING
+from config import FLAG_PREFIX
 
 if TYPE_CHECKING:
     from helpMenu.helpMenuEntry import HelpMenuEntry
@@ -12,16 +14,16 @@ class CommandCategory(Enum):
 
 @unique
 class PublicCategory(CommandCategory):
-    Fun = 52382
-    Game = 6724095
-    Utility = 16375162
-    Moderation = 13524060
+    Fun = colors.Category.FUN_GREEN
+    Game = colors.Category.GAME_BLUE
+    Utility = colors.Category.UTILITY_YELLOW
+    Moderation = colors.Category.MODERATION_RED
 
 
 @unique
 class RestrictedCategory(CommandCategory):
-    Private = 1764824
-    DevOnly = 13273297
+    Private = colors.Category.PRIVATE_TEAL
+    DevOnly = colors.Category.DEV_PINK
 
 
 @dataclass(frozen=True, slots=True)
@@ -77,12 +79,8 @@ class CommandFlags:
     name: str
     desc: str
     syntax: Optional[str] = ""
-    _flag_prefix: ClassVar[str] = "-"
+    _flag_prefix: ClassVar[str] = FLAG_PREFIX
 
     def __str__(self):
         desc = self.desc.format(name=self.name)
         return f"`{self._flag_prefix}{self.name}{self.syntax}` {desc}"
-
-    @classmethod
-    async def SetFlagPrefix(cls, prefix: str):
-        cls._flag_prefix = prefix

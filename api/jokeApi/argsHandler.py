@@ -8,11 +8,15 @@ from api.jokeApi.flags import FlagBlacklist
 class ArgsHandler:
     args: str
 
-    async def GetCategories(self) -> list[Category]:
+    async def GetCategories(self, **kwargs) -> list[Category]:
         if not self.args:
             return
-        print(await Category.FromArgs(self.args))
-        return await Category.FromArgs(self.args)
+        return await Category.FromArgs(self.args, **kwargs)
 
-    async def GetFlags(self, inverse: bool = False):
-        return await FlagBlacklist.FromArgs(self.args, inverse=inverse)
+    async def GetFlags(self, *, inverse: bool = False, **kwargs):
+        return await FlagBlacklist.FromArgs(self.args, inverse=inverse, **kwargs)
+
+    async def SafeMode(self):
+        if not self.args:
+            return True
+        return False
