@@ -15,4 +15,7 @@ class Type(Enum):
             case "twopart":
                 return cls["TwoPart"]
             case _:
-                raise ApiError("Incorrect Joke Types")
+                raise ApiError(
+                    __name__, f"{__class__.__name__}.FromString",
+                    details="Incorrect joke type"
+                )

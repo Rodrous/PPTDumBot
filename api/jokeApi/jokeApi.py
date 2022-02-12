@@ -49,7 +49,10 @@ class JokeApi:
     @classmethod
     async def FromJson(cls, dictionary: dict):
         if dictionary["error"]:
-            raise ApiError("An error with the api has occurred")
+            raise ApiError(
+                __name__, f"{__class__.__name__}.FromJson",
+                details="There has been an error with the API server"
+            )
         category = Category[dictionary["category"]]
         joke_type = Type.FromString(dictionary["type"])
         flags = FlagBlacklist(**dictionary["flags"])
@@ -61,5 +64,3 @@ class JokeApi:
                 return cls(category, joke_type, flags, joke_id, safe, language, joke=dictionary["joke"])
             case Type.TwoPart:
                 return cls(category, joke_type, flags, joke_id, safe, language, setup=dictionary["setup"], delivery=dictionary["delivery"])
-
-
