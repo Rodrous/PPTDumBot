@@ -18,7 +18,7 @@ class Errors(Exception):
         self._module = module
         self._func = func
         self.ctx = ctx
-        self.discord_message = discord_message if not ctx else ctx.message
+        self.discord_message = discord_message
         self._UpdateFullPath()
         if details:
             self.details = details
