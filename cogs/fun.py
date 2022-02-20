@@ -1,8 +1,8 @@
 import asyncio
+import random
 import re as reg
 
 import discord
-import random
 import requests
 import wikipedia
 from discord.ext import commands
@@ -14,9 +14,9 @@ from api.jokeApi.url import BuildRequestUrl
 from general import colors
 from general.errors import ApiError
 from general.generalPurpose import Dumbot, get_data_from_link
-from general.movieQuotes import MovieQuotes
+from general.loadingMessages import sendLoadingMessage
 from general.movieQuotes import ArgsHandler as MqArgsHandler
-from general.loadingMessages import loadingFunnyMessages, sendLoadingMessage
+from general.movieQuotes import MovieQuotes
 from general.urbanDict import searchitem
 
 CATEGORY_EMBED_COLOR = colors.Category.FUN_GREEN

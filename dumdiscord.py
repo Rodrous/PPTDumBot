@@ -4,10 +4,11 @@ from typing import List, Dict
 import discord
 from discord import Intents
 from discord.ext import commands, tasks
+from dotenv import load_dotenv
 
 from general.backEnd import getRandomDescription
 from general.generalPurpose import Dumbot
-from dotenv import load_dotenv
+
 load_dotenv()
 
 bot_id: str = os.environ.get("clientId")

@@ -1,7 +1,10 @@
 import asyncio
-from general.connection import createdb, connection
 from typing import Dict, List, Optional, Union
+
 from dotenv import load_dotenv
+
+from general.connection import createdb, connection
+
 load_dotenv()
 
 

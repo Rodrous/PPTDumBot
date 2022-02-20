@@ -1,9 +1,13 @@
-from discord.ext import commands
-import discord,os, requests
 import re as reg
-from general.generalPurpose import Dumbot, get_data_from_link
+
+import discord
+import os
+import requests
+from discord.ext import commands
+
 from general import checks
 from general import notion
+from general.generalPurpose import Dumbot, get_data_from_link
 from general.loadingMessages import loadingFunnyMessages
 
 allowedguilds = [os.environ.get('allowedGuild')]

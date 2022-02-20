@@ -1,8 +1,12 @@
-from discord.ext import commands
-import discord, base64, typing, asyncio
-from general.generalPurpose import Dumbot
-from general.backEnd import mute,unmute
 import os
+
+import asyncio
+import discord
+import typing
+from discord.ext import commands
+
+from general.backEnd import mute, unmute
+from general.generalPurpose import Dumbot
 
 allowedguilds = [os.environ.get('allowedGuild')]
 

@@ -1,8 +1,8 @@
 import asyncio
 
+from helpMenu.commands import CommandFlags
 from helpMenu.commands import PublicCategory
 from helpMenu.helpMenuEntry import EntryFactory
-from helpMenu.commands import CommandFlags
 
 
 async def Init():

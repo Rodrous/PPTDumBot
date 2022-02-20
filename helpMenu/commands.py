@@ -1,8 +1,9 @@
 from dataclasses import dataclass, field
 from enum import Enum, unique
-from general import colors
 from typing import ClassVar, Optional, TYPE_CHECKING
+
 from config import FLAG_PREFIX
+from general import colors
 
 if TYPE_CHECKING:
     from helpMenu.helpMenuEntry import HelpMenuEntry

@@ -1,6 +1,7 @@
 from dataclasses import dataclass
-from general.backEnd import getRandomQuote
+
 from config import FLAG_PREFIX
+from general.backEnd import getRandomQuote
 
 
 @dataclass
