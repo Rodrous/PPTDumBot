@@ -3,7 +3,7 @@ import asyncio
 import discord
 from discord.ext import commands
 
-from general import checks
+from general import checks, colors
 from general.generalPurpose import Dumbot
 from general.returnCodes import ReturnCode
 from helpMenu import menus, initialize
@@ -96,19 +96,21 @@ class HelpMenu(commands.Cog):
 
 
 async def _BuildEmbed(found_command: HelpMenuEntry, requested_command: str, prefix: str) -> discord.Embed:
-    if found_command:
-        embed = discord.Embed(
-            title=found_command.name,
-            description=found_command.BuildDesc().format(prefix=prefix),
-            color=found_command.category.value
-        )
-    else:
-        embed = discord.Embed(
+    if not found_command:
+        return discord.Embed(
             title="404: Not Found",
             description=f"Command {requested_command} was not found",
-            color=discord.Color.red()
+            color=colors.Fault.ERROR
         )
-    return embed
+    desc = found_command.BuildDesc()
+    if found_command.flags:
+        flags = [str(flag) for flag in found_command.flags]
+        desc += "\n\n**Flags:**\n" + "\n".join(flags)
+    return discord.Embed(
+        title=found_command.name,
+        description=desc.format(prefix=prefix),
+        color=found_command.category.value
+    )
 
 
 def setup(bot):

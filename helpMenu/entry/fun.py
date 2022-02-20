@@ -1,5 +1,6 @@
 import asyncio
 
+from helpMenu.commands import CommandFlags
 from helpMenu.commands import PublicCategory
 from helpMenu.helpMenuEntry import EntryFactory
 
@@ -58,7 +59,22 @@ async def Init():
         entry.Create(
             name="Joke",
             brief="Tells a joke",
-            desc="Sends a random joke\n\n**Flags:**\n`-ex` sends any jokes, even explicit and dark jokes",
+            desc="Sends a random joke",
+            flags=[
+                CommandFlags("any", "will remove everything from blacklist"),
+                CommandFlags("nsfw", "will remove {name} from blacklist"),
+                CommandFlags("religious", "will remove {name} from blacklist"),
+                CommandFlags("political", "will remove {name} from blacklist"),
+                CommandFlags("racist", "will remove {name} from blacklist"),
+                CommandFlags("sexist", "will remove {name} from blacklist"),
+                CommandFlags("explicit", "will remove {name} from blacklist"),
+                CommandFlags("misc", "category specific will include {name}"),
+                CommandFlags("programming", "category specific will include {name}"),
+                CommandFlags("dark", "category specific will include {name}"),
+                CommandFlags("pun", "category specific will include {name}"),
+                CommandFlags("spooky", "category specific will include {name}"),
+                CommandFlags("christmas", "category specific will include {name}")
+            ],
             aliases=["getjoke", "jk"],
             syntax="[Flags]"
         ),

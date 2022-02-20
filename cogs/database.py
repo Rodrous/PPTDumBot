@@ -31,7 +31,7 @@ class Database(commands.Cog):
                                                 add_reactions=False)
                 except Exception as e:
                     print(f"Fuck you!:- {e}")
-                    
+
                 await member.add_roles(getRole)
             else:
                 await member.add_roles(getRole)
@@ -43,6 +43,7 @@ class Database(commands.Cog):
     @commands.Cog.listener()
     async def on_message_delete(self, ctx):
         await messageDecrement(ctx.guild.id, ctx.author.id)
+
 
 def setup(bot):
     bot.add_cog(Database(bot))
