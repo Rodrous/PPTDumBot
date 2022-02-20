@@ -1,14 +1,14 @@
 import asyncio
+import random
 import re as reg
 
 import discord
-import random
 import requests
 import wikipedia
 from discord.ext import commands
+from general.library import loadingFunnyMessages, MovieQuotes
 
 from general.generalPurpose import Dumbot, get_data_from_link
-from general.library import loadingFunnyMessages, MovieQuotes
 from general.urbanDict import searchitem
 
 

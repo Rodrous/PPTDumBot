@@ -1,14 +1,14 @@
+import os
 import re as reg
 
 import discord
-import os
 import requests
 from discord.ext import commands
+from general.library import loadingFunnyMessages
 
 from general import checks
 from general import notion
 from general.generalPurpose import Dumbot, get_data_from_link
-from general.library import loadingFunnyMessages
 
 allowedguilds = [os.environ.get('allowedGuild')]
 
