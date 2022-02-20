@@ -4,7 +4,7 @@ import re as reg
 import discord
 import requests
 from discord.ext import commands
-from general.library import loadingFunnyMessages
+from general.loadingMessages import sendLoadingMessage
 
 from general import checks
 from general import notion
@@ -87,8 +87,7 @@ class SysCom(commands.Cog):
         name="feedback",
         aliases= ["fb"])
     async def feedBack(self,ctx,*,args):
-        loading_msg = await loadingFunnyMessages()
-        msg = await ctx.send(loading_msg)
+        msg = await sendLoadingMessage(ctx)
         headers, post_content = await notion.feedback_n_bugs_json(ctx, str(args), selectName="Feedback")
         post_url = "https://api.notion.com/v1/pages"
         response = requests.post(url=post_url, headers=headers, json=post_content)
@@ -104,8 +103,7 @@ class SysCom(commands.Cog):
         name="bugreport",
         aliases=["bugs", "bugrep", "bug-report", "bug-rep"])
     async def bugReport(self, ctx, *, args):
-        loading_msg = await loadingFunnyMessages()
-        msg = await ctx.send(loading_msg)
+        msg = await sendLoadingMessage(ctx)
         headers, post_content = await notion.feedback_n_bugs_json(ctx, str(args), selectName="Bugs")
         post_url = "https://api.notion.com/v1/pages"
         response = requests.post(url=post_url, headers=headers, json=post_content)

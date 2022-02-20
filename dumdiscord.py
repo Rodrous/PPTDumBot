@@ -118,10 +118,10 @@ async def change_description() -> None:
 
 if __name__ == "__main__":
     bot.load_extension("cogs.fun")
-    bot.load_extension("cogs.systemcommands")
+    bot.load_extension("cogs.utility")
     bot.load_extension("cogs.help")
-    bot.load_extension("cogs.Moderation")
+    bot.load_extension("cogs.moderation")
     bot.load_extension("cogs.games")
-    bot.load_extension("cogs.Personal")
-    bot.load_extension("cogs.Database")
+    bot.load_extension("cogs.private")
+    bot.load_extension("cogs.database")
     bot.run(id)
